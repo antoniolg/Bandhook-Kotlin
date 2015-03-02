@@ -1,0 +1,58 @@
+/*
+ * Copyright (C) 2015 Antonio Leiva
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+buildscript {
+    ext.kotlin_version = "0.11.91"
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:1.1.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+
+    ext {
+        // Android config
+        androidBuildToolsVersion = "22.0.0"
+        androidMinSdkVersion = 16
+        androidTargetSdkVersion = 22
+        androidCompileSdkVersion = 22
+        androidApplicationId = "com.antonioleiva.bandhookkotlin"
+        androidVersionCode = 1
+        androidVersionName = "0.1"
+        supportVersion = "22.0.0"
+
+        // Libraries
+        libKotlin = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        libAppCompat = "com.android.support:appcompat-v7:$supportVersion"
+        libRecyclerView = "com.android.support:recyclerview-v7:$supportVersion"
+        libPalette = "com.android.support:palette-v7:$supportVersion"
+        libEventBus = "de.greenrobot:eventbus:2.4.0"
+        libPicasso = "com.squareup.picasso:picasso:2.5.0"
+        libOkHttp = "com.squareup.okhttp:okhttp:2.2.0"
+        libRetrofit = "com.squareup.retrofit:retrofit:1.9.0"
+        libJobQueue = "com.path:android-priority-jobqueue:1.1.2"
+
+        libEspresso = "com.android.support.test.espresso:espresso-core:2.0"
+        libTestingSupport = "com.android.support.test:testing-support-lib:0.1"
+    }
+}

@@ -1,0 +1,77 @@
+/*
+ * Copyright (C) 2015 Antonio Leiva
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion parent.ext.androidCompileSdkVersion
+    buildToolsVersion parent.ext.androidBuildToolsVersion
+
+    defaultConfig {
+        minSdkVersion parent.ext.androidMinSdkVersion
+        targetSdkVersion parent.ext.androidTargetSdkVersion
+        versionCode parent.ext.androidVersionCode
+        versionName parent.ext.androidVersionName
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
+    }
+}
+
+dependencies {
+    compile project (":data")
+    compile project (":presentation")
+
+    compile parent.ext.libKotlin
+    compile parent.ext.libAppCompat
+    compile parent.ext.libRecyclerView
+    compile parent.ext.libPalette
+    compile parent.ext.libEventBus
+    compile parent.ext.libPicasso
+    compile parent.ext.libJobQueue
+
+    androidTestCompile parent.ext.libEspresso
+    androidTestCompile parent.ext.libTestingSupport
+}
