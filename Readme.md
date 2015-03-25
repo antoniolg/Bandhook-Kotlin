@@ -12,7 +12,7 @@ At the moment it will only connect to LastFm and retrieve some music bands. It w
 The purpose of the project is to show a complex (at least in architecture) project entirely written using Kotlin. This example also supports the articles
 written in [antonioleiva.com](http://antonioleiva.com) related to Kotlin for Android:
 
-* [Kotlin for Android (I): qIntroduction](http://antonioleiva.com/kotlin-for-android-introduction/)
+* [Kotlin for Android (I): Introduction](http://antonioleiva.com/kotlin-for-android-introduction/)
 * [Kotlin for Android (II): Create a new project](http://antonioleiva.com/kotlin-android-create-project/)
 
 This sample project is still in development, and could easily break or have some messy code. However, any idea or suggestion to improve it will be welcomed. Feel free to [open an issue](https://github.com/antoniolg/Bandhook-Kotlin/issues/new) if you think something could be improved.
