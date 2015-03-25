@@ -35,18 +35,25 @@ trait ScrollableHeader : BaseActivity {
         val headerImage: ImageView = findView(R.id.image)
         val scrollableView: ObservableScrollView = findView(R.id.scrollableView)
 
-        val minHeight = toolbar.getHeight() + getResources().getDimensionPixelOffset(R.dimen.statusbar_height)
+        val minHeight = getToolbarHeight() + getResources().getDimensionPixelOffset(R.dimen.statusbar_height)
         val maxHeight = getResources().getDimensionPixelOffset(R.dimen.detail_toolbar_height);
 
         initWindow()
-        initTitle(titleText, minHeight, maxHeight)
-        initToolbar(headerImage, maxHeight)
+        initTitle(titleText, minHeight, maxHeight, scrollableView.getScrollY())
+        initToolbar(headerImage, minHeight, maxHeight, scrollableView.getScrollY())
 
         scrollableView.listener = { x, y ->
             updateTitleScale(titleText, minHeight, maxHeight, y)
             updateToolbarAlpha(minHeight, maxHeight, y)
             updateImageTranslation(headerImage, y)
         }
+    }
+
+    private fun getToolbarHeight(): Int{
+        val a = getTheme().obtainStyledAttributes(R.style.AppTheme, intArray(R.attr.actionBarSize));
+        val attributeResourceId = a.getResourceId(0, 0);
+        a.recycle()
+        return getResources().getDimensionPixelOffset(attributeResourceId)
     }
 
     private fun updateImageTranslation(image: ImageView, scrollY: Int) {
@@ -60,15 +67,15 @@ trait ScrollableHeader : BaseActivity {
         }
     }
 
-    private fun initTitle(titleText: TextView, minHeight: Int, maxHeight: Int) {
+    private fun initTitle(titleText: TextView, minHeight: Int, maxHeight: Int, scrollY: Int) {
         with(titleText) {
             setPivotX(0f)
             setPivotY(getHeight().toFloat())
-            updateTitleScale(this, minHeight, maxHeight, 0)
+            updateTitleScale(this, minHeight, maxHeight, scrollY)
         }
     }
 
-    private fun initToolbar(headerImage: ImageView, maxHeight: Int) {
+    private fun initToolbar(headerImage: ImageView, minHeight: Int, maxHeight: Int, scrollY: Int) {
         val drawable = headerImage.getDrawable() as BitmapDrawable
         val bitmap = drawable.getBitmap()
 
@@ -80,7 +87,7 @@ trait ScrollableHeader : BaseActivity {
         Palette.generateAsync(bitmap) { palette ->
             toolbarColor = palette.getDarkVibrantColor(toolbarColor)
             toolbar.setBackgroundColor(toolbarColor)
-            toolbar.getBackground().setAlpha(0)
+            updateToolbarAlpha(minHeight, maxHeight, scrollY)
         }
     }
 
