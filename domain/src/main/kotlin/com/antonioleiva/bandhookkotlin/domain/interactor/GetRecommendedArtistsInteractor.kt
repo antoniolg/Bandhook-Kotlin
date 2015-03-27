@@ -18,14 +18,10 @@ package com.antonioleiva.bandhookkotlin.domain.interactor
 
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Event
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Interactor
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorPriority
 import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistsEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 
-class GetRecommendedArtistsInteractor(
-        val artistRepository: ArtistRepository,
-        override var priority: InteractorPriority = InteractorPriority.LOW ) :
-        Interactor {
+class GetRecommendedArtistsInteractor(val artistRepository: ArtistRepository) : Interactor {
 
     override fun invoke(): Event {
         val artists = artistRepository.getRecommendedArtists()

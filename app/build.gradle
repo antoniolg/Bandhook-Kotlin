@@ -49,6 +49,13 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
+
+    dexOptions {
+        incremental true
+        preDexLibraries = false
+        jumboMode = false
+        javaMaxHeapSize "4g"
+    }
 }
 
 buildscript {

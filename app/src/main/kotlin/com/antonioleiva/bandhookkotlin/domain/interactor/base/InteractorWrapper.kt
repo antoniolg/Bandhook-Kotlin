@@ -19,8 +19,8 @@ package com.antonioleiva.bandhookkotlin.domain.interactor.base
 import com.path.android.jobqueue.Job
 import com.path.android.jobqueue.Params
 
-class InteractorWrapper(val interactor: Interactor, val bus: Bus) :
-        Job(Params(interactor.priority.value).requireNetwork()) {
+class InteractorWrapper(val interactor: Interactor, priority: InteractorPriority, val bus: Bus) :
+        Job(Params(priority.value).requireNetwork()) {
 
     override fun onRun() {
         val event = interactor.invoke()

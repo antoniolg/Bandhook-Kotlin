@@ -20,6 +20,7 @@ import android.util.Log
 import com.antonioleiva.bandhookkotlin.AppContext
 import com.antonioleiva.bandhookkotlin.AppModule
 import com.antonioleiva.bandhookkotlin.BuildConfig
+import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmRequestInterceptor
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
 import com.squareup.okhttp.Cache
@@ -49,9 +50,12 @@ class DataModuleImpl(appModule: AppModule) : DataModule, AppContext by appModule
         val okHttpClient = OkHttpClient()
         okHttpClient.setCache(responseCache)
 
+        val apiKey = appContext.getString(R.string.last_fm_api_key)
+        val cacheDuration = appContext.getResources().getInteger(R.integer.cache_duration)
+
         val restAdapter = RestAdapter.Builder()
                 .setEndpoint("http://ws.audioscrobbler.com")
-                .setRequestInterceptor(LastFmRequestInterceptor(appContext))
+                .setRequestInterceptor(LastFmRequestInterceptor(apiKey, cacheDuration))
                 .setLogLevel(if (BuildConfig.DEBUG) RestAdapter.LogLevel.FULL else RestAdapter.LogLevel.NONE)
                 .setClient(OkClient(okHttpClient))
                 .build();

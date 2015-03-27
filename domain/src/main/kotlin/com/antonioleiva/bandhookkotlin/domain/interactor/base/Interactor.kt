@@ -18,7 +18,5 @@ package com.antonioleiva.bandhookkotlin.domain.interactor.base
 
 trait Interactor {
 
-    var priority: InteractorPriority
-
     fun invoke(): Event
 }

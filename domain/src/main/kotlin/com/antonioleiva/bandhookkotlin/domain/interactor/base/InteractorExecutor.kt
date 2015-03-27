@@ -17,5 +17,5 @@
 package com.antonioleiva.bandhookkotlin.domain.interactor.base
 
 trait InteractorExecutor {
-    fun execute(interactor: Interactor)
+    fun execute(interactor: Interactor, priority: InteractorPriority = InteractorPriority.LOW)
 }

@@ -16,16 +16,12 @@
 
 package com.antonioleiva.bandhookkotlin.data.lastfm
 
-import android.content.Context
-import com.antonioleiva.bandhookkotlin.R
 import retrofit.RequestInterceptor
 
-class LastFmRequestInterceptor(val context: Context) : RequestInterceptor
-{
+class LastFmRequestInterceptor(val apiKey: String, val cacheDuration: Int) : RequestInterceptor {
     override fun intercept(request: RequestInterceptor.RequestFacade) {
-        val res = context.getResources()
-        request.addQueryParam("api_key", res.getString(R.string.last_fm_api_key))
+        request.addQueryParam("api_key", apiKey)
         request.addQueryParam("format", "json")
-        request.addHeader("Cache-Control", "public, max-age=" + res.getInteger(R.integer.cache_duration))
+        request.addHeader("Cache-Control", "public, max-age=$cacheDuration")
     }
 }
