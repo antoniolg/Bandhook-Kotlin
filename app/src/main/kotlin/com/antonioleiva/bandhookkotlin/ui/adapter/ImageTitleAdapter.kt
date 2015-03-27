@@ -57,7 +57,7 @@ private class ViewHolder(view: View, var onItemClickListener: ((ImageTitle) -> U
     private val image: ImageView by bindView(R.id.image)
 
     fun setItem(item: ImageTitle) {
-        itemView?.setOnClickListener({ onItemClickListener?.invoke(item) })
+        itemView?.setOnClickListener(SingleClickListener({ onItemClickListener?.invoke(item) }))
         title.setText(item.name)
         Picasso.with(itemView.getContext()).load(item.url).centerCrop().fit().into(image)
     }
