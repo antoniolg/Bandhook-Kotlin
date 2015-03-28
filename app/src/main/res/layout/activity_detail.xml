@@ -50,8 +50,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_shadow"
-        android:elevation="8dp">
+        android:background="@drawable/gradient_shadow">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

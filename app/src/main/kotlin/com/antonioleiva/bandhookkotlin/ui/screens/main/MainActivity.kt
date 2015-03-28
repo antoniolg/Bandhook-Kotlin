@@ -25,6 +25,8 @@ import com.antonioleiva.bandhookkotlin.Inject
 import com.antonioleiva.bandhookkotlin.Injector
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
+import com.antonioleiva.bandhookkotlin.ui.activity.HidingToolbarActivity
+import com.antonioleiva.bandhookkotlin.ui.activity.scrollwrapper.RecyclerViewScrollWrapper
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
@@ -34,7 +36,7 @@ import com.antonioleiva.bandhookkotlin.ui.screens.detail.DetailActivity
 import com.antonioleiva.bandhookkotlin.ui.util.navigate
 import kotlinx.android.synthetic.activity_main.recycler
 
-class MainActivity : BaseActivity(), MainView, Injector by Inject.instance {
+class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector by Inject.instance {
 
     override val layoutResource = R.layout.activity_main
 
@@ -45,6 +47,7 @@ class MainActivity : BaseActivity(), MainView, Injector by Inject.instance {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<BaseActivity>.onCreate(savedInstanceState)
         init()
+        initHidingToolbar(RecyclerViewScrollWrapper(recycler))
     }
 
     fun init() {

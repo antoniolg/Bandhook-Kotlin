@@ -16,39 +16,20 @@
 
 package com.antonioleiva.bandhookkotlin.ui.util
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.app.Fragment
+import android.animation.ObjectAnimator
 import android.view.View
-import android.widget.Toast
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.Interpolator
 
-fun Activity.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) = toast(this, message, duration)
-fun Fragment.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
-    Toast.makeText(getActivity(), message, duration).show()
-}
+fun View.animateEnter() = animateTranslationY(0, DecelerateInterpolator(3f))
+fun View.animateExit() = animateTranslationY(-getHeight(), AccelerateInterpolator(3f))
 
-fun toast(context: Context, message: CharSequence, duration: Int)
-        = Toast.makeText(context, message, duration).show()
-
-
-inline public fun <reified T : Activity> Activity.navigate(id: String, sharedView: View? = null,
-                                                           transitionName: String? = null) {
-    val intent = Intent(this, javaClass<T>())
-    intent.putExtra("id", id)
-
-    var options: ActivityOptionsCompat? = null
-
-    if (sharedView != null && transitionName != null) {
-        options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, sharedView, transitionName)
+fun View.animateTranslationY(translationY: Int, interpolator: Interpolator) {
+    with(ObjectAnimator.ofFloat(this, "translationY", translationY.toFloat()))
+    {
+        setDuration(getContext().getResources().getInteger(android.R.integer.config_mediumAnimTime).toLong())
+        setInterpolator(interpolator)
+        start()
     }
-
-    ActivityCompat.startActivity(this, intent, options?.toBundle())
-}
-
-public fun Activity.getNavigationId(): String {
-    val intent = getIntent()
-    return intent.getStringExtra("id")
 }

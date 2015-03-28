@@ -22,7 +22,7 @@ import com.antonioleiva.bandhookkotlin.Inject
 import com.antonioleiva.bandhookkotlin.Injector
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
-import com.antonioleiva.bandhookkotlin.ui.activity.ScrollableHeader
+import com.antonioleiva.bandhookkotlin.ui.activity.ScrollableHeaderActivity
 import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.DetailPresenter
@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.activity_detail.biography
 import kotlinx.android.synthetic.activity_detail.image
 import kotlinx.android.synthetic.activity_detail.name
 
-class DetailActivity : BaseActivity(), DetailView, ScrollableHeader,
+class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
         Injector by Inject.instance {
 
     override val layoutResource: Int = R.layout.activity_detail
@@ -67,7 +67,7 @@ class DetailActivity : BaseActivity(), DetailView, ScrollableHeader,
 
         Picasso.with(this).load(artistDetail.url).fit().centerCrop().into(image, object : Callback.EmptyCallback() {
             override fun onSuccess() {
-                init()
+                initScrollableHeader()
                 supportStartPostponedEnterTransition()
             }
         })

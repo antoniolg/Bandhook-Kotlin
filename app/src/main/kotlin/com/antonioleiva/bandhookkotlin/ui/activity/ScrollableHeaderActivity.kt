@@ -28,9 +28,9 @@ import com.antonioleiva.bandhookkotlin.ui.util.findView
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.util.with
 
-trait ScrollableHeader : BaseActivity {
+trait ScrollableHeaderActivity : BaseActivity {
 
-    fun init() {
+    fun initScrollableHeader() {
         val titleText: TextView = findView(R.id.name)
         val headerImage: ImageView = findView(R.id.image)
         val scrollableView: ObservableScrollView = findView(R.id.scrollableView)

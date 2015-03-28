@@ -22,7 +22,7 @@ import android.widget.ScrollView
 
 public class ObservableScrollView : ScrollView {
 
-    var listener : ((Int, Int) -> Unit)? = null
+    var listener : ((x: Int, y: Int) -> Unit)? = null
 
     public constructor(context: Context) : super(context) {
     }
