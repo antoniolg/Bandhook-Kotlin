@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ Copyright (C) 2015 Antonio Leiva
   ~
@@ -16,13 +15,6 @@
   ~ limitations under the License.
   -->
 
-<android.support.v7.widget.Toolbar
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:background="?attr/colorPrimary"
-    android:fitsSystemWindows="true"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+<resources>
+    <item type="layout" name="activity_main">@layout/activity_main_large</item>
+</resources>

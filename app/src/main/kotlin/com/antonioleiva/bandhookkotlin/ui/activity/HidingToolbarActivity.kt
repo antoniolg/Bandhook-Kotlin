@@ -26,7 +26,7 @@ trait HidingToolbarActivity : BaseActivity {
 
         var hidden = false;
 
-        viewWrapper.scrollListener = { wrapper ->
+        viewWrapper.scrollObservers.add { wrapper ->
             if (wrapper.dY > 0 && wrapper.scrollY > toolbar.getHeight() && !hidden) {
                 hidden = true;
                 toolbar.animateExit()

@@ -19,11 +19,11 @@ package com.antonioleiva.bandhookkotlin.ui.util
 import android.os.Build
 
 public fun supportsKitKat(code:() -> Unit){
-    supportsVersion(code, Build.VERSION_CODES.KITKAT)
+    supportsVersion(code, 19)
 }
 
 public fun supportsLollipop(code:() -> Unit){
-    supportsVersion(code, Build.VERSION_CODES.LOLLIPOP)
+    supportsVersion(code, 21)
 }
 
 private fun supportsVersion(code:() -> Unit, sdk: Int){

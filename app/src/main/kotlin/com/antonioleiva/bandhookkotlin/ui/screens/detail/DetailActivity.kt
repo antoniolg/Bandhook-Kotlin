@@ -18,6 +18,8 @@ package com.antonioleiva.bandhookkotlin.ui.screens.detail
 
 import android.os.Bundle
 import android.text.Html
+import android.widget.ImageView
+import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.Inject
 import com.antonioleiva.bandhookkotlin.Injector
 import com.antonioleiva.bandhookkotlin.R
@@ -26,13 +28,12 @@ import com.antonioleiva.bandhookkotlin.ui.activity.ScrollableHeaderActivity
 import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.DetailPresenter
+import com.antonioleiva.bandhookkotlin.ui.util.bindView
 import com.antonioleiva.bandhookkotlin.ui.util.getNavigationId
+import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.DetailView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.activity_detail.biography
-import kotlinx.android.synthetic.activity_detail.image
-import kotlinx.android.synthetic.activity_detail.name
 
 class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
         Injector by Inject.instance {
@@ -41,13 +42,17 @@ class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
     val presenter = DetailPresenter(this, bus, artistDetailInteractorProvider,
             interactorExecutor, ArtistDetailDataMapper())
 
+    val image: ImageView by bindView(R.id.image)
+    val name: TextView by bindView(R.id.name)
+    val biography: TextView by bindView(R.id.biography)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super<BaseActivity>.onCreate(savedInstanceState)
         supportPostponeEnterTransition()
         setTitle(null)
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true)
-        image.setTransitionName(BaseActivity.IMAGE_TRANSITION_NAME)
+        supportsLollipop { image.setTransitionName(BaseActivity.IMAGE_TRANSITION_NAME) }
     }
 
     override fun onResume() {

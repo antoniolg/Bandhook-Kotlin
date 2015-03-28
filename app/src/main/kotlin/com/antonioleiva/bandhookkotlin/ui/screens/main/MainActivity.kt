@@ -17,6 +17,7 @@
 package com.antonioleiva.bandhookkotlin.ui.screens.main
 
 import android.os.Bundle
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -32,8 +33,9 @@ import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
 import com.antonioleiva.bandhookkotlin.ui.presenter.view.MainView
 import com.antonioleiva.bandhookkotlin.ui.screens.detail.DetailActivity
+import com.antonioleiva.bandhookkotlin.ui.util.bindOptionalView
+import com.antonioleiva.bandhookkotlin.ui.util.bindView
 import com.antonioleiva.bandhookkotlin.ui.util.navigate
-import kotlinx.android.synthetic.activity_main.recycler
 
 class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector by Inject.instance {
 
@@ -43,15 +45,22 @@ class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector b
     val presenter = MainPresenter(this, bus, recommendedArtistsInteractorProvider,
             interactorExecutor, ImageTitleDataMapper())
 
+    val recycler: RecyclerView by bindView(R.id.recycler)
+    val background: View? by bindOptionalView(R.id.background)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super<BaseActivity>.onCreate(savedInstanceState)
-        init()
-        initHidingToolbar(RecyclerViewScrollWrapper(recycler))
+        val scrollWrapper = RecyclerViewScrollWrapper(recycler)
+        init(scrollWrapper)
+        initHidingToolbar(scrollWrapper)
     }
 
-    fun init() {
+    fun init(scrollWrapper: RecyclerViewScrollWrapper) {
         recycler.setAdapter(adapter)
         adapter.onItemClickListener = { presenter.onArtistClicked(it) }
+        scrollWrapper.scrollObservers.add { wrapper ->
+            background?.setTranslationY((-wrapper.scrollY / 2).toFloat())
+        }
     }
 
     override fun onResume() {

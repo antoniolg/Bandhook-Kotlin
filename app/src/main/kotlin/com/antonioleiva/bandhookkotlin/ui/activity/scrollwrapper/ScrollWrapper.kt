@@ -26,5 +26,5 @@ trait ScrollWrapper {
     var scrollY: Int
     var dX: Int
     var dY: Int
-    var scrollListener: ((viewWrapper: ScrollWrapper) -> Unit)?
+    var scrollObservers: MutableList<((viewWrapper: ScrollWrapper) -> Unit)>
 }

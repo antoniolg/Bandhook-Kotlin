@@ -17,6 +17,7 @@
 package com.antonioleiva.bandhookkotlin.ui.activity.scrollwrapper
 
 import android.support.v7.widget.RecyclerView
+import java.util.ArrayList
 
 class RecyclerViewScrollWrapper(recyclerView: RecyclerView) : ScrollWrapper {
 
@@ -24,7 +25,7 @@ class RecyclerViewScrollWrapper(recyclerView: RecyclerView) : ScrollWrapper {
     override var scrollY: Int = 0
     override var dX: Int = 0
     override var dY: Int = 0
-    override var scrollListener: ((ScrollWrapper) -> Unit)? = null
+    override var scrollObservers: MutableList<((ScrollWrapper) -> Unit)> = ArrayList()
 
     init {
         recyclerView.setOnScrollListener(object: RecyclerView.OnScrollListener(){
@@ -33,7 +34,7 @@ class RecyclerViewScrollWrapper(recyclerView: RecyclerView) : ScrollWrapper {
                 scrollY += dy
                 dX = dx
                 dY = dy
-                scrollListener?.invoke(this@RecyclerViewScrollWrapper)
+                scrollObservers forEach { it.invoke(this@RecyclerViewScrollWrapper)}
             }
         })
     }
