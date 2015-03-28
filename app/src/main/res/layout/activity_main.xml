@@ -20,12 +20,13 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
+    <com.antonioleiva.bandhookkotlin.ui.custom.AutofitRecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize"
-        android:clipToPadding="false"/>
+        android:clipToPadding="false"
+        android:columnWidth="180dp"/>
 
     <include layout="@layout/includes_toolbar"/>
 

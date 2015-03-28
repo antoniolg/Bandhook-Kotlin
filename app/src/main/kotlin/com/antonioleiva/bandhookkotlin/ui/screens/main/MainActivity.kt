@@ -17,7 +17,6 @@
 package com.antonioleiva.bandhookkotlin.ui.screens.main
 
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -51,7 +50,6 @@ class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector b
     }
 
     fun init() {
-        recycler.setLayoutManager(GridLayoutManager(this, 2))
         recycler.setAdapter(adapter)
         adapter.onItemClickListener = { presenter.onArtistClicked(it) }
     }
