@@ -17,6 +17,7 @@
 package com.antonioleiva.bandhookkotlin.ui.util
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
@@ -39,5 +40,16 @@ inline public fun <reified T : Activity> Activity.navigate(id: String, sharedVie
 public fun Activity.getNavigationId(): String {
     val intent = getIntent()
     return intent.getStringExtra("id")
+}
+
+public fun Context.getDimen(dimenRes: Int): Int {
+    return getResources().getDimensionPixelSize(dimenRes)
+}
+
+public fun Context.getAttrId(themeRes: Int, attrRes: Int): Int {
+    val a = getTheme().obtainStyledAttributes(themeRes, intArray(attrRes));
+    val attributeResourceId = a.getResourceId(0, 0);
+    a.recycle()
+    return attributeResourceId
 }
 

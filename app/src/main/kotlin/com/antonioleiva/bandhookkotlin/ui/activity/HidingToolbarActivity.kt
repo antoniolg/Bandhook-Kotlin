@@ -19,6 +19,7 @@ package com.antonioleiva.bandhookkotlin.ui.activity
 import com.antonioleiva.bandhookkotlin.ui.activity.scrollwrapper.ScrollWrapper
 import com.antonioleiva.bandhookkotlin.ui.util.animateEnter
 import com.antonioleiva.bandhookkotlin.ui.util.animateExit
+import kotlinx.android.anko.height
 
 trait HidingToolbarActivity : BaseActivity {
 
@@ -27,7 +28,7 @@ trait HidingToolbarActivity : BaseActivity {
         var hidden = false;
 
         viewWrapper.scrollObservers.add { wrapper ->
-            if (wrapper.dY > 0 && wrapper.scrollY > toolbar.getHeight() && !hidden) {
+            if (wrapper.dY > 0 && wrapper.scrollY > toolbar.height && !hidden) {
                 hidden = true;
                 toolbar.animateExit()
             } else if (wrapper.dY < 0 && hidden) {

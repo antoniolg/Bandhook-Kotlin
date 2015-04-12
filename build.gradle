@@ -51,6 +51,7 @@ allprojects {
         libOkHttp = "com.squareup.okhttp:okhttp:2.2.0"
         libRetrofit = "com.squareup.retrofit:retrofit:1.9.0"
         libJobQueue = "com.path:android-priority-jobqueue:1.1.2"
+        libAnko = "org.jetbrains.anko:anko:0.5-15s"
 
         libEspresso = "com.android.support.test.espresso:espresso-core:2.0"
         libTestingSupport = "com.android.support.test:testing-support-lib:0.1"

@@ -25,39 +25,37 @@ import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.custom.ObservableScrollView
 import com.antonioleiva.bandhookkotlin.ui.util.findView
+import com.antonioleiva.bandhookkotlin.ui.util.getAttrId
+import com.antonioleiva.bandhookkotlin.ui.util.getDimen
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.util.with
+import kotlinx.android.anko.*
 
 trait ScrollableHeaderActivity : BaseActivity {
 
     fun initScrollableHeader() {
         val titleText: TextView = findView(R.id.name)
         val headerImage: ImageView = findView(R.id.image)
-        val scrollableView: ObservableScrollView = findView(R.id.scrollableView)
+        val scrollView: ObservableScrollView = findView(R.id.scrollableView)
 
-        val minHeight = getToolbarHeight() + getResources().getDimensionPixelOffset(R.dimen.statusbar_height)
-        val maxHeight = getResources().getDimensionPixelOffset(R.dimen.detail_toolbar_height);
+        val minHeight = getToolbarHeight() + getDimen(R.dimen.statusbar_height)
+        val maxHeight = getDimen(R.dimen.detail_toolbar_height);
 
         initWindow()
-        initTitle(titleText, minHeight, maxHeight, scrollableView.getScrollY())
-        initToolbar(headerImage, minHeight, maxHeight, scrollableView.getScrollY())
+        initTitle(titleText, minHeight, maxHeight, scrollView.getScrollY())
+        initToolbar(headerImage, minHeight, maxHeight, scrollView.getScrollY())
 
-        scrollableView.listener = { x, y ->
+        scrollView.listener = { x, y ->
             updateTitleScale(titleText, minHeight, maxHeight, y)
             updateToolbarAlpha(minHeight, maxHeight, y)
             updateImageTranslation(headerImage, y)
         }
     }
 
-    private fun getToolbarHeight(): Int{
-        val a = getTheme().obtainStyledAttributes(R.style.AppTheme, intArray(R.attr.actionBarSize));
-        val attributeResourceId = a.getResourceId(0, 0);
-        a.recycle()
-        return getResources().getDimensionPixelOffset(attributeResourceId)
-    }
+    private fun getToolbarHeight() = getDimen(getAttrId(R.style.AppTheme, R.attr.actionBarSize))
 
     private fun updateImageTranslation(image: ImageView, scrollY: Int) {
-        image.setTranslationY(-(scrollY / 2).toFloat())
+        image.translationY = -(scrollY / 2).toFloat()
     }
 
     private fun initWindow() {
@@ -69,8 +67,8 @@ trait ScrollableHeaderActivity : BaseActivity {
 
     private fun initTitle(titleText: TextView, minHeight: Int, maxHeight: Int, scrollY: Int) {
         with(titleText) {
-            setPivotX(0f)
-            setPivotY(getHeight().toFloat())
+            pivotX = 0f
+            pivotY = getHeight().toFloat()
             updateTitleScale(this, minHeight, maxHeight, scrollY)
         }
     }
@@ -79,9 +77,7 @@ trait ScrollableHeaderActivity : BaseActivity {
         val drawable = headerImage.getDrawable() as BitmapDrawable
         val bitmap = drawable.getBitmap()
 
-        val lp = toolbar.getLayoutParams()
-        lp.height = maxHeight
-        toolbar.setLayoutParams(lp)
+        toolbar.layoutParams?.height = maxHeight
 
         var toolbarColor = Color.DKGRAY
         Palette.generateAsync(bitmap) { palette ->
@@ -94,17 +90,19 @@ trait ScrollableHeaderActivity : BaseActivity {
     private fun updateTitleScale(titleText: TextView, minHeight: Int, maxHeight: Int, scrollY: Int) {
         val current = maxHeight - minHeight - scrollY
         val scale = 1f + (current.toFloat() / maxHeight.toFloat())
-        titleText.setScaleX(Math.max(1f, scale))
-        titleText.setScaleY(Math.max(1f, scale))
+        titleText.scaleX = Math.max(1f, scale)
+        titleText.scaleY = Math.max(1f, scale)
     }
 
     private fun updateToolbarAlpha(minHeight: Int, maxHeight: Int, y: Int) {
         val alpha = ((y / (maxHeight - minHeight).toFloat()) * 255).toInt()
         val finalAlpha = Math.max(0, Math.min(alpha, 255))
 
-        val toolbarParams = toolbar.getLayoutParams()
-        toolbarParams.height = Math.max(maxHeight - y, minHeight)
-        toolbar.setLayoutParams(toolbarParams)
-        toolbar.getBackground().setAlpha(finalAlpha)
+        with(toolbar){
+            val toolbarParams = layoutParams
+            toolbarParams?.height = Math.max(maxHeight - y, minHeight)
+            layoutParams = toolbarParams
+            getBackground().setAlpha(finalAlpha)
+        }
     }
 }

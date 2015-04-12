@@ -21,6 +21,7 @@ import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
+import com.antonioleiva.bandhookkotlin.ui.adapter.SingleClickListener
 
 fun View.animateEnter() = animateTranslationY(0, DecelerateInterpolator(3f))
 fun View.animateExit() = animateTranslationY(-getHeight(), AccelerateInterpolator(3f))
@@ -32,4 +33,11 @@ fun View.animateTranslationY(translationY: Int, interpolator: Interpolator) {
         setInterpolator(interpolator)
         start()
     }
+}
+
+/**
+ * Click listener setter that prevents double click on the view it´s set
+ */
+fun View.singleClick(l: (android.view.View?) -> Unit){
+    setOnClickListener(SingleClickListener(l))
 }

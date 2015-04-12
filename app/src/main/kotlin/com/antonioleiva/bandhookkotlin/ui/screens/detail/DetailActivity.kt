@@ -34,6 +34,7 @@ import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.DetailView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import kotlinx.android.anko.text
 
 class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
         Injector by Inject.instance {
@@ -67,8 +68,8 @@ class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
     }
 
     override fun showArtist(artistDetail: ArtistDetail) {
-        name.setText(artistDetail.name)
-        biography.setText(Html.fromHtml(artistDetail.bio))
+        name.text = artistDetail.name
+        biography.text = Html.fromHtml(artistDetail.bio)
 
         Picasso.with(this).load(artistDetail.url).fit().centerCrop().into(image, object : Callback.EmptyCallback() {
             override fun onSuccess() {

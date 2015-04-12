@@ -17,7 +17,6 @@
 package com.antonioleiva.bandhookkotlin.ui.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -25,7 +24,10 @@ import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.util.bindView
+import com.antonioleiva.bandhookkotlin.ui.util.singleClick
 import com.squareup.picasso.Picasso
+import kotlinx.android.anko.layoutInflater
+import kotlinx.android.anko.text
 
 class ImageTitleAdapter() : RecyclerView.Adapter<ViewHolder>() {
 
@@ -38,7 +40,7 @@ class ImageTitleAdapter() : RecyclerView.Adapter<ViewHolder>() {
     var onItemClickListener: ((ImageTitle) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
-        val v = LayoutInflater.from(parent!!.getContext()).inflate(R.layout.item_view, parent, false)
+        val v = parent!!.getContext().layoutInflater.inflate(R.layout.item_view, parent, false)
         return ViewHolder(v, onItemClickListener)
     }
 
@@ -57,8 +59,8 @@ private class ViewHolder(view: View, var onItemClickListener: ((ImageTitle) -> U
     private val image: ImageView by bindView(R.id.image)
 
     fun setItem(item: ImageTitle) {
-        itemView?.setOnClickListener(SingleClickListener({ onItemClickListener?.invoke(item) }))
-        title.setText(item.name)
+        itemView?.singleClick { onItemClickListener?.invoke(item) }
+        title.text = item.name
         Picasso.with(itemView.getContext()).load(item.url).centerCrop().fit().into(image)
     }
 }
