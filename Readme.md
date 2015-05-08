@@ -13,6 +13,9 @@ written in [antonioleiva.com](http://antonioleiva.com) related to Kotlin for And
 
 * [Kotlin for Android (I): Introduction](http://antonioleiva.com/kotlin-for-android-introduction/)
 * [Kotlin for Android (II): Create a new project](http://antonioleiva.com/kotlin-android-create-project/)
+* [Kotlin for Android (III): Extension functions and default values](http://antonioleiva.com/kotlin-android-extension-functions/)
+* [Kotlin for Android (IV): Custom Views and Android Extensions](http://antonioleiva.com/kotlin-android-custom-views/)
+
 
 This sample project is still in development, and could easily break or have some messy code. However, any idea or suggestion to improve it will be welcomed. Feel free to [open an issue](https://github.com/antoniolg/Bandhook-Kotlin/issues/new) if you think something could be improved.
 
