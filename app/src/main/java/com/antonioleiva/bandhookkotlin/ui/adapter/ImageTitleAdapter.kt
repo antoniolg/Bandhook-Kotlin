@@ -26,8 +26,8 @@ import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.util.bindView
 import com.antonioleiva.bandhookkotlin.ui.util.singleClick
 import com.squareup.picasso.Picasso
-import kotlinx.android.anko.layoutInflater
-import kotlinx.android.anko.text
+import org.jetbrains.anko.layoutInflater
+import org.jetbrains.anko.text
 
 class ImageTitleAdapter() : RecyclerView.Adapter<ViewHolder>() {
 

@@ -28,7 +28,7 @@ class RecyclerViewScrollWrapper(recyclerView: RecyclerView) : ScrollWrapper {
     override var scrollObservers: MutableList<((ScrollWrapper) -> Unit)> = ArrayList()
 
     init {
-        recyclerView.setOnScrollListener(object: RecyclerView.OnScrollListener(){
+        recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
                 scrollX += dx
                 scrollY += dy

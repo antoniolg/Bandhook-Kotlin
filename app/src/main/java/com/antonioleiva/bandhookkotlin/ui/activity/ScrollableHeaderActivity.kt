@@ -29,7 +29,7 @@ import com.antonioleiva.bandhookkotlin.ui.util.getAttrId
 import com.antonioleiva.bandhookkotlin.ui.util.getDimen
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.util.with
-import kotlinx.android.anko.*
+import org.jetbrains.anko.*
 
 trait ScrollableHeaderActivity : BaseActivity {
 
@@ -80,7 +80,7 @@ trait ScrollableHeaderActivity : BaseActivity {
         toolbar.layoutParams?.height = maxHeight
 
         var toolbarColor = Color.DKGRAY
-        Palette.generateAsync(bitmap) { palette ->
+        Palette.Builder(bitmap).generate { palette ->
             toolbarColor = palette.getDarkVibrantColor(toolbarColor)
             toolbar.setBackgroundColor(toolbarColor)
             updateToolbarAlpha(minHeight, maxHeight, scrollY)

@@ -17,12 +17,12 @@
 package com.antonioleiva.bandhookkotlin.ui.activity
 
 import android.os.Bundle
-import android.support.v7.app.ActionBarActivity
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.util.bindView
 
-abstract class BaseActivity : ActionBarActivity(){
+abstract class BaseActivity : AppCompatActivity(){
 
     companion object {
         val IMAGE_TRANSITION_NAME = "activity_image_transition"

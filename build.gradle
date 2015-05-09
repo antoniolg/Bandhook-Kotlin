@@ -15,7 +15,7 @@
  */
 
 buildscript {
-    ext.kotlin_version = "0.11.91.1"
+    ext.kotlin_version = "0.11.91.4"
     repositories {
         jcenter()
     }
@@ -39,7 +39,7 @@ allprojects {
         androidApplicationId = "com.antonioleiva.bandhookkotlin"
         androidVersionCode = 1
         androidVersionName = "0.1"
-        supportVersion = "22.0.0"
+        supportVersion = "22.1.1"
 
         // Libraries
         libKotlin = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -51,7 +51,7 @@ allprojects {
         libOkHttp = "com.squareup.okhttp:okhttp:2.2.0"
         libRetrofit = "com.squareup.retrofit:retrofit:1.9.0"
         libJobQueue = "com.path:android-priority-jobqueue:1.1.2"
-        libAnko = "org.jetbrains.anko:anko:0.5-15s"
+        libAnko = "org.jetbrains.anko:anko:0.6-15s"
 
         libEspresso = "com.android.support.test.espresso:espresso-core:2.0"
         libTestingSupport = "com.android.support.test:testing-support-lib:0.1"

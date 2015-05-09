@@ -34,7 +34,7 @@ import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.DetailView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import kotlinx.android.anko.text
+import org.jetbrains.anko.text
 
 class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
         Injector by Inject.instance {

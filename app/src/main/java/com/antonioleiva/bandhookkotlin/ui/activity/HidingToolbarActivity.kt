@@ -19,7 +19,7 @@ package com.antonioleiva.bandhookkotlin.ui.activity
 import com.antonioleiva.bandhookkotlin.ui.activity.scrollwrapper.ScrollWrapper
 import com.antonioleiva.bandhookkotlin.ui.util.animateEnter
 import com.antonioleiva.bandhookkotlin.ui.util.animateExit
-import kotlinx.android.anko.height
+import org.jetbrains.anko.height
 
 trait HidingToolbarActivity : BaseActivity {
 
