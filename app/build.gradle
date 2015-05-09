@@ -45,11 +45,6 @@ android {
         exclude 'META-INF/NOTICE'
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
-    }
-
     dexOptions {
         incremental true
         preDexLibraries = false
