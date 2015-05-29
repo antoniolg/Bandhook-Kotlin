@@ -17,9 +17,7 @@
 package com.antonioleiva.bandhookkotlin
 
 import android.app.Application
-import com.antonioleiva.bandhookkotlin.di.DataModuleImpl
-import com.antonioleiva.bandhookkotlin.di.DomainModuleImpl
-import com.antonioleiva.bandhookkotlin.di.RepositoryModuleImpl
+import com.antonioleiva.bandhookkotlin.di.*
 
 class App : Application() {
 

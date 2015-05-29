@@ -20,9 +20,9 @@ import com.antonioleiva.bandhookkotlin.domain.interactor.GetArtistDetailInteract
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetRecommendedArtistsInteractor
 import com.antonioleiva.bandhookkotlin.util.DelegatesExt
 
-public trait DomainModule : GetRecommendedArtistsInteractorProvider
+public interface DomainModule : GetRecommendedArtistsInteractorProvider
 
-public trait GetRecommendedArtistsInteractorProvider {
+public interface GetRecommendedArtistsInteractorProvider {
     val recommendedArtistsInteractorProvider: GetRecommendedArtistsInteractor
     val artistDetailInteractorProvider: GetArtistDetailInteractor
 }

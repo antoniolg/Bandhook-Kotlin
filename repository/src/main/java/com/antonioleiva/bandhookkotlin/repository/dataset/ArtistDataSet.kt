@@ -14,17 +14,12 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin.ui.activity.scrollwrapper
+package com.antonioleiva.bandhookkotlin.repository.dataset
 
-/**
- * A wrapper to make easier listening to a scrollable view. It will give information about the
- * scroll position as well as the difference from latest listener call. This way, classes that use
- * it don´t need to know which type of view are they dealing with.
- */
-interface ScrollWrapper {
-    var scrollX: Int
-    var scrollY: Int
-    var dX: Int
-    var dY: Int
-    var scrollObservers: MutableList<((viewWrapper: ScrollWrapper) -> Unit)>
+import com.antonioleiva.bandhookkotlin.domain.entity.Artist
+
+public interface ArtistDataSet {
+
+    fun requestRecommendedArtists(): List<Artist>
+    fun requestArtist(id: String): Artist
 }

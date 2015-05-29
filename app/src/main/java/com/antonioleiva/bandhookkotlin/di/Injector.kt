@@ -14,14 +14,11 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin
+package com.antonioleiva.bandhookkotlin.di
 
-import com.antonioleiva.bandhookkotlin.di.DataModule
-import com.antonioleiva.bandhookkotlin.di.DomainModule
-import com.antonioleiva.bandhookkotlin.di.RepositoryModule
 import kotlin.properties.Delegates
 
-trait Injector : AppModule, DomainModule, RepositoryModule, DataModule
+interface Injector : AppModule, DomainModule, RepositoryModule, DataModule
 
 class InjectorImpl(
         appModule: AppModule,

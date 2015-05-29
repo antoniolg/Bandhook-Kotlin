@@ -15,12 +15,12 @@
  */
 
 buildscript {
-    ext.kotlin_version = "0.11.91.4"
+    ext.kotlin_version = "0.12.200"
     repositories {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:1.1.3"
+        classpath "com.android.tools.build:gradle:1.2.3"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -32,14 +32,14 @@ allprojects {
 
     ext {
         // Android config
-        androidBuildToolsVersion = "22.0.0"
+        androidBuildToolsVersion = "22.0.1"
         androidMinSdkVersion = 16
         androidTargetSdkVersion = 22
         androidCompileSdkVersion = 22
         androidApplicationId = "com.antonioleiva.bandhookkotlin"
         androidVersionCode = 1
         androidVersionName = "0.1"
-        supportVersion = "22.1.1"
+        supportVersion = "22.2.0"
 
         // Libraries
         libKotlin = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -51,7 +51,7 @@ allprojects {
         libOkHttp = "com.squareup.okhttp:okhttp:2.2.0"
         libRetrofit = "com.squareup.retrofit:retrofit:1.9.0"
         libJobQueue = "com.path:android-priority-jobqueue:1.1.2"
-        libAnko = "org.jetbrains.anko:anko:0.6-15s"
+        libAnko = "org.jetbrains.anko:anko:0.6.2-15s"
 
         libEspresso = "com.android.support.test.espresso:espresso-core:2.0"
         libTestingSupport = "com.android.support.test:testing-support-lib:0.1"

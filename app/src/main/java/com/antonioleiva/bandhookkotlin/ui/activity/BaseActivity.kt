@@ -19,8 +19,8 @@ package com.antonioleiva.bandhookkotlin.ui.activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import butterknife.bindView
 import com.antonioleiva.bandhookkotlin.R
-import com.antonioleiva.bandhookkotlin.ui.util.bindView
 
 abstract class BaseActivity : AppCompatActivity(){
 

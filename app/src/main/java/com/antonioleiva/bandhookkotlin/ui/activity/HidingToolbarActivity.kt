@@ -21,7 +21,7 @@ import com.antonioleiva.bandhookkotlin.ui.util.animateEnter
 import com.antonioleiva.bandhookkotlin.ui.util.animateExit
 import org.jetbrains.anko.height
 
-trait HidingToolbarActivity : BaseActivity {
+interface HidingToolbarActivity : BaseActivity {
 
     fun initHidingToolbar(viewWrapper: ScrollWrapper) {
 

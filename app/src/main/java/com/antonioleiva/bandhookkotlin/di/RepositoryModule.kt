@@ -16,15 +16,13 @@
 
 package com.antonioleiva.bandhookkotlin.di
 
-import com.antonioleiva.bandhookkotlin.AppModule
-import com.antonioleiva.bandhookkotlin.LanguageSingleton
 import com.antonioleiva.bandhookkotlin.data.CloudArtistDataSet
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
-import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepositoryImp
+import com.antonioleiva.bandhookkotlin.repository.ArtistRepositoryImp
 
-public trait RepositoryModule : ArtistRepositorySingleton
+public interface RepositoryModule : ArtistRepositorySingleton
 
-public trait ArtistRepositorySingleton {
+public interface ArtistRepositorySingleton {
     val artistRepository: ArtistRepository
 }
 

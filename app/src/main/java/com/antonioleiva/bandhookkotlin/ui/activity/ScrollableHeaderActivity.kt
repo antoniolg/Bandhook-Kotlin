@@ -24,19 +24,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.custom.ObservableScrollView
-import com.antonioleiva.bandhookkotlin.ui.util.findView
 import com.antonioleiva.bandhookkotlin.ui.util.getAttrId
 import com.antonioleiva.bandhookkotlin.ui.util.getDimen
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.util.with
 import org.jetbrains.anko.*
 
-trait ScrollableHeaderActivity : BaseActivity {
+interface ScrollableHeaderActivity : BaseActivity {
 
     fun initScrollableHeader() {
-        val titleText: TextView = findView(R.id.name)
-        val headerImage: ImageView = findView(R.id.image)
-        val scrollView: ObservableScrollView = findView(R.id.scrollableView)
+        val titleText: TextView = find(R.id.name)
+        val headerImage: ImageView = find(R.id.image)
+        val scrollView: ObservableScrollView = find(R.id.scrollableView)
 
         val minHeight = getToolbarHeight() + getDimen(R.dimen.statusbar_height)
         val maxHeight = getDimen(R.dimen.detail_toolbar_height);

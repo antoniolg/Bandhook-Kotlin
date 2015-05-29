@@ -17,8 +17,6 @@
 package com.antonioleiva.bandhookkotlin.di
 
 import android.util.Log
-import com.antonioleiva.bandhookkotlin.AppContext
-import com.antonioleiva.bandhookkotlin.AppModule
 import com.antonioleiva.bandhookkotlin.BuildConfig
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmRequestInterceptor
@@ -29,9 +27,9 @@ import retrofit.RestAdapter
 import retrofit.client.OkClient
 import java.io.IOException
 
-public trait DataModule : LastFmServiceSingleton
+public interface DataModule : LastFmServiceSingleton
 
-public trait LastFmServiceSingleton {
+public interface LastFmServiceSingleton {
     val lastFmService: LastFmService
 }
 

@@ -21,9 +21,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import butterknife.bindView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
-import com.antonioleiva.bandhookkotlin.ui.util.bindView
 import com.antonioleiva.bandhookkotlin.ui.util.singleClick
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.layoutInflater

@@ -14,17 +14,20 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin.ui.activity.scrollwrapper
+package com.antonioleiva.bandhookkotlin.ui.presenter
 
-/**
- * A wrapper to make easier listening to a scrollable view. It will give information about the
- * scroll position as well as the difference from latest listener call. This way, classes that use
- * it don´t need to know which type of view are they dealing with.
- */
-interface ScrollWrapper {
-    var scrollX: Int
-    var scrollY: Int
-    var dX: Int
-    var dY: Int
-    var scrollObservers: MutableList<((viewWrapper: ScrollWrapper) -> Unit)>
+import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
+
+interface Presenter<T> {
+
+    val view: T
+    val bus: Bus
+
+    fun onResume(){
+        bus.register(this)
+    }
+
+    fun onPause(){
+        bus.unregister(this)
+    }
 }

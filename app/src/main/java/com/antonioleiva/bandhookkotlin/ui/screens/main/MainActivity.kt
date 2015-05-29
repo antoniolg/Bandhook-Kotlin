@@ -21,9 +21,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.antonioleiva.bandhookkotlin.Inject
-import com.antonioleiva.bandhookkotlin.Injector
+import butterknife.bindOptionalView
+import butterknife.bindView
 import com.antonioleiva.bandhookkotlin.R
+import com.antonioleiva.bandhookkotlin.di.Inject
+import com.antonioleiva.bandhookkotlin.di.Injector
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.activity.HidingToolbarActivity
 import com.antonioleiva.bandhookkotlin.ui.activity.scrollwrapper.RecyclerViewScrollWrapper
@@ -31,11 +33,9 @@ import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
-import com.antonioleiva.bandhookkotlin.ui.presenter.view.MainView
 import com.antonioleiva.bandhookkotlin.ui.screens.detail.DetailActivity
-import com.antonioleiva.bandhookkotlin.ui.util.bindOptionalView
-import com.antonioleiva.bandhookkotlin.ui.util.bindView
 import com.antonioleiva.bandhookkotlin.ui.util.navigate
+import com.antonioleiva.bandhookkotlin.ui.view.MainView
 
 class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector by Inject.instance {
 

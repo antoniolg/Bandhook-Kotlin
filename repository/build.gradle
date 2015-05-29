@@ -16,10 +16,6 @@
 
 apply plugin: 'kotlin'
 
-sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
-}
-
 dependencies {
     compile parent.ext.libKotlin
     compile project (':domain')

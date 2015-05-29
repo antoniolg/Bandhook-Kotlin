@@ -47,7 +47,7 @@ class AutofitRecyclerView : RecyclerView {
 
     fun init(context: Context, attrs: AttributeSet? = null) {
         if (attrs != null){
-            val attrsArray = intArray(android.R.attr.columnWidth)
+            val attrsArray = intArrayOf(android.R.attr.columnWidth)
             val ta = context.obtainStyledAttributes(attrs, attrsArray)
             columnWidth = ta.getDimensionPixelSize(0, -1)
             ta.recycle()

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin
+package com.antonioleiva.bandhookkotlin.di
 
 import android.content.Context
 import com.antonioleiva.bandhookkotlin.domain.BusImpl
@@ -26,7 +26,7 @@ import com.path.android.jobqueue.JobManager
 import java.util.Locale
 import kotlin.properties.Delegates
 
-trait AppModule : AppContext, BusSingleton, InteractorExecutorSingleton, JobManagerSingleton, LanguageSingleton
+interface AppModule : AppContext, BusSingleton, InteractorExecutorSingleton, JobManagerSingleton, LanguageSingleton
 
 class AppModuleImpl(context: Context): AppModule {
     override val appContext = context;
@@ -36,22 +36,22 @@ class AppModuleImpl(context: Context): AppModule {
     override val language by Delegates.lazy { Locale.getDefault().getLanguage() }
 }
 
-trait AppContext {
+interface AppContext {
     val appContext: Context
 }
 
-trait BusSingleton {
+interface BusSingleton {
     val bus: Bus
 }
 
-trait JobManagerSingleton {
+interface JobManagerSingleton {
     val jobManager: JobManager
 }
 
-trait InteractorExecutorSingleton {
+interface InteractorExecutorSingleton {
     val interactorExecutor: InteractorExecutor
 }
 
-trait LanguageSingleton {
+interface LanguageSingleton {
     val language: String
 }
