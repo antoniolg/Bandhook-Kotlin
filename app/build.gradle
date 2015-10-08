@@ -54,18 +54,15 @@ android {
 }
 
 dependencies {
-    compile project (":data")
-    compile project (":presentation")
-
-    compile parent.ext.libKotlin
-    compile parent.ext.libAppCompat
-    compile parent.ext.libRecyclerView
-    compile parent.ext.libPalette
-    compile parent.ext.libEventBus
-    compile parent.ext.libPicasso
-    compile parent.ext.libJobQueue
-    compile parent.ext.libAnko
-
-    androidTestCompile parent.ext.libEspresso
-    androidTestCompile parent.ext.libTestingSupport
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "com.android.support:appcompat-v7:$supportVersion"
+    compile "com.android.support:recyclerview-v7:$supportVersion"
+    compile "com.android.support:palette-v7:$supportVersion"
+    compile "de.greenrobot:eventbus:2.4.0"
+    compile "com.squareup.picasso:picasso:2.5.0"
+    compile "com.squareup.okhttp:okhttp:2.2.0"
+    compile "com.squareup.retrofit:retrofit:1.9.0"
+    compile "com.path:android-priority-jobqueue:1.1.2"
+    compile "org.jetbrains.anko:anko-sdk15:$ankoVersion"
+    compile "org.jetbrains.anko:anko-support-v4:$ankoVersion"
 }

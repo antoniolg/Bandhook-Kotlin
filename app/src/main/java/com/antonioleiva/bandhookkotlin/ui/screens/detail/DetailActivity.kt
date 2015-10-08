@@ -34,12 +34,13 @@ import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.DetailView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import org.jetbrains.anko.text
 
 class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
         Injector by Inject.instance {
 
+    override val activity: BaseActivity = this
     override val layoutResource: Int = R.layout.activity_detail
+
     val presenter = DetailPresenter(this, bus, artistDetailInteractorProvider,
             interactorExecutor, ArtistDetailDataMapper())
 
@@ -48,22 +49,22 @@ class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
     val biography: TextView by bindView(R.id.biography)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<BaseActivity>.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         supportPostponeEnterTransition()
-        setTitle(null)
+        title = null
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true)
-        supportsLollipop { image.setTransitionName(BaseActivity.IMAGE_TRANSITION_NAME) }
+        supportActionBar.setDisplayHomeAsUpEnabled(true)
+        supportsLollipop { image.transitionName = BaseActivity.IMAGE_TRANSITION_NAME }
     }
 
     override fun onResume() {
-        super<BaseActivity>.onResume()
+        super.onResume()
         presenter.onResume()
         presenter.init(getNavigationId())
     }
 
     override fun onPause() {
-        super<BaseActivity>.onPause()
+        super.onPause()
         presenter.onPause()
     }
 

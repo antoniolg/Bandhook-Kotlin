@@ -18,10 +18,11 @@ package com.antonioleiva.bandhookkotlin.data.lastfm.model
 
 import com.google.gson.annotations.SerializedName
 
-class LastFmResponse (
-        val results: LastFmResult,
-        val artist: LastFmArtist,
-        SerializedName("topalbums") val topAlbums: LastFmTopAlbums,
-        SerializedName("similarartists") val similarArtists: LastFmArtistList,
-        val album: LastFmAlbumDetail
+class LastFmArtist (
+        val name: String,
+        val mbid: String,
+        val url: String,
+        @SerializedName("image") val images: List<LastFmImage>,
+        val similar: LastFmSimilar?,
+        val bio: LastFmBio?
 )

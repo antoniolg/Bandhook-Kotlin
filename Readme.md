@@ -33,8 +33,6 @@ Two plugins for Android Studio are also required: `Kotlin` and `Kotlin Extension
 
 Many ideas on how this project is organized were taken from [Clean Contacts](https://github.com/PaNaVTEC/Clean-Contacts/blob/master/Readme.md) project, by [PaNaVTEC](https://github.com/PaNaVTEC). There are some slight differences, but reading [How to start section](https://github.com/PaNaVTEC/Clean-Contacts/blob/master/Readme.md#how-to-start-with-this-repository) will be helpful.
 
-The project is divided in 5 modules, each of one represents a different layer. This project only uses an Android module, `app`, that can be considered a configuration module that will implement all the necessary dependencies the rest of layers will use.
-
 #License
 
     Copyright 2015 Antonio Leiva

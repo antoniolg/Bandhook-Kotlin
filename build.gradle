@@ -15,12 +15,12 @@
  */
 
 buildscript {
-    ext.kotlin_version = "0.12.200"
+    ext.kotlin_version = "0.14.451"
     repositories {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:1.2.3"
+        classpath "com.android.tools.build:gradle:1.3.0"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -32,28 +32,14 @@ allprojects {
 
     ext {
         // Android config
-        androidBuildToolsVersion = "22.0.1"
+        androidBuildToolsVersion = "23.0.1"
         androidMinSdkVersion = 16
-        androidTargetSdkVersion = 22
-        androidCompileSdkVersion = 22
+        androidTargetSdkVersion = 23
+        androidCompileSdkVersion = 23
         androidApplicationId = "com.antonioleiva.bandhookkotlin"
         androidVersionCode = 1
         androidVersionName = "0.1"
-        supportVersion = "22.2.0"
-
-        // Libraries
-        libKotlin = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        libAppCompat = "com.android.support:appcompat-v7:$supportVersion"
-        libRecyclerView = "com.android.support:recyclerview-v7:$supportVersion"
-        libPalette = "com.android.support:palette-v7:$supportVersion"
-        libEventBus = "de.greenrobot:eventbus:2.4.0"
-        libPicasso = "com.squareup.picasso:picasso:2.5.0"
-        libOkHttp = "com.squareup.okhttp:okhttp:2.2.0"
-        libRetrofit = "com.squareup.retrofit:retrofit:1.9.0"
-        libJobQueue = "com.path:android-priority-jobqueue:1.1.2"
-        libAnko = "org.jetbrains.anko:anko:0.6.2-15s"
-
-        libEspresso = "com.android.support.test.espresso:espresso-core:2.0"
-        libTestingSupport = "com.android.support.test:testing-support-lib:0.1"
+        supportVersion = "23.0.1"
+        ankoVersion= "0.7.1"
     }
 }

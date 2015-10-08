@@ -16,12 +16,14 @@
 
 package com.antonioleiva.bandhookkotlin.ui.activity
 
+import android.support.v7.widget.Toolbar
 import com.antonioleiva.bandhookkotlin.ui.activity.scrollwrapper.ScrollWrapper
 import com.antonioleiva.bandhookkotlin.ui.util.animateEnter
 import com.antonioleiva.bandhookkotlin.ui.util.animateExit
-import org.jetbrains.anko.height
 
-interface HidingToolbarActivity : BaseActivity {
+interface HidingToolbarActivity {
+
+    val toolbar: Toolbar
 
     fun initHidingToolbar(viewWrapper: ScrollWrapper) {
 

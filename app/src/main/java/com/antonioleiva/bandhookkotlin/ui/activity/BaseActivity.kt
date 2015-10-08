@@ -29,7 +29,7 @@ abstract class BaseActivity : AppCompatActivity(){
     }
 
     protected abstract val layoutResource : Int
-    protected val toolbar: Toolbar by bindView(R.id.toolbar)
+    val toolbar: Toolbar by bindView(R.id.toolbar)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -40,7 +40,7 @@ class DataModuleImpl(appModule: AppModule) : DataModule, AppContext by appModule
     init {
         var responseCache: Cache? = null
         try {
-            responseCache = Cache(appContext.getCacheDir(), 10 * 1024 * 1024.toLong())
+            responseCache = Cache(appContext.cacheDir, 10 * 1024 * 1024.toLong())
         } catch (e: IOException) {
             Log.e("Retrofit", "Could not create http cache", e)
         }
@@ -49,7 +49,7 @@ class DataModuleImpl(appModule: AppModule) : DataModule, AppContext by appModule
         okHttpClient.setCache(responseCache)
 
         val apiKey = appContext.getString(R.string.last_fm_api_key)
-        val cacheDuration = appContext.getResources().getInteger(R.integer.cache_duration)
+        val cacheDuration = appContext.resources.getInteger(R.integer.cache_duration)
 
         val restAdapter = RestAdapter.Builder()
                 .setEndpoint("http://ws.audioscrobbler.com")
@@ -58,6 +58,6 @@ class DataModuleImpl(appModule: AppModule) : DataModule, AppContext by appModule
                 .setClient(OkClient(okHttpClient))
                 .build();
 
-        lastFmService = restAdapter.create(javaClass<LastFmService>()) ;
+        lastFmService = restAdapter.create(LastFmService::class.java) ;
     }
 }

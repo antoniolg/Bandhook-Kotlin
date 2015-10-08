@@ -23,17 +23,16 @@ import com.antonioleiva.bandhookkotlin.domain.interactor.base.CustomJobManager
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutorImpl
 import com.path.android.jobqueue.JobManager
-import java.util.Locale
-import kotlin.properties.Delegates
+import java.util.*
 
 interface AppModule : AppContext, BusSingleton, InteractorExecutorSingleton, JobManagerSingleton, LanguageSingleton
 
 class AppModuleImpl(context: Context): AppModule {
     override val appContext = context;
-    override val bus by Delegates.lazy { BusImpl() }
-    override val jobManager by Delegates.lazy { CustomJobManager(context) }
-    override val interactorExecutor by Delegates.lazy { InteractorExecutorImpl(jobManager, bus) }
-    override val language by Delegates.lazy { Locale.getDefault().getLanguage() }
+    override val bus by lazy { BusImpl() }
+    override val jobManager by lazy { CustomJobManager(context) }
+    override val interactorExecutor by lazy { InteractorExecutorImpl(jobManager, bus) }
+    override val language by lazy { Locale.getDefault().language }
 }
 
 interface AppContext {

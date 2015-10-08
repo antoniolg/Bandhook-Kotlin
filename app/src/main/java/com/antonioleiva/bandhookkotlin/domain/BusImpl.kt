@@ -26,6 +26,6 @@ class BusImpl : EventBus(), Bus {
     val mainThread = Handler(Looper.getMainLooper())
 
     override fun post(event: Any) {
-        mainThread.post({ super<EventBus>.post(event) })
+        mainThread.post({ super.post(event) })
     }
 }

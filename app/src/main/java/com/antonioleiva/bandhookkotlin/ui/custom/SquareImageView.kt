@@ -22,18 +22,15 @@ import android.widget.ImageView
 
 class SquareImageView : ImageView {
 
-    public constructor(context: Context) : super(context) {
-    }
+    public constructor(context: Context) : super(context)
 
-    public constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-    }
+    public constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    public constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-    }
+    public constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val width = getMeasuredWidth()
+        val width = measuredWidth
         setMeasuredDimension(width, width)
     }
 }

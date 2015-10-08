@@ -54,14 +54,14 @@ class AutofitRecyclerView : RecyclerView {
         }
 
         manager = GridLayoutManager(context, 1)
-        setLayoutManager(manager)
+        layoutManager = manager
     }
 
     override fun onMeasure(widthSpec: Int, heightSpec: Int) {
         super.onMeasure(widthSpec, heightSpec)
         if (columnWidth > 0) {
-            val spanCount = Math.max(1, getMeasuredWidth() / columnWidth)
-            manager.setSpanCount(spanCount)
+            val spanCount = Math.max(1, measuredWidth / columnWidth)
+            manager.spanCount = spanCount
         }
     }
 }

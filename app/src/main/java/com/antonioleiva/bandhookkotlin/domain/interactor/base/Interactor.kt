@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin.data.lastfm.model
+package com.antonioleiva.bandhookkotlin.domain.interactor.base
 
-import com.google.gson.annotations.SerializedName
+interface Interactor {
 
-class LastFmResult (
-        SerializedName("artistmatches") val artistMatches: LastFmArtistMatches
-)
+    operator fun invoke(): Event
+}

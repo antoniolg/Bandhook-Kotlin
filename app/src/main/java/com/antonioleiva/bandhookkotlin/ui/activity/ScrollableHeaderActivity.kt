@@ -28,21 +28,23 @@ import com.antonioleiva.bandhookkotlin.ui.util.getAttrId
 import com.antonioleiva.bandhookkotlin.ui.util.getDimen
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.util.with
-import org.jetbrains.anko.*
+import org.jetbrains.anko.find
 
-interface ScrollableHeaderActivity : BaseActivity {
+interface ScrollableHeaderActivity {
+
+    val activity: BaseActivity
 
     fun initScrollableHeader() {
-        val titleText: TextView = find(R.id.name)
-        val headerImage: ImageView = find(R.id.image)
-        val scrollView: ObservableScrollView = find(R.id.scrollableView)
+        val titleText: TextView = activity.find(R.id.name)
+        val headerImage: ImageView = activity.find(R.id.image)
+        val scrollView: ObservableScrollView = activity.find(R.id.scrollableView)
 
-        val minHeight = getToolbarHeight() + getDimen(R.dimen.statusbar_height)
-        val maxHeight = getDimen(R.dimen.detail_toolbar_height);
+        val minHeight = getToolbarHeight() + activity.getDimen(R.dimen.statusbar_height)
+        val maxHeight = activity.getDimen(R.dimen.detail_toolbar_height);
 
         initWindow()
-        initTitle(titleText, minHeight, maxHeight, scrollView.getScrollY())
-        initToolbar(headerImage, minHeight, maxHeight, scrollView.getScrollY())
+        initTitle(titleText, minHeight, maxHeight, scrollView.scrollY)
+        initToolbar(headerImage, minHeight, maxHeight, scrollView.scrollY)
 
         scrollView.listener = { x, y ->
             updateTitleScale(titleText, minHeight, maxHeight, y)
@@ -51,7 +53,7 @@ interface ScrollableHeaderActivity : BaseActivity {
         }
     }
 
-    private fun getToolbarHeight() = getDimen(getAttrId(R.style.AppTheme, R.attr.actionBarSize))
+    private fun getToolbarHeight() = activity.getDimen(activity.getAttrId(R.style.AppTheme, R.attr.actionBarSize))
 
     private fun updateImageTranslation(image: ImageView, scrollY: Int) {
         image.translationY = -(scrollY / 2).toFloat()
@@ -59,7 +61,7 @@ interface ScrollableHeaderActivity : BaseActivity {
 
     private fun initWindow() {
         supportsLollipop {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+            activity.window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
@@ -67,21 +69,21 @@ interface ScrollableHeaderActivity : BaseActivity {
     private fun initTitle(titleText: TextView, minHeight: Int, maxHeight: Int, scrollY: Int) {
         with(titleText) {
             pivotX = 0f
-            pivotY = getHeight().toFloat()
+            pivotY = height.toFloat()
             updateTitleScale(this, minHeight, maxHeight, scrollY)
         }
     }
 
     private fun initToolbar(headerImage: ImageView, minHeight: Int, maxHeight: Int, scrollY: Int) {
-        val drawable = headerImage.getDrawable() as BitmapDrawable
-        val bitmap = drawable.getBitmap()
+        val drawable = headerImage.drawable as BitmapDrawable
+        val bitmap = drawable.bitmap
 
-        toolbar.layoutParams?.height = maxHeight
+        activity.toolbar.layoutParams?.height = maxHeight
 
         var toolbarColor = Color.DKGRAY
         Palette.Builder(bitmap).generate { palette ->
             toolbarColor = palette.getDarkVibrantColor(toolbarColor)
-            toolbar.setBackgroundColor(toolbarColor)
+            activity.toolbar.setBackgroundColor(toolbarColor)
             updateToolbarAlpha(minHeight, maxHeight, scrollY)
         }
     }
@@ -97,11 +99,11 @@ interface ScrollableHeaderActivity : BaseActivity {
         val alpha = ((y / (maxHeight - minHeight).toFloat()) * 255).toInt()
         val finalAlpha = Math.max(0, Math.min(alpha, 255))
 
-        with(toolbar){
+        with(activity.toolbar){
             val toolbarParams = layoutParams
             toolbarParams?.height = Math.max(maxHeight - y, minHeight)
             layoutParams = toolbarParams
-            getBackground().setAlpha(finalAlpha)
+            background.alpha = finalAlpha
         }
     }
 }

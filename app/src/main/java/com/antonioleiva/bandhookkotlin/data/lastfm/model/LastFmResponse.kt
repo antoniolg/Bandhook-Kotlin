@@ -14,9 +14,14 @@
  * limitations under the License.
  */
 
-apply plugin: 'kotlin'
+package com.antonioleiva.bandhookkotlin.data.lastfm.model
 
-dependencies {
-    compile parent.ext.libKotlin
-    compile project (':domain')
-}
+import com.google.gson.annotations.SerializedName
+
+class LastFmResponse (
+        val results: LastFmResult,
+        val artist: LastFmArtist,
+        @SerializedName("topalbums") val topAlbums: LastFmTopAlbums,
+        @SerializedName("similarartists") val similarArtists: LastFmArtistList,
+        val album: LastFmAlbumDetail
+)

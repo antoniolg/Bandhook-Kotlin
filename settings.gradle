@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-include ':app', ':domain', ':data', ':presentation', ':repository'
+include ':app'

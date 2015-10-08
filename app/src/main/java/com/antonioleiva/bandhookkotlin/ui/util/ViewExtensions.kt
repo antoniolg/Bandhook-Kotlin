@@ -24,12 +24,12 @@ import android.view.animation.Interpolator
 import com.antonioleiva.bandhookkotlin.ui.adapter.SingleClickListener
 
 fun View.animateEnter() = animateTranslationY(0, DecelerateInterpolator(3f))
-fun View.animateExit() = animateTranslationY(-getHeight(), AccelerateInterpolator(3f))
+fun View.animateExit() = animateTranslationY(-height, AccelerateInterpolator(3f))
 
 fun View.animateTranslationY(translationY: Int, interpolator: Interpolator) {
     with(ObjectAnimator.ofFloat(this, "translationY", translationY.toFloat()))
     {
-        setDuration(getContext().getResources().getInteger(android.R.integer.config_mediumAnimTime).toLong())
+        setDuration(context.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
         setInterpolator(interpolator)
         start()
     }

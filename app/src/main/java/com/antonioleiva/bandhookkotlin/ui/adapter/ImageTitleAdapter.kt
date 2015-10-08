@@ -27,30 +27,26 @@ import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.util.singleClick
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.layoutInflater
-import org.jetbrains.anko.text
+import kotlin.properties.Delegates
 
 class ImageTitleAdapter() : RecyclerView.Adapter<ViewHolder>() {
 
-    var items: List<ImageTitle>? = null
-        set(value) {
-            $items = value
-            notifyDataSetChanged()
-        }
+    var items: List<ImageTitle> by Delegates.observable(emptyList()) { prop, old, new -> notifyDataSetChanged() }
 
     var onItemClickListener: ((ImageTitle) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
-        val v = parent!!.getContext().layoutInflater.inflate(R.layout.item_view, parent, false)
+        val v = parent!!.context.layoutInflater.inflate(R.layout.item_view, parent, false)
         return ViewHolder(v, onItemClickListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.setItem(items!![position])
+        holder?.setItem(items[position])
     }
 
-    override fun getItemCount() = items?.size() ?: 0
+    override fun getItemCount() = items.size()
 
-    fun findPositionById(id: String): Int = items!!.withIndex().first({ it.value.id == id }).index
+    fun findPositionById(id: String): Int = items.withIndex().first({ it.value.id == id }).index
 }
 
 private class ViewHolder(view: View, var onItemClickListener: ((ImageTitle) -> Unit)?) : RecyclerView.ViewHolder(view) {
@@ -61,6 +57,6 @@ private class ViewHolder(view: View, var onItemClickListener: ((ImageTitle) -> U
     fun setItem(item: ImageTitle) {
         itemView?.singleClick { onItemClickListener?.invoke(item) }
         title.text = item.name
-        Picasso.with(itemView.getContext()).load(item.url).centerCrop().fit().into(image)
+        Picasso.with(itemView.context).load(item.url).centerCrop().fit().into(image)
     }
 }

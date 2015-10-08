@@ -24,14 +24,11 @@ public class ObservableScrollView : ScrollView {
 
     var listener : ((x: Int, y: Int) -> Unit)? = null
 
-    public constructor(context: Context) : super(context) {
-    }
+    public constructor(context: Context) : super(context)
 
-    public constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-    }
+    public constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    public constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-    }
+    public constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun onScrollChanged(l: Int, t: Int, oldl: Int, oldt: Int) {
         super.onScrollChanged(l, t, oldl, oldt)

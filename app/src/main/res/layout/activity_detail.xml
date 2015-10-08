@@ -66,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/toolbar"
             android:layout_marginStart="56dp"
+            android:layout_marginLeft="56dp"
             android:height="4dp"
             android:minHeight="56dp"
             android:maxLines="1"

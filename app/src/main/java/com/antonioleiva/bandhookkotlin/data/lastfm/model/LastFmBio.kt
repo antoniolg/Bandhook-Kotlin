@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-apply plugin: 'kotlin'
+package com.antonioleiva.bandhookkotlin.data.lastfm.model
 
-dependencies {
-    compile parent.ext.libKotlin
-}
+class LastFmBio(
+        val content: String
+)

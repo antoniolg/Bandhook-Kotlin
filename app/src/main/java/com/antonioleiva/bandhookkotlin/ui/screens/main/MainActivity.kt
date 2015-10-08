@@ -49,27 +49,27 @@ class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector b
     val background: View? by bindOptionalView(R.id.background)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super<BaseActivity>.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState)
         val scrollWrapper = RecyclerViewScrollWrapper(recycler)
         init(scrollWrapper)
         initHidingToolbar(scrollWrapper)
     }
 
     fun init(scrollWrapper: RecyclerViewScrollWrapper) {
-        recycler.setAdapter(adapter)
+        recycler.adapter = adapter
         adapter.onItemClickListener = { presenter.onArtistClicked(it) }
         scrollWrapper.scrollObservers.add { wrapper ->
-            background?.setTranslationY((-wrapper.scrollY / 2).toFloat())
+            background?.translationY = (-wrapper.scrollY / 2).toFloat()
         }
     }
 
     override fun onResume() {
-        super<BaseActivity>.onResume()
+        super.onResume()
         presenter.onResume()
     }
 
     override fun onPause() {
-        super<BaseActivity>.onPause()
+        super.onPause()
         presenter.onPause()
     }
 
@@ -78,12 +78,12 @@ class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector b
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        getMenuInflater().inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.getItemId()) {
+        when (item.itemId) {
             R.id.action_settings -> return true
             else -> return onOptionsItemSelected(item)
         }
@@ -95,6 +95,6 @@ class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector b
 
     private fun findItemById(id: String): View {
         val pos = adapter.findPositionById(id)
-        return recycler.getLayoutManager().findViewByPosition(pos).findViewById(R.id.image)
+        return recycler.layoutManager.findViewByPosition(pos).findViewById(R.id.image)
     }
 }

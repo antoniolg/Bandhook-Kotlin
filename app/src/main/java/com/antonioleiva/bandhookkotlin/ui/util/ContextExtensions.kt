@@ -25,7 +25,7 @@ import android.view.View
 
 inline public fun <reified T : Activity> Activity.navigate(id: String, sharedView: View? = null,
                                                            transitionName: String? = null) {
-    val intent = Intent(this, javaClass<T>())
+    val intent = Intent(this, T::class.java)
     intent.putExtra("id", id)
 
     var options: ActivityOptionsCompat? = null
@@ -38,16 +38,16 @@ inline public fun <reified T : Activity> Activity.navigate(id: String, sharedVie
 }
 
 public fun Activity.getNavigationId(): String {
-    val intent = getIntent()
+    val intent = intent
     return intent.getStringExtra("id")
 }
 
 public fun Context.getDimen(dimenRes: Int): Int {
-    return getResources().getDimensionPixelSize(dimenRes)
+    return resources.getDimensionPixelSize(dimenRes)
 }
 
 public fun Context.getAttrId(themeRes: Int, attrRes: Int): Int {
-    val a = getTheme().obtainStyledAttributes(themeRes, intArrayOf(attrRes));
+    val a = theme.obtainStyledAttributes(themeRes, intArrayOf(attrRes));
     val attributeResourceId = a.getResourceId(0, 0);
     a.recycle()
     return attributeResourceId

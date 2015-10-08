@@ -16,6 +16,8 @@
 
 package com.antonioleiva.bandhookkotlin.data.lastfm.model
 
-class LastFmBio (
-        val content: String
+import com.google.gson.annotations.SerializedName
+
+class LastFmTopAlbums (
+        @SerializedName("album") val albums: List<LastFmAlbum>
 )

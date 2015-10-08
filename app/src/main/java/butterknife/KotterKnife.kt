@@ -54,13 +54,13 @@ public fun <T : View> SupportFragment.bindOptionalViews(vararg ids: Int): ReadOn
 public fun <T : View> ViewHolder.bindOptionalViews(vararg ids: Int): ReadOnlyProperty<Any, List<T>> = OptionalViewListBinding(ids)
 
 private fun findView<T : View>(thisRef: Any, id: Int): T? {
-    @suppress("UNCHECKED_CAST")
+    @Suppress("UNCHECKED_CAST")
     return when (thisRef) {
         is View -> thisRef.findViewById(id)
         is Activity -> thisRef.findViewById(id)
         is Dialog -> thisRef.findViewById(id)
-        is Fragment -> thisRef.getView().findViewById(id)
-        is SupportFragment -> thisRef.getView().findViewById(id)
+        is Fragment -> thisRef.view.findViewById(id)
+        is SupportFragment -> thisRef.view.findViewById(id)
         is ViewHolder -> thisRef.itemView.findViewById(id)
         else -> throw IllegalStateException("Unable to find views on type.")
     } as T?
@@ -111,7 +111,7 @@ private class Lazy<T> {
         if (value == EMPTY) {
             value = initializer.invoke()
         }
-        @suppress("UNCHECKED_CAST")
+        @Suppress("UNCHECKED_CAST")
         return value as T
     }
 }
