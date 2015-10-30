@@ -21,11 +21,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.bindView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.util.singleClick
 import com.squareup.picasso.Picasso
+import org.jetbrains.anko.find
 import org.jetbrains.anko.layoutInflater
 import kotlin.properties.Delegates
 
@@ -35,24 +35,24 @@ class ImageTitleAdapter() : RecyclerView.Adapter<ViewHolder>() {
 
     var onItemClickListener: ((ImageTitle) -> Unit)? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder? {
-        val v = parent!!.context.layoutInflater.inflate(R.layout.item_view, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val v = parent.context.layoutInflater.inflate(R.layout.item_view, parent, false)
         return ViewHolder(v, onItemClickListener)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.setItem(items[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.setItem(items[position])
     }
 
-    override fun getItemCount() = items.size()
+    override fun getItemCount() = items.size
 
     fun findPositionById(id: String): Int = items.withIndex().first({ it.value.id == id }).index
 }
 
-private class ViewHolder(view: View, var onItemClickListener: ((ImageTitle) -> Unit)?) : RecyclerView.ViewHolder(view) {
+class ViewHolder(view: View, var onItemClickListener: ((ImageTitle) -> Unit)?) : RecyclerView.ViewHolder(view) {
 
-    private val title: TextView by bindView(R.id.title)
-    private val image: ImageView by bindView(R.id.image)
+    private val title: TextView = view.find(R.id.title)
+    private val image: ImageView = view.find(R.id.image)
 
     fun setItem(item: ImageTitle) {
         itemView?.singleClick { onItemClickListener?.invoke(item) }

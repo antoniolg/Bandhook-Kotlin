@@ -21,8 +21,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import butterknife.bindOptionalView
-import butterknife.bindView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.Inject
 import com.antonioleiva.bandhookkotlin.di.Injector
@@ -36,6 +34,8 @@ import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
 import com.antonioleiva.bandhookkotlin.ui.screens.detail.DetailActivity
 import com.antonioleiva.bandhookkotlin.ui.util.navigate
 import com.antonioleiva.bandhookkotlin.ui.view.MainView
+import org.jetbrains.anko.find
+import org.jetbrains.anko.findOptional
 
 class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector by Inject.instance {
 
@@ -45,8 +45,8 @@ class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector b
     val presenter = MainPresenter(this, bus, recommendedArtistsInteractorProvider,
             interactorExecutor, ImageTitleDataMapper())
 
-    val recycler: RecyclerView by bindView(R.id.recycler)
-    val background: View? by bindOptionalView(R.id.background)
+    val recycler by lazy { find<RecyclerView>(R.id.recycler) }
+    val background by lazy { findOptional<View>(R.id.background) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

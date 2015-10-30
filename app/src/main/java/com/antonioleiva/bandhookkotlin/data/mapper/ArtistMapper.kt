@@ -24,7 +24,7 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 class ArtistMapper {
 
     fun transform(artists: List<LastFmArtist>): List<Artist> {
-        return artists filter { artistHasQualityInfo(it) } map { transform(it) }
+        return artists.filter { artistHasQualityInfo(it) }.map { transform(it) }
     }
 
     fun transform(artist: LastFmArtist): Artist = Artist(
@@ -34,11 +34,11 @@ class ArtistMapper {
             artist.bio?.content)
 
     private fun artistHasQualityInfo(it: LastFmArtist): Boolean {
-        return !it.mbid.isEmpty() && it.images.size() > 0
+        return !it.mbid.isEmpty() && it.images.size > 0
     }
 
     private fun getImage(images: List<LastFmImage>): String {
-        val image = images firstOrNull { it.size == LastFmImageType.MEGA.name }
+        val image = images.firstOrNull { it.size == LastFmImageType.MEGA.type }
         return image?.url ?: images.last().url
     }
 }

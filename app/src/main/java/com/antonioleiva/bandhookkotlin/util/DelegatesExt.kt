@@ -17,13 +17,12 @@
 package com.antonioleiva.bandhookkotlin.util
 
 import kotlin.properties.ReadOnlyProperty
+import kotlin.reflect.KProperty
 
 object DelegatesExt {
-    fun provider<T>(initializer: () -> T): ReadOnlyProperty<Any?, T> = Provider(initializer)
+    fun <T> provider(initializer: () -> T): ReadOnlyProperty<Any?, T> = Provider(initializer)
 }
 
 private class Provider<T>(private val initializer: () -> T) : ReadOnlyProperty<Any?, T> {
-    override fun get(thisRef: Any?, desc: PropertyMetadata): T {
-        return initializer()
-    }
+    override fun getValue(thisRef: Any?, property: KProperty<*>): T = initializer()
 }

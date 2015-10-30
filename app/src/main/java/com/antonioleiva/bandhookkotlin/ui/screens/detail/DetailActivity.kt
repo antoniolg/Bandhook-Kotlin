@@ -20,7 +20,6 @@ import android.os.Bundle
 import android.text.Html
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.bindView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.Inject
 import com.antonioleiva.bandhookkotlin.di.Injector
@@ -34,6 +33,7 @@ import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.DetailView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import org.jetbrains.anko.find
 
 class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
         Injector by Inject.instance {
@@ -44,9 +44,9 @@ class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
     val presenter = DetailPresenter(this, bus, artistDetailInteractorProvider,
             interactorExecutor, ArtistDetailDataMapper())
 
-    val image: ImageView by bindView(R.id.image)
-    val name: TextView by bindView(R.id.name)
-    val biography: TextView by bindView(R.id.biography)
+    val image by lazy { find<ImageView>(R.id.image) }
+    val name by lazy { find<TextView>(R.id.name) }
+    val biography by lazy { find<TextView>(R.id.biography) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

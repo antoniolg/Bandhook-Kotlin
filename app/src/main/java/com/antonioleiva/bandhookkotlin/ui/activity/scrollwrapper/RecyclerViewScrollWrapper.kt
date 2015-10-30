@@ -34,7 +34,7 @@ class RecyclerViewScrollWrapper(recyclerView: RecyclerView) : ScrollWrapper {
                 scrollY += dy
                 dX = dx
                 dY = dy
-                scrollObservers forEach { it.invoke(this@RecyclerViewScrollWrapper)}
+                scrollObservers.forEach { it.invoke(this@RecyclerViewScrollWrapper)}
             }
         })
     }

@@ -25,8 +25,6 @@ class CustomJobManager(context: Context)
 
     companion object {
 
-        private val TAG = "JOBS"
-
         private fun getJobManagerConfiguration(context: Context): Configuration {
 
             return Configuration.Builder(context)

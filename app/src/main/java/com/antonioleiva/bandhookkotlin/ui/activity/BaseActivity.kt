@@ -19,17 +19,17 @@ package com.antonioleiva.bandhookkotlin.ui.activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import butterknife.bindView
 import com.antonioleiva.bandhookkotlin.R
+import org.jetbrains.anko.find
 
-abstract class BaseActivity : AppCompatActivity(){
+abstract class BaseActivity : AppCompatActivity() {
 
     companion object {
         val IMAGE_TRANSITION_NAME = "activity_image_transition"
     }
 
-    protected abstract val layoutResource : Int
-    val toolbar: Toolbar by bindView(R.id.toolbar)
+    protected abstract val layoutResource: Int
+    val toolbar: Toolbar by lazy { find<Toolbar>(R.id.toolbar) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

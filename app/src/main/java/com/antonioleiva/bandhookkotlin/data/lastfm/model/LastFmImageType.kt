@@ -16,7 +16,7 @@
 
 package com.antonioleiva.bandhookkotlin.data.lastfm.model
 
-enum class LastFmImageType(val name: String) {
+enum class LastFmImageType(val type: String) {
 
     SMALL("small"),
     MEDIUM("medium"),
@@ -25,6 +25,6 @@ enum class LastFmImageType(val name: String) {
     MEGA("mega");
 
     fun findByName(name: String): LastFmImageType? {
-        return values().firstOrNull { it.name == name }
+        return values.firstOrNull { it.type == name }
     }
 }
