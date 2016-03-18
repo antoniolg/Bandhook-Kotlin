@@ -53,7 +53,7 @@ class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
         supportPostponeEnterTransition()
         title = null
 
-        supportActionBar.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportsLollipop { image.transitionName = BaseActivity.IMAGE_TRANSITION_NAME }
     }
 

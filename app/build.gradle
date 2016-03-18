@@ -63,6 +63,6 @@ dependencies {
     compile "com.squareup.okhttp:okhttp:2.2.0"
     compile "com.squareup.retrofit:retrofit:1.9.0"
     compile "com.path:android-priority-jobqueue:1.1.2"
-    compile "org.jetbrains.anko:anko-sdk15:$ankoVersion"
-    compile "org.jetbrains.anko:anko-support-v4:$ankoVersion"
+    compile "org.jetbrains.anko:anko-sdk15:$parent.ext.ankoVersion"
+    compile "org.jetbrains.anko:anko-support-v4:$parent.ext.ankoVersion"
 }
