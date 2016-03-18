@@ -25,6 +25,6 @@ enum class LastFmImageType(val type: String) {
     MEGA("mega");
 
     fun findByName(name: String): LastFmImageType? {
-        return values.firstOrNull { it.type == name }
+        return values().firstOrNull { it.type == name }
     }
 }
