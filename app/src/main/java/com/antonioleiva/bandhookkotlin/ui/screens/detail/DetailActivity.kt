@@ -30,6 +30,7 @@ import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.DetailPresenter
 import com.antonioleiva.bandhookkotlin.ui.util.getNavigationId
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
+import com.antonioleiva.bandhookkotlin.ui.util.setTransitionGroupCompat
 import com.antonioleiva.bandhookkotlin.ui.view.DetailView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -55,6 +56,8 @@ class DetailActivity : BaseActivity(), DetailView, ScrollableHeaderActivity,
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportsLollipop { image.transitionName = BaseActivity.IMAGE_TRANSITION_NAME }
+
+        findViewById(android.R.id.content).setTransitionGroupCompat(true)
     }
 
     override fun onResume() {
