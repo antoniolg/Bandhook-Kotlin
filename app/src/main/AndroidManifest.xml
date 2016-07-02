@@ -39,7 +39,7 @@
         </activity>
 
         <activity
-            android:name=".ui.screens.detail.DetailActivity"
+            android:name=".ui.screens.detail.ArtistActivity"
             android:parentActivityName=".ui.screens.main.MainActivity"/>
     </application>
 

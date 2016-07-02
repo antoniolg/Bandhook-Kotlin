@@ -18,6 +18,6 @@ package com.antonioleiva.bandhookkotlin.ui.view
 
 import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
 
-interface DetailView : PresentationView {
+interface ArtistView : PresentationView {
     fun showArtist(artistDetail: ArtistDetail)
 }

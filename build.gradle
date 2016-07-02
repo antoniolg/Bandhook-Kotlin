@@ -39,7 +39,7 @@ allprojects {
         androidApplicationId = "com.antonioleiva.bandhookkotlin"
         androidVersionCode = 1
         androidVersionName = "0.1"
-        supportVersion = "23.3.0"
+        supportVersion = "24.0.0"
         ankoVersion= "0.8.3"
     }
 }
