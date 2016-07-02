@@ -23,9 +23,10 @@ import com.antonioleiva.bandhookkotlin.domain.interactor.base.CustomJobManager
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutorImpl
 import com.path.android.jobqueue.JobManager
+import com.squareup.picasso.Picasso
 import java.util.*
 
-interface AppModule : AppContext, BusSingleton, InteractorExecutorSingleton, JobManagerSingleton, LanguageSingleton
+interface AppModule : AppContext, BusSingleton, InteractorExecutorSingleton, JobManagerSingleton, LanguageSingleton, PicassoSingleton
 
 class AppModuleImpl(context: Context): AppModule {
     override val appContext = context;
@@ -33,6 +34,7 @@ class AppModuleImpl(context: Context): AppModule {
     override val jobManager by lazy { CustomJobManager(context) }
     override val interactorExecutor by lazy { InteractorExecutorImpl(jobManager, bus) }
     override val language by lazy { Locale.getDefault().language }
+    override var picasso = Picasso.Builder(appContext).build()
 }
 
 interface AppContext {
@@ -41,6 +43,10 @@ interface AppContext {
 
 interface BusSingleton {
     val bus: Bus
+}
+
+interface PicassoSingleton {
+    var picasso: Picasso
 }
 
 interface JobManagerSingleton {

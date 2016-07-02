@@ -66,4 +66,10 @@ dependencies {
     compile "com.path:android-priority-jobqueue:1.1.2"
     compile "org.jetbrains.anko:anko-sdk15:$parent.ext.ankoVersion"
     compile "org.jetbrains.anko:anko-support-v4:$parent.ext.ankoVersion"
+
+    androidTestCompile "org.mockito:mockito-core:1.10.19"
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.2'
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.2'
+    androidTestCompile "com.android.support:support-annotations:$supportVersion"
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
 }

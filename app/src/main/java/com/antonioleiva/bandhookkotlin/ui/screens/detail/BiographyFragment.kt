@@ -33,4 +33,8 @@ class BiographyFragment: Fragment() {
     fun setBiographyText(biographyText: String?) {
         biographyTextView?.text = Html.fromHtml(biographyText)
     }
+
+    fun getBiographyText(): String? {
+        return biographyTextView?.text?.toString()
+    }
 }

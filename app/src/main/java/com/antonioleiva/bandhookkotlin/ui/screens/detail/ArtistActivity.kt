@@ -21,7 +21,6 @@ import com.antonioleiva.bandhookkotlin.ui.util.getNavigationId
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.ArtistView
 import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import org.jetbrains.anko.find
 
 /**
@@ -32,8 +31,6 @@ import org.jetbrains.anko.find
 
 class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
 
-    private val picasso by lazy { Picasso.Builder(this).build() }
-
     override val layoutResource: Int = R.layout.activity_artist
 
     val image by lazy { find<ImageView>(R.id.collapse_image) }
@@ -41,7 +38,7 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
     val viewPager by lazy { find<ViewPager>(R.id.viewpager) }
     val tabLayout by lazy { find<TabLayout>(R.id.tabs) }
 
-    val presenter = ArtistPresenter(this, bus, artistDetailInteractorProvider,
+    var presenter = ArtistPresenter(this, bus, artistDetailInteractorProvider,
             interactorExecutor, ArtistDetailDataMapper())
 
     val biographyFragment = BiographyFragment()
@@ -74,6 +71,13 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
         })
     }
 
+    private fun setUpViewPager() {
+        val artistDetailPagerAdapter = ArtistDetailPagerAdapter(supportFragmentManager)
+        artistDetailPagerAdapter.addFragment(biographyFragment, "BIO")
+        artistDetailPagerAdapter.addFragment(AlbumsFragment(), "DISCOGRAPHY")
+        viewPager.adapter = artistDetailPagerAdapter
+    }
+
     override fun onResume() {
         super.onResume()
         presenter.onResume()
@@ -83,13 +87,6 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
     override fun onPause() {
         super.onPause()
         presenter.onPause()
-    }
-
-    private fun setUpViewPager() {
-        val artistDetailPagerAdapter = ArtistDetailPagerAdapter(supportFragmentManager)
-        artistDetailPagerAdapter.addFragment(biographyFragment, "BIO")
-        artistDetailPagerAdapter.addFragment(AlbumsFragment(), "DISCOGRAPHY")
-        viewPager.adapter = artistDetailPagerAdapter
     }
 
     override fun showArtist(artistDetail: ArtistDetail) {
@@ -116,13 +113,15 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
     }
 
     private fun setActionBarPalette() {
-        val drawable = image.drawable as BitmapDrawable
-        val bitmap = drawable.bitmap
-        Palette.from(bitmap).generate { palette ->
-            val darkVibrantColor = palette.getDarkVibrantColor(R.attr.colorPrimary);
-            collapsingToolbarLayout.setContentScrimColor(darkVibrantColor);
-            collapsingToolbarLayout.setStatusBarScrimColor(darkVibrantColor);
-        };
+        val drawable = image.drawable as BitmapDrawable?
+        val bitmap = drawable?.bitmap
+        if (bitmap != null) {
+            Palette.from(bitmap).generate { palette ->
+                val darkVibrantColor = palette.getDarkVibrantColor(R.attr.colorPrimary);
+                collapsingToolbarLayout.setContentScrimColor(darkVibrantColor);
+                collapsingToolbarLayout.setStatusBarScrimColor(darkVibrantColor);
+            };
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

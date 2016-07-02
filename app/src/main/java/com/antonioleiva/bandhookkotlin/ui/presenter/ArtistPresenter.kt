@@ -23,14 +23,14 @@ import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistDetailEvent
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.ArtistView
 
-class ArtistPresenter(
+open class ArtistPresenter(
         override val view: ArtistView,
         override val bus: Bus,
         val artistDetailInteractor: GetArtistDetailInteractor,
         val interactorExecutor: InteractorExecutor,
         val mapper: ArtistDetailDataMapper) : Presenter<ArtistView> {
 
-    fun init(id: String) {
+    open fun init(id: String) {
         val interactor = artistDetailInteractor;
         interactor.id = id
         interactorExecutor.execute(interactor)
