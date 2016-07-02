@@ -73,8 +73,8 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
 
     private fun setUpViewPager() {
         val artistDetailPagerAdapter = ArtistDetailPagerAdapter(supportFragmentManager)
-        artistDetailPagerAdapter.addFragment(biographyFragment, "BIO")
-        artistDetailPagerAdapter.addFragment(AlbumsFragment(), "DISCOGRAPHY")
+        artistDetailPagerAdapter.addFragment(biographyFragment, resources.getString(R.string.bio_fragment_title))
+        artistDetailPagerAdapter.addFragment(AlbumsFragment(), resources.getString(R.string.albums_fragment_title))
         viewPager.adapter = artistDetailPagerAdapter
     }
 

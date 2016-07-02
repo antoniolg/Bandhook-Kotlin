@@ -17,4 +17,6 @@
 <resources>
     <string name="app_name">Bandhook</string>
     <string name="action_settings">Settings</string>
+    <string name="albums_fragment_title">Albums</string>
+    <string name="bio_fragment_title">Bio</string>
 </resources>
