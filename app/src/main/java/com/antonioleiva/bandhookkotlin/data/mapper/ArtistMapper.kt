@@ -34,7 +34,7 @@ class ArtistMapper {
             artist.bio?.content)
 
     private fun artistHasQualityInfo(it: LastFmArtist): Boolean {
-        return it.mbid != null && !it.mbid.isEmpty() && it.images.size > 0
+        return !it.mbid.isEmpty() && it.images.size > 0
     }
 
     private fun getImage(images: List<LastFmImage>): String {
