@@ -17,11 +17,9 @@
 package com.antonioleiva.bandhookkotlin.data.mapper
 
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmArtist
-import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmImage
-import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmImageType
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 
-class ArtistMapper {
+class ArtistMapper(val imageMapper: ImageMapper = ImageMapper()) {
 
     fun transform(artists: List<LastFmArtist>): List<Artist> {
         return artists.filter { artistHasQualityInfo(it) }.map { transform(it) }
@@ -30,15 +28,10 @@ class ArtistMapper {
     fun transform(artist: LastFmArtist): Artist = Artist(
             artist.mbid,
             artist.name,
-            getImage(artist.images),
+            imageMapper.getMainImageUrl(artist.images),
             artist.bio?.content)
 
     private fun artistHasQualityInfo(it: LastFmArtist): Boolean {
-        return !it.mbid.isEmpty() && it.images.size > 0
-    }
-
-    private fun getImage(images: List<LastFmImage>): String {
-        val image = images.firstOrNull { it.size == LastFmImageType.MEGA.type }
-        return image?.url ?: images.last().url
+        return it.mbid != null && !it.mbid.isEmpty() && it.images != null && it.images.size > 0
     }
 }

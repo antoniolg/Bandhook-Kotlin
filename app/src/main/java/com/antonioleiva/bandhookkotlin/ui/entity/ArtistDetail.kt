@@ -18,6 +18,6 @@ package com.antonioleiva.bandhookkotlin.ui.entity
 
 data class ArtistDetail(val id: String,
                         val name: String,
-                        val url: String,
+                        val url: String?,
                         val bio: String?,
                         val albums: List<ImageTitle>? = null)

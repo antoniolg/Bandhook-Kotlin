@@ -16,14 +16,21 @@
 
 package com.antonioleiva.bandhookkotlin.di
 
+import com.antonioleiva.bandhookkotlin.data.CloudAlbumDataSet
 import com.antonioleiva.bandhookkotlin.data.CloudArtistDataSet
+import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
+import com.antonioleiva.bandhookkotlin.repository.AlbumRepositoryImp
 import com.antonioleiva.bandhookkotlin.repository.ArtistRepositoryImp
 
-public interface RepositoryModule : ArtistRepositorySingleton
+interface RepositoryModule : ArtistRepositorySingleton, AlbumRepositorySingleton
 
-public interface ArtistRepositorySingleton {
+interface ArtistRepositorySingleton {
     val artistRepository: ArtistRepository
+}
+
+interface AlbumRepositorySingleton {
+    val albumRepository: AlbumRepository
 }
 
 class RepositoryModuleImpl(appModule: AppModule, dataModule: DataModule) :
@@ -31,4 +38,5 @@ class RepositoryModuleImpl(appModule: AppModule, dataModule: DataModule) :
         LanguageSingleton by appModule, LastFmServiceSingleton by dataModule {
 
     override val artistRepository = ArtistRepositoryImp(listOf(CloudArtistDataSet(language, lastFmService)))
+    override val albumRepository = AlbumRepositoryImp(listOf(CloudAlbumDataSet(lastFmService)))
 }

@@ -18,7 +18,7 @@ package com.antonioleiva.bandhookkotlin.domain.repository
 
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 
-public interface ArtistRepository {
+interface ArtistRepository {
     fun getRecommendedArtists(): List<Artist>
     fun getArtist(id: String): Artist
 }

@@ -16,19 +16,26 @@
 
 package com.antonioleiva.bandhookkotlin.di
 
+import com.antonioleiva.bandhookkotlin.domain.interactor.GetAlbumDetailInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetArtistDetailInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetRecommendedArtistsInteractor
+import com.antonioleiva.bandhookkotlin.domain.interactor.GetTopAlbumsInteractor
 import com.antonioleiva.bandhookkotlin.util.DelegatesExt
 
-public interface DomainModule : GetRecommendedArtistsInteractorProvider
+interface DomainModule : GetRecommendedArtistsInteractorProvider, GetAlbumsInteractorProvider
 
-public interface GetRecommendedArtistsInteractorProvider {
+interface GetRecommendedArtistsInteractorProvider {
     val recommendedArtistsInteractorProvider: GetRecommendedArtistsInteractor
     val artistDetailInteractorProvider: GetArtistDetailInteractor
 }
 
+interface GetAlbumsInteractorProvider {
+    val topAlbumsInteractorProvider: GetTopAlbumsInteractor
+    val albumInteractorProvider: GetAlbumDetailInteractor
+}
+
 class DomainModuleImpl(repositoryModule: RepositoryModule) : DomainModule,
-        ArtistRepositorySingleton by repositoryModule {
+        ArtistRepositorySingleton by repositoryModule, AlbumRepositorySingleton by repositoryModule {
 
     override val recommendedArtistsInteractorProvider by DelegatesExt.provider {
         GetRecommendedArtistsInteractor(artistRepository)
@@ -36,5 +43,13 @@ class DomainModuleImpl(repositoryModule: RepositoryModule) : DomainModule,
 
     override val artistDetailInteractorProvider by DelegatesExt.provider {
         GetArtistDetailInteractor(artistRepository)
+    }
+
+    override val topAlbumsInteractorProvider by DelegatesExt.provider {
+        GetTopAlbumsInteractor(albumRepository)
+    }
+
+    override val albumInteractorProvider by DelegatesExt.provider {
+        GetAlbumDetailInteractor(albumRepository)
     }
 }

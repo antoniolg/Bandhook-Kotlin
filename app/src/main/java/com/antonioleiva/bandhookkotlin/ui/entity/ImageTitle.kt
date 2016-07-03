@@ -16,4 +16,11 @@
 
 package com.antonioleiva.bandhookkotlin.ui.entity
 
-data class ImageTitle(val id: String, val name: String, val url: String)
+class ImageTitle(val id: String, val name: String, rawUrl: String?) {
+
+    val url: String?
+
+    init {
+        url = if ("" == rawUrl) null else rawUrl
+    }
+}

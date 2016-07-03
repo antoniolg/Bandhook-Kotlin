@@ -15,7 +15,9 @@ import com.antonioleiva.bandhookkotlin.di.Injector
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.ArtistDetailPagerAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
+import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
+import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.ArtistPresenter
 import com.antonioleiva.bandhookkotlin.ui.util.getNavigationId
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
@@ -38,10 +40,11 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
     val viewPager by lazy { find<ViewPager>(R.id.viewpager) }
     val tabLayout by lazy { find<TabLayout>(R.id.tabs) }
 
-    var presenter = ArtistPresenter(this, bus, artistDetailInteractorProvider,
-            interactorExecutor, ArtistDetailDataMapper())
+    var presenter = ArtistPresenter(this, bus, artistDetailInteractorProvider, topAlbumsInteractorProvider,
+            interactorExecutor, ArtistDetailDataMapper(), ImageTitleDataMapper())
 
     val biographyFragment = BiographyFragment()
+    val albumsFragment = AlbumsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,7 +77,7 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
     private fun setUpViewPager() {
         val artistDetailPagerAdapter = ArtistDetailPagerAdapter(supportFragmentManager)
         artistDetailPagerAdapter.addFragment(biographyFragment, resources.getString(R.string.bio_fragment_title))
-        artistDetailPagerAdapter.addFragment(AlbumsFragment(), resources.getString(R.string.albums_fragment_title))
+        artistDetailPagerAdapter.addFragment(albumsFragment, resources.getString(R.string.albums_fragment_title))
         viewPager.adapter = artistDetailPagerAdapter
     }
 
@@ -99,6 +102,11 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
                 setActionBarPalette()
             }
         })
+    }
+
+    override fun showAlbums(albums: List<ImageTitle>) {
+        albumsFragment.adapter.items = albums
+   //     albumsFragment.adapter.notifyDataSetChanged()
     }
 
     private fun setActionBarTitle(title: String) {

@@ -17,26 +17,39 @@
 package com.antonioleiva.bandhookkotlin.ui.presenter
 
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetArtistDetailInteractor
+import com.antonioleiva.bandhookkotlin.domain.interactor.GetTopAlbumsInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
 import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistDetailEvent
+import com.antonioleiva.bandhookkotlin.domain.interactor.event.TopAlbumsEvent
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
+import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.ArtistView
 
 open class ArtistPresenter(
         override val view: ArtistView,
         override val bus: Bus,
         val artistDetailInteractor: GetArtistDetailInteractor,
+        val topAlbumsInteractor: GetTopAlbumsInteractor,
         val interactorExecutor: InteractorExecutor,
-        val mapper: ArtistDetailDataMapper) : Presenter<ArtistView> {
+        val artistDetailMapper: ArtistDetailDataMapper,
+        val albumsMapper: ImageTitleDataMapper) : Presenter<ArtistView> {
 
-    open fun init(id: String) {
-        val interactor = artistDetailInteractor;
-        interactor.id = id
-        interactorExecutor.execute(interactor)
+    open fun init(artistId: String) {
+        val artistDetailInteractor = artistDetailInteractor;
+        artistDetailInteractor.id = artistId
+        interactorExecutor.execute(artistDetailInteractor)
+
+        val topAlbumsInteratcor = topAlbumsInteractor
+        topAlbumsInteratcor.artistId = artistId
+        interactorExecutor.execute(topAlbumsInteractor)
     }
 
     fun onEvent(event: ArtistDetailEvent) {
-        view.showArtist(mapper.transform(event.artist))
+        view.showArtist(artistDetailMapper.transform(event.artist))
+    }
+
+    fun onEvent(event: TopAlbumsEvent) {
+        view.showAlbums(albumsMapper.transformAlbums(event.topAlbums))
     }
 }
