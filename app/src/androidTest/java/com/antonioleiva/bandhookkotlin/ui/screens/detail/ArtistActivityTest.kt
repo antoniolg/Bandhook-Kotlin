@@ -56,6 +56,16 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
         assertEquals(ArtistDetailPagerAdapter::class.java, artistActivity.viewPager.adapter.javaClass)
     }
 
+    fun testViewPagerTitles() {
+        // Given
+        val desiredBioTitle = instrumentation.targetContext.getString(com.antonioleiva.bandhookkotlin.R.string.bio_fragment_title)
+        val desiredAlbumsTitle = instrumentation.targetContext.getString(com.antonioleiva.bandhookkotlin.R.string.albums_fragment_title)
+
+        // Then
+        assertEquals(desiredBioTitle, artistActivity.viewPager.adapter.getPageTitle(0))
+        assertEquals(desiredAlbumsTitle, artistActivity.viewPager.adapter.getPageTitle(1))
+    }
+
     @UiThreadTest
     fun testLifecycleDelegatedToPresenter() {
         // Given
