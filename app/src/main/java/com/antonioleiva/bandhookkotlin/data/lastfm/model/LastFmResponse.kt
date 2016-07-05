@@ -18,7 +18,7 @@ package com.antonioleiva.bandhookkotlin.data.lastfm.model
 
 import com.google.gson.annotations.SerializedName
 
-class LastFmResponse (
+open class LastFmResponse (
         val results: LastFmResult,
         val artist: LastFmArtist,
         @SerializedName("topalbums") val topAlbums: LastFmTopAlbums,

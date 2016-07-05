@@ -11,7 +11,7 @@ import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 01/07/16.
  */

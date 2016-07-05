@@ -8,6 +8,7 @@ import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.ArtistDetailPagerAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
+import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.presenter.ArtistPresenter
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -16,7 +17,7 @@ import org.mockito.ArgumentCaptor
 import org.mockito.Mockito.*
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  * *         02/07/16.
  */
 class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(ArtistActivity::class.java) {
@@ -28,6 +29,7 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
 
     lateinit var image: ImageView
     lateinit var biographyFragment: BiographyFragment
+    lateinit var albumsFragment: AlbumsFragment
 
     public override fun setUp() {
         super.setUp()
@@ -45,15 +47,20 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
 
         image = artistActivity.image
         biographyFragment = artistActivity.biographyFragment
+        albumsFragment = artistActivity.albumsFragment
     }
 
     fun testOnCreate() {
+        // When created
+        // Then
         assertNotNull(artistActivity.image)
         assertEquals(BaseActivity.IMAGE_TRANSITION_NAME, artistActivity.image.transitionName)
         assertNull(artistActivity.title)
         assertNotNull(artistActivity.tabLayout)
         assertNotNull(artistActivity.viewPager)
         assertEquals(ArtistDetailPagerAdapter::class.java, artistActivity.viewPager.adapter.javaClass)
+        assertEquals(biographyFragment, (artistActivity.viewPager.adapter as ArtistDetailPagerAdapter).getItem(0))
+        assertEquals(albumsFragment, (artistActivity.viewPager.adapter as ArtistDetailPagerAdapter).getItem(1))
     }
 
     fun testViewPagerTitles() {
@@ -105,5 +112,17 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
         // Then
         assertEquals(artistDetail.name, artistActivity.supportActionBar?.title)
         assertEquals(artistDetail.bio, biographyFragment.getBiographyText())
+    }
+
+    @UiThreadTest
+    fun testShowAlbums() {
+        // Given
+        val albumImageTitles = listOf(ImageTitle("album id", "album name", "album url"))
+
+        // When
+        artistActivity.showAlbums(albumImageTitles)
+
+        // Then
+        assertEquals(albumImageTitles, albumsFragment.adapter.items)
     }
 }

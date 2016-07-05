@@ -26,7 +26,7 @@ import com.squareup.picasso.Callback
 import org.jetbrains.anko.find
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 01/07/16.
  */
@@ -106,7 +106,6 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
 
     override fun showAlbums(albums: List<ImageTitle>) {
         albumsFragment.adapter.items = albums
-   //     albumsFragment.adapter.notifyDataSetChanged()
     }
 
     private fun setActionBarTitle(title: String) {

@@ -3,7 +3,7 @@ package com.antonioleiva.bandhookkotlin.domain.repository
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 03/07/16.
  */

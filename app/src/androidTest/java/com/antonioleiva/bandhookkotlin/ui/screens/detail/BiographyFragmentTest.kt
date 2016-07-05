@@ -9,7 +9,7 @@ import android.widget.TextView
 import org.mockito.Mockito.*
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  * *         03/07/16.
  */
 class BiographyFragmentTest : AndroidTestCase() {

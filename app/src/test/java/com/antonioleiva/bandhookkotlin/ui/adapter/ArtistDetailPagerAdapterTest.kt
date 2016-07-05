@@ -9,7 +9,7 @@ import org.mockito.Mock
 import org.mockito.runners.MockitoJUnitRunner
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  * *         02/07/16.
  */
 @RunWith(MockitoJUnitRunner::class)

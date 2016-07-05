@@ -27,9 +27,9 @@ import retrofit.RestAdapter
 import retrofit.client.OkClient
 import java.io.IOException
 
-public interface DataModule : LastFmServiceSingleton
+interface DataModule : LastFmServiceSingleton
 
-public interface LastFmServiceSingleton {
+interface LastFmServiceSingleton {
     val lastFmService: LastFmService
 }
 

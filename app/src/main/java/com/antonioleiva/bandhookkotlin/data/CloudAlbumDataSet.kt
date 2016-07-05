@@ -6,15 +6,15 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 03/07/16.
  */
 
 class CloudAlbumDataSet(val lastFmService: LastFmService) : AlbumDataSet {
 
-    override fun requestAlbum(id: String): Album? {
-        val result = lastFmService.requestAlbum(id)
+    override fun requestAlbum(mbid: String): Album? {
+        val result = lastFmService.requestAlbum(mbid)
         return AlbumMapper().transform(result.album)
     }
 

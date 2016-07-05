@@ -5,12 +5,12 @@ import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 03/07/16.
  */
 
-class AlbumRepositoryImp(val albumDataSets: List<AlbumDataSet>) : AlbumRepository {
+class AlbumRepositoryImpl(val albumDataSets: List<AlbumDataSet>) : AlbumRepository {
 
     override fun getAlbum(id: String): Album? {
         for (dataSet in albumDataSets) {

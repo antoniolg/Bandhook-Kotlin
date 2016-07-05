@@ -4,7 +4,7 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Event
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 03/07/16.
  */

@@ -6,7 +6,7 @@ import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumDetailEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 03/07/16.
  */

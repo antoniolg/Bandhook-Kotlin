@@ -10,7 +10,7 @@ import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.R
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 02/07/16.
  */
