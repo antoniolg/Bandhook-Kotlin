@@ -7,6 +7,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.graphics.Palette
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.R
@@ -18,8 +19,12 @@ import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
+import com.antonioleiva.bandhookkotlin.ui.fragment.AlbumsFragmentContainer
+import com.antonioleiva.bandhookkotlin.ui.presenter.AlbumsPresenter
 import com.antonioleiva.bandhookkotlin.ui.presenter.ArtistPresenter
+import com.antonioleiva.bandhookkotlin.ui.screens.album.AlbumActivity
 import com.antonioleiva.bandhookkotlin.ui.util.getNavigationId
+import com.antonioleiva.bandhookkotlin.ui.util.navigate
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.ArtistView
 import com.squareup.picasso.Callback
@@ -31,7 +36,7 @@ import org.jetbrains.anko.find
  * 01/07/16.
  */
 
-class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
+class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injector by Inject.instance {
 
     override val layoutResource: Int = R.layout.activity_artist
 
@@ -67,7 +72,7 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
 
     private fun setUpTabLayout() {
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setOnTabSelectedListener(object : OnTabSelected {
+        tabLayout.addOnTabSelectedListener(object : OnTabSelected {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 viewPager.currentItem = tab?.position ?: 0
             }
@@ -137,6 +142,19 @@ class ArtistActivity: BaseActivity(), ArtistView, Injector by Inject.instance {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    override fun navigateToAlbum(albumId: String) {
+        navigate<AlbumActivity>(albumId, findItemById(albumId), BaseActivity.IMAGE_TRANSITION_NAME)
+    }
+
+    private fun findItemById(id: String): View? {
+        val pos = albumsFragment.adapter.findPositionById(id)
+        return albumsFragment.recycler.layoutManager.findViewByPosition(pos).findViewById(R.id.image)
+    }
+
+    override fun getAlbumsPresenter(): AlbumsPresenter {
+        return presenter
     }
 }
 

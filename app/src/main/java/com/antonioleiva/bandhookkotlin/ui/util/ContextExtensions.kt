@@ -23,7 +23,7 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.view.View
 
-inline public fun <reified T : Activity> Activity.navigate(id: String, sharedView: View? = null,
+inline fun <reified T : Activity> Activity.navigate(id: String, sharedView: View? = null,
                                                            transitionName: String? = null) {
     val intent = Intent(this, T::class.java)
     intent.putExtra("id", id)
@@ -37,16 +37,16 @@ inline public fun <reified T : Activity> Activity.navigate(id: String, sharedVie
     ActivityCompat.startActivity(this, intent, options?.toBundle())
 }
 
-public fun Activity.getNavigationId(): String {
+fun Activity.getNavigationId(): String {
     val intent = intent
     return intent.getStringExtra("id")
 }
 
-public fun Context.getDimen(dimenRes: Int): Int {
+fun Context.getDimen(dimenRes: Int): Int {
     return resources.getDimensionPixelSize(dimenRes)
 }
 
-public fun Context.getAttrId(themeRes: Int, attrRes: Int): Int {
+fun Context.getAttrId(themeRes: Int, attrRes: Int): Int {
     val a = theme.obtainStyledAttributes(themeRes, intArrayOf(attrRes));
     val attributeResourceId = a.getResourceId(0, 0);
     a.recycle()

@@ -24,5 +24,5 @@ class LastFmAlbum(
         val url: String,
         val artist: LastFmArtist,
         @SerializedName("image") val images: List<LastFmImage>,
-        val tracks: LastFmTracklist
+        val tracks: LastFmTracklist?
 )

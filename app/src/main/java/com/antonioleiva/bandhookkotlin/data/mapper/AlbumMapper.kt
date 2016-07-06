@@ -11,7 +11,8 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Artist
  * 03/07/16.
  */
 
-class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapper: ImageMapper = ImageMapper()) {
+class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapper: ImageMapper = ImageMapper(),
+                  val trackMapper: TrackMapper = TrackMapper()) {
 
     fun transform(albums: List<LastFmAlbum>): List<Album> {
         return albums.filter { albumHasQualityInfo(it) }.mapNotNull { transform(it) }
@@ -31,7 +32,8 @@ class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapp
                     album.mbid,
                     album.name,
                     imageMapper.getMainImageUrl(album.images),
-                    Artist("", album.artist))
+                    Artist("", album.artist),
+                    trackMapper.transform(album.tracks.tracks))
         } else {
             return null
         }
@@ -43,7 +45,8 @@ class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapp
                     album.mbid,
                     album.name,
                     imageMapper.getMainImageUrl(album.images),
-                    artistMapper.transform(album.artist))
+                    artistMapper.transform(album.artist),
+                    trackMapper.transform(album.tracks?.tracks))
         } else {
             return null
         }

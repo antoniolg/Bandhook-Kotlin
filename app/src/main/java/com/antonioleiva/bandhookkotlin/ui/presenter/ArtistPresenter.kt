@@ -22,6 +22,7 @@ import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
 import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistDetailEvent
 import com.antonioleiva.bandhookkotlin.domain.interactor.event.TopAlbumsEvent
+import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.ArtistView
@@ -33,7 +34,7 @@ open class ArtistPresenter(
         val topAlbumsInteractor: GetTopAlbumsInteractor,
         val interactorExecutor: InteractorExecutor,
         val artistDetailMapper: ArtistDetailDataMapper,
-        val albumsMapper: ImageTitleDataMapper) : Presenter<ArtistView> {
+        val albumsMapper: ImageTitleDataMapper) : Presenter<ArtistView>, AlbumsPresenter {
 
     open fun init(artistId: String) {
         val artistDetailInteractor = artistDetailInteractor;
@@ -51,5 +52,9 @@ open class ArtistPresenter(
 
     fun onEvent(event: TopAlbumsEvent) {
         view.showAlbums(albumsMapper.transformAlbums(event.topAlbums))
+    }
+
+    override fun onAlbumClicked(item: ImageTitle) {
+        view.navigateToAlbum(item.id)
     }
 }

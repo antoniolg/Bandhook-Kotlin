@@ -41,6 +41,11 @@
         <activity
             android:name=".ui.screens.detail.ArtistActivity"
             android:parentActivityName=".ui.screens.main.MainActivity"/>
+
+        <activity
+            android:name=".ui.screens.album.AlbumActivity"
+            android:parentActivityName=".ui.screens.detail.ArtistActivity"/>
+
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.antonioleiva.bandhookkotlin.ui.screens.detail
 
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.RecyclerView
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
+import com.antonioleiva.bandhookkotlin.ui.fragment.AlbumsFragmentContainer
 
 /**
  * @author tpom6oh@gmail.com
@@ -19,6 +21,11 @@ import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 class AlbumsFragment: Fragment() {
 
     lateinit var adapter: ImageTitleAdapter
+        private set
+    lateinit var recycler: RecyclerView
+        private set
+
+    var albumsFragmentContainer: AlbumsFragmentContainer? = null
         private set
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,8 +40,26 @@ class AlbumsFragment: Fragment() {
     }
 
     private fun setUpRecyclerView(view: View) {
-        val recyclerView = view.findViewById(R.id.albums_view) as RecyclerView
+        recycler = view.findViewById(R.id.albums_view) as RecyclerView
         adapter = ImageTitleAdapter();
-        recyclerView.adapter = adapter;
+        recycler.adapter = adapter;
+
+        adapter.onItemClickListener = {
+            albumsFragmentContainer?.getAlbumsPresenter()?.onAlbumClicked(it)
+        }
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        if (context is AlbumsFragmentContainer) {
+            albumsFragmentContainer = context
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+
+        albumsFragmentContainer = null
     }
 }

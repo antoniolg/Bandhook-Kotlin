@@ -23,4 +23,6 @@ interface ArtistView : PresentationView {
     fun showArtist(artistDetail: ArtistDetail)
 
     fun showAlbums(albums: List<ImageTitle>)
+
+    fun navigateToAlbum(albumId: String)
 }
