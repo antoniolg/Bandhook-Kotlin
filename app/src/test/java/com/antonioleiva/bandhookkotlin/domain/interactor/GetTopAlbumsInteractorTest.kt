@@ -31,7 +31,7 @@ class GetTopAlbumsInteractorTest {
 
     @Before
     fun setUp() {
-        album = Album("album id", "Album name", null, Artist("artist id", "artist name"))
+        album = Album("album id", "Album name", null, Artist("artist id", "artist name"), emptyList())
 
         `when`(albumRepository.getTopAlbums(artistId, artistName)).thenReturn(listOf(album))
         `when`(albumRepository.getTopAlbums(null, artistName)).thenReturn(listOf(album))
@@ -69,7 +69,7 @@ class GetTopAlbumsInteractorTest {
     @Test(expected = IllegalStateException::class)
     fun testInvoke_withoutData() {
         // When
-        val event = getTopAlbumsInteractor.invoke()
+        getTopAlbumsInteractor.invoke()
 
         // Then expected illegal state exception
     }

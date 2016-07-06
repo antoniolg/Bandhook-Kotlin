@@ -12,14 +12,14 @@ import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
  *
  * 05/07/16.
  */
-class AlbumPresenter(
+open class AlbumPresenter(
         override val view: AlbumView,
         override val bus: Bus,
         val albumInteractor: GetAlbumDetailInteractor,
         val interactorExecutor: InteractorExecutor,
         val albumDetailMapper: AlbumDetailDataMapper) : Presenter<AlbumView> {
 
-    fun init(albumId: String) {
+    open fun init(albumId: String) {
         val albumDetailInteractor = albumInteractor;
         albumInteractor.albumId = albumId
         interactorExecutor.execute(albumDetailInteractor)

@@ -18,8 +18,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentCaptor
-import org.mockito.Captor
 import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.runners.MockitoJUnitRunner
@@ -41,8 +39,6 @@ class ArtistPresenterTest {
     lateinit var albumRepository: AlbumRepository
     @Mock
     lateinit var interactorExecutor: InteractorExecutor
-    @Captor
-    lateinit var imageTitlesCaptor: ArgumentCaptor<List<ImageTitle>>
 
     lateinit var artistDetailInteractor: GetArtistDetailInteractor
     lateinit var topAlbumsInteractor: GetTopAlbumsInteractor
@@ -102,7 +98,7 @@ class ArtistPresenterTest {
     @Test
     fun testOnTopAlbumsEvent() {
         // Given
-        val album = Album("album id", "album name", null, Artist("artist id", "artist name"))
+        val album = Album("album id", "album name", null, Artist("artist id", "artist name"), emptyList())
         val topAlbumsEvent = TopAlbumsEvent(listOf(album))
         val desiredAlbums = albumsMapper.transformAlbums(topAlbumsEvent.topAlbums)
 
@@ -129,5 +125,17 @@ class ArtistPresenterTest {
 
         // Then
         verify(bus).register(artistPresenter)
+    }
+
+    @Test
+    fun testOnAlbumClicked() {
+        // Given
+        val imageId = "image id"
+
+        // When
+        artistPresenter.onAlbumClicked(ImageTitle(imageId, "image name", null))
+
+        // Then
+        verify(artistView).navigateToAlbum(imageId)
     }
 }

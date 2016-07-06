@@ -26,9 +26,9 @@ class ImageTitleDataMapperTest {
 
         artists = listOf(artistWithImageUrl, artistWithoutImageUrl, artistWithEmptyImageUrl)
 
-        val albumWithImageUrl = Album("album id", "album name", "album url", artistWithImageUrl)
-        val albumWithoutImageUrl = Album("album id", "album name", null, artistWithImageUrl)
-        val albumWithEmptyImageUrl = Album("album id", "album name", "", artistWithImageUrl)
+        val albumWithImageUrl = Album("album id", "album name", "album url", artistWithImageUrl, emptyList())
+        val albumWithoutImageUrl = Album("album id", "album name", null, artistWithImageUrl, emptyList())
+        val albumWithEmptyImageUrl = Album("album id", "album name", "", artistWithImageUrl, emptyList())
 
         albums = listOf(albumWithImageUrl, albumWithoutImageUrl, albumWithEmptyImageUrl)
 

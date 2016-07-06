@@ -72,11 +72,6 @@ class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injec
 
     private fun setUpTabLayout() {
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.addOnTabSelectedListener(object : OnTabSelected {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                viewPager.currentItem = tab?.position ?: 0
-            }
-        })
     }
 
     private fun setUpViewPager() {
@@ -155,13 +150,5 @@ class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injec
 
     override fun getAlbumsPresenter(): AlbumsPresenter {
         return presenter
-    }
-}
-
-interface OnTabSelected: TabLayout.OnTabSelectedListener {
-    override fun onTabReselected(tab: TabLayout.Tab?) {
-    }
-
-    override fun onTabUnselected(tab: TabLayout.Tab?) {
     }
 }

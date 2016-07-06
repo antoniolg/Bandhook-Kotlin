@@ -41,8 +41,8 @@ class AlbumRepositoryImplTest {
     @Before
     fun setUp() {
 
-        albumInBothDataSets = Album(albumIdInBothDataSets, "album name", "album url", Artist(artistIdInBothDataSets, artistName))
-        albumInSecondDataSet = Album(albumIdInSecondDataSet, "album name", "album url", Artist(artistIdInBothDataSets, artistName))
+        albumInBothDataSets = Album(albumIdInBothDataSets, "album name", "album url", Artist(artistIdInBothDataSets, artistName), emptyList())
+        albumInSecondDataSet = Album(albumIdInSecondDataSet, "album name", "album url", Artist(artistIdInBothDataSets, artistName), emptyList())
 
         mockRequestAlbumReturns()
 

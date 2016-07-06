@@ -34,7 +34,7 @@ class AlbumMapperTest {
     fun setUp() {
         val lastFmArtist = LastFmArtist(artistName, "artist mbid", "artist url", emptyList(), null, null)
         val lastFmImages = listOf(LastFmImage("image url", LastFmImageType.MEGA.type))
-        val lastFmTracklist = LastFmTracklist(emptyList())
+        val lastFmTracklist = LastFmTracklist(listOf(LastFmTrack("track name", 10, null, null, lastFmArtist)))
 
         lastFmAlbum = LastFmAlbum(albumName, albumMbid, albumUrl,
                 lastFmArtist, lastFmImages, lastFmTracklist)
@@ -103,6 +103,11 @@ class AlbumMapperTest {
         // Then
         assertNotNull(album)
         assertEquals(lastFmAlbumDetail.mbid, album?.id)
+        assertEquals(lastFmAlbumDetail.name, album?.name)
+        assertNotNull(album?.url)
+        assertEquals(lastFmAlbumDetail.artist, album?.artist?.name)
+        assertEquals(lastFmAlbumDetail.tracks.tracks[0].name, album?.tracks?.get(0)?.name)
+        assertEquals(lastFmAlbumDetail.tracks.tracks[0].duration, album?.tracks?.get(0)?.duration)
     }
 
     @Test
@@ -122,6 +127,12 @@ class AlbumMapperTest {
         // Then
         assertNotNull(album)
         assertEquals(lastFmAlbum.mbid, album?.id)
+        assertEquals(lastFmAlbum.name, album?.name)
+        assertNotNull(album?.url)
+        assertEquals(lastFmAlbum.artist.name, album?.artist?.name)
+        assertEquals(lastFmAlbum.artist.mbid, album?.artist?.id)
+        assertEquals(lastFmAlbum.tracks?.tracks?.get(0)?.name, album?.tracks?.get(0)?.name)
+        assertEquals(lastFmAlbum.tracks?.tracks?.get(0)?.duration, album?.tracks?.get(0)?.duration)
     }
 
     @Test

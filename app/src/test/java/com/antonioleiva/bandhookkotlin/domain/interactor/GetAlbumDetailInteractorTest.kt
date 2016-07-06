@@ -29,7 +29,7 @@ class GetAlbumDetailInteractorTest {
     @Before
     fun setUp() {
         `when`(albumRepository.getAlbum(albumId)).thenReturn(Album("album id", "album name",
-                "album url", Artist("artist id", "artist name", null, null, null)))
+                "album url", Artist("artist id", "artist name", null, null, null), emptyList()))
 
         getAlbumDetailInteractor = GetAlbumDetailInteractor(albumRepository)
     }
@@ -37,7 +37,7 @@ class GetAlbumDetailInteractorTest {
     @Test(expected = IllegalStateException::class)
     fun testInvoke_withoutId() {
         // When
-        val event = getAlbumDetailInteractor.invoke()
+        getAlbumDetailInteractor.invoke()
 
         // Then expected illegal state exception
     }
