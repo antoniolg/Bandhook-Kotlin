@@ -1,5 +1,6 @@
 package com.antonioleiva.bandhookkotlin.ui.adapter
 
+import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +12,15 @@ import org.jetbrains.anko.layoutInflater
 import kotlin.properties.Delegates
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 06/07/16.
  */
 
-class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
+open class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
 
     var items: List<TrackDetail> by Delegates.observable(emptyList())
-                    { prop, old, new -> notifyDataSetChanged() }
+                    { prop, old, new -> notifyDataSetChange() }
 
     override fun getItemCount(): Int {
         return items.count()
@@ -34,20 +35,29 @@ class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
         return TracksAdapter.ViewHolder(v)
     }
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    @VisibleForTesting
+    open fun notifyDataSetChange() {
+        notifyDataSetChanged()
+    }
+
+    open class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val trackNumberTextView: TextView = view.find(R.id.track_number)
         private val trackNameTextView: TextView = view.find(R.id.track_name)
         private val trackLengthTextView: TextView = view.find(R.id.track_length)
 
-        fun setItem(item: TrackDetail, position: Int) {
-            val fullMinutes = item.duration / 60
-            val restSeconds = item.duration % 60
-            val trackLength = String.format("%d:%02d", fullMinutes, restSeconds);
+        open fun setItem(item: TrackDetail, position: Int) {
 
             trackNumberTextView.text = "${position + 1}"
             trackNameTextView.text = item.name
-            trackLengthTextView.text = "$trackLength"
+            trackLengthTextView.text = "${secondsToTrackDurationString(item)}"
+        }
+
+        private fun secondsToTrackDurationString(item: TrackDetail): String {
+            val fullMinutes = item.duration / 60
+            val restSeconds = item.duration % 60
+            val trackLength = String.format("%d:%02d", fullMinutes, restSeconds);
+            return trackLength
         }
     }
 }

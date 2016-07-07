@@ -46,6 +46,10 @@ class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
 
     var adapter = TracksAdapter()
 
+    private val listAnimationStartDelay = 500L
+    private val noTranslation = 0f
+    private val transparent = 0f
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpTransition()
@@ -97,7 +101,7 @@ class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
     }
 
     private fun animateTrackListUp() {
-        listCard.animate().setStartDelay(500).translationY(0f)
+        listCard.animate().setStartDelay(listAnimationStartDelay).translationY(noTranslation)
     }
 
     private fun populateTrackList(TrackDetails: List<TrackDetail>) {
@@ -120,7 +124,7 @@ class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
     }
 
     override fun onBackPressed() {
-        listCard.animate().alpha(0f).setListener(object: AnimatorListenerAdapter() {
+        listCard.animate().alpha(transparent).setListener(object: AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
                 supportFinishAfterTransition();
             }

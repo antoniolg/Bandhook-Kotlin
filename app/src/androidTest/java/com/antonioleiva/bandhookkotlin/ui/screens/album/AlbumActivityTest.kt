@@ -5,8 +5,10 @@ import android.support.test.InstrumentationRegistry
 import android.test.ActivityInstrumentationTestCase2
 import android.test.UiThreadTest
 import android.widget.ImageView
+import com.antonioleiva.bandhookkotlin.domain.entity.Track
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
+import com.antonioleiva.bandhookkotlin.ui.entity.mapper.TrackDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.AlbumPresenter
 import com.antonioleiva.bandhookkotlin.ui.screens.detail.ArtistActivity
 import com.squareup.picasso.Callback
@@ -49,7 +51,16 @@ class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumA
         // When created
         // Then
         assertNotNull(albumActivity.image)
+        assertNotNull(albumActivity.trackList)
+        assertNotNull(albumActivity.listCard)
+        assertNotNull(albumActivity.albumListBreakingEdgeHeight)
+        assertNotNull(albumActivity.trackDataMapper)
+        assertNotNull(albumActivity.presenter)
+        assertNotNull(albumActivity.adapter)
+        assertNull(albumActivity.title)
         assertEquals(BaseActivity.IMAGE_TRANSITION_NAME, albumActivity.image.transitionName)
+        assertEquals(albumActivity.adapter, albumActivity.trackList.adapter)
+        assertEquals(- albumActivity.albumListBreakingEdgeHeight, albumActivity.listCard.translationY)
     }
 
     @UiThreadTest
@@ -76,8 +87,8 @@ class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumA
         `when`(picassoRequestCreator.fit()).thenReturn(picassoRequestCreator)
         `when`(picassoRequestCreator.centerCrop()).thenReturn(picassoRequestCreator)
         val picassoCallbackArgumentCaptor = ArgumentCaptor.forClass(Callback.EmptyCallback::class.java)
-        val albumDetail = AlbumDetail("id", "name", "url", emptyList())
-        val desiredTracksDescription = albumDetail.tracks.map { it.name }.joinToString()
+        val track = Track("track name", 10)
+        val albumDetail = AlbumDetail("id", "name", "url", listOf(track, track))
 
         // When
         albumActivity.showAlbum(albumDetail)
@@ -90,7 +101,7 @@ class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumA
         picassoCallbackArgumentCaptor.value.onSuccess()
 
         // Then
-        assertEquals(desiredTracksDescription, albumActivity.text.text)
+        assertEquals(albumActivity.adapter.items, TrackDataMapper().transform(albumDetail.tracks))
     }
 
     @UiThreadTest
