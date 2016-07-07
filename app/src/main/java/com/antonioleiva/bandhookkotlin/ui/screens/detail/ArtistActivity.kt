@@ -115,7 +115,7 @@ class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injec
     private fun makeStatusBarTransparent() {
         supportsLollipop {
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
     }
 
@@ -124,19 +124,19 @@ class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injec
         val bitmap = drawable?.bitmap
         if (bitmap != null) {
             Palette.from(bitmap).generate { palette ->
-                val darkVibrantColor = palette.getDarkVibrantColor(R.attr.colorPrimary);
-                collapsingToolbarLayout.setContentScrimColor(darkVibrantColor);
-                collapsingToolbarLayout.setStatusBarScrimColor(darkVibrantColor);
+                val darkVibrantColor = palette.getDarkVibrantColor(R.attr.colorPrimary)
+                collapsingToolbarLayout.setContentScrimColor(darkVibrantColor)
+                collapsingToolbarLayout.setStatusBarScrimColor(darkVibrantColor)
             };
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item != null && item.itemId == android.R.id.home) {
-            supportFinishAfterTransition();
-            return true;
+            supportFinishAfterTransition()
+            return true
         }
-        return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item)
     }
 
     override fun navigateToAlbum(albumId: String) {

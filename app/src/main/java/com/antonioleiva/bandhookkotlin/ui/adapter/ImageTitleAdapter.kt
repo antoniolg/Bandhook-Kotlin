@@ -29,7 +29,7 @@ import org.jetbrains.anko.find
 import org.jetbrains.anko.layoutInflater
 import kotlin.properties.Delegates
 
-class ImageTitleAdapter() : RecyclerView.Adapter<ViewHolder>() {
+class ImageTitleAdapter() : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
 
     var items: List<ImageTitle> by Delegates.observable(emptyList()) { prop, old, new -> notifyDataSetChanged() }
 
@@ -47,16 +47,17 @@ class ImageTitleAdapter() : RecyclerView.Adapter<ViewHolder>() {
     override fun getItemCount() = items.size
 
     fun findPositionById(id: String): Int = items.withIndex().first({ it.value.id == id }).index
-}
 
-class ViewHolder(view: View, var onItemClickListener: ((ImageTitle) -> Unit)?) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, var onItemClickListener: ((ImageTitle) -> Unit)?) : RecyclerView.ViewHolder(view) {
 
-    private val title: TextView = view.find(R.id.title)
-    private val image: ImageView = view.find(R.id.image)
+        private val title: TextView = view.find(R.id.title)
+        private val image: ImageView = view.find(R.id.image)
 
-    fun setItem(item: ImageTitle) {
-        itemView?.singleClick { onItemClickListener?.invoke(item) }
-        title.text = item.name
-        Picasso.with(itemView.context).load(item.url).centerCrop().fit().into(image)
+        fun setItem(item: ImageTitle) {
+            itemView?.singleClick { onItemClickListener?.invoke(item) }
+            title.text = item.name
+            Picasso.with(itemView.context).load(item.url).centerCrop().fit().into(image)
+        }
     }
 }
+
