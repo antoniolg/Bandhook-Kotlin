@@ -41,7 +41,7 @@ class CloudArtistDataSetTest {
         lastFmResponse = LastFmResponse(LastFmResult(LastFmArtistMatches(emptyList())),
                 lastFmArtist, LastFmTopAlbums(emptyList()), LastFmArtistList(recomendedArtistList),
                 LastFmAlbumDetail("album name", artistMbid, "album url", "album artist", "album release",
-                        emptyList(), LastFmTracklist(emptyList())));
+                        emptyList(), LastFmTracklist(emptyList())))
 
         cloudArtistDataSet = CloudArtistDataSet(language, lastFmService)
 

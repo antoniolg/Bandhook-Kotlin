@@ -20,7 +20,7 @@ open class AlbumPresenter(
         val albumDetailMapper: AlbumDetailDataMapper) : Presenter<AlbumView> {
 
     open fun init(albumId: String) {
-        val albumDetailInteractor = albumInteractor;
+        val albumDetailInteractor = albumInteractor
         albumInteractor.albumId = albumId
         interactorExecutor.execute(albumDetailInteractor)
     }

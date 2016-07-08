@@ -56,8 +56,8 @@ class DataModuleImpl(appModule: AppModule) : DataModule, AppContext by appModule
                 .setRequestInterceptor(LastFmRequestInterceptor(apiKey, cacheDuration))
                 .setLogLevel(if (BuildConfig.DEBUG) RestAdapter.LogLevel.FULL else RestAdapter.LogLevel.NONE)
                 .setClient(OkClient(okHttpClient))
-                .build();
+                .build()
 
-        lastFmService = restAdapter.create(LastFmService::class.java) ;
+        lastFmService = restAdapter.create(LastFmService::class.java)
     }
 }

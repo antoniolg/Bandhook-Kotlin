@@ -56,7 +56,7 @@ open class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
         private fun secondsToTrackDurationString(item: TrackDetail): String {
             val fullMinutes = item.duration / 60
             val restSeconds = item.duration % 60
-            val trackLength = String.format("%d:%02d", fullMinutes, restSeconds);
+            val trackLength = String.format("%d:%02d", fullMinutes, restSeconds)
             return trackLength
         }
     }

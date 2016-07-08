@@ -27,11 +27,11 @@ interface HidingToolbarActivity {
 
     fun initHidingToolbar(viewWrapper: ScrollWrapper) {
 
-        var hidden = false;
+        var hidden = false
 
         viewWrapper.scrollObservers.add { wrapper ->
             if (wrapper.dY > 0 && wrapper.scrollY > toolbar.height && !hidden) {
-                hidden = true;
+                hidden = true
                 toolbar.animateExit()
             } else if (wrapper.dY < 0 && hidden) {
                 hidden = false

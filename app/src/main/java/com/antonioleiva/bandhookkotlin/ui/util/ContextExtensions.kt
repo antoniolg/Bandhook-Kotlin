@@ -47,8 +47,8 @@ fun Context.getDimen(dimenRes: Int): Int {
 }
 
 fun Context.getAttrId(themeRes: Int, attrRes: Int): Int {
-    val a = theme.obtainStyledAttributes(themeRes, intArrayOf(attrRes));
-    val attributeResourceId = a.getResourceId(0, 0);
+    val a = theme.obtainStyledAttributes(themeRes, intArrayOf(attrRes))
+    val attributeResourceId = a.getResourceId(0, 0)
     a.recycle()
     return attributeResourceId
 }

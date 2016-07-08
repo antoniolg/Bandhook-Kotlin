@@ -71,7 +71,7 @@ class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injec
     }
 
     private fun setUpTabLayout() {
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager)
     }
 
     private fun setUpViewPager() {
@@ -127,7 +127,7 @@ class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injec
                 val darkVibrantColor = palette.getDarkVibrantColor(R.attr.colorPrimary)
                 collapsingToolbarLayout.setContentScrimColor(darkVibrantColor)
                 collapsingToolbarLayout.setStatusBarScrimColor(darkVibrantColor)
-            };
+            }
         }
     }
 

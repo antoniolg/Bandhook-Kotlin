@@ -32,7 +32,7 @@ class CustomJobManager(context: Context)
                     .maxConsumerCount(3)    // up to 3 consumers at NextOnEditorActionListener time
                     .loadFactor(3)          // 3 jobs per consumer
                     .consumerKeepAlive(120) // wait 2 minutes
-                    .build();
+                    .build()
 
         }
     }

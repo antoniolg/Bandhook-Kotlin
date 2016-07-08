@@ -29,7 +29,7 @@ import java.util.*
 interface AppModule : AppContext, BusSingleton, InteractorExecutorSingleton, JobManagerSingleton, LanguageSingleton, PicassoSingleton
 
 class AppModuleImpl(context: Context): AppModule {
-    override val appContext = context;
+    override val appContext = context
     override val bus by lazy { BusImpl() }
     override val jobManager by lazy { CustomJobManager(context) }
     override val interactorExecutor by lazy { InteractorExecutorImpl(jobManager, bus) }

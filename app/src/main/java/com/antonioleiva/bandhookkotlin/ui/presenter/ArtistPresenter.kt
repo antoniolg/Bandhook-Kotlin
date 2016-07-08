@@ -37,7 +37,7 @@ open class ArtistPresenter(
         val albumsMapper: ImageTitleDataMapper) : Presenter<ArtistView>, AlbumsPresenter {
 
     open fun init(artistId: String) {
-        val artistDetailInteractor = artistDetailInteractor;
+        val artistDetailInteractor = artistDetailInteractor
         artistDetailInteractor.id = artistId
         interactorExecutor.execute(artistDetailInteractor)
 

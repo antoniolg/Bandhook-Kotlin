@@ -41,8 +41,8 @@ class AlbumsFragment: Fragment() {
 
     private fun setUpRecyclerView(view: View) {
         recycler = view.findViewById(R.id.albums_view) as RecyclerView
-        adapter = ImageTitleAdapter();
-        recycler.adapter = adapter;
+        adapter = ImageTitleAdapter()
+        recycler.adapter = adapter
 
         adapter.onItemClickListener = {
             albumsFragmentContainer?.getAlbumsPresenter()?.onAlbumClicked(it)

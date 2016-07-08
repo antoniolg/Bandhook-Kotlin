@@ -95,8 +95,8 @@ class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
                 }
             })
         } else {
-            supportStartPostponedEnterTransition();
-            supportFinishAfterTransition();
+            supportStartPostponedEnterTransition()
+            supportFinishAfterTransition()
         }
     }
 
@@ -111,7 +111,7 @@ class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
     private fun makeStatusBarTransparent() {
         supportsLollipop {
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
     }
 
@@ -126,7 +126,7 @@ class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
     override fun onBackPressed() {
         listCard.animate().alpha(transparent).setListener(object: AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
-                supportFinishAfterTransition();
+                supportFinishAfterTransition()
             }
         })
     }

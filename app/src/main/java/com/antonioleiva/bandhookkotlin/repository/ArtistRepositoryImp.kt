@@ -37,7 +37,7 @@ class ArtistRepositoryImp(val artistDataSets: List<ArtistDataSet>) : ArtistRepos
         // TODO test if result can be null
         for (dataSet in artistDataSets) {
             var result = dataSet.requestArtist(id)
-            return result;
+            return result
         }
         return Artist("empty", "empty", "empty")
     }
