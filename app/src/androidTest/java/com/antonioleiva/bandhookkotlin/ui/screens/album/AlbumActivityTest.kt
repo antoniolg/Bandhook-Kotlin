@@ -18,7 +18,7 @@ import org.mockito.ArgumentCaptor
 import org.mockito.Mockito.*
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  * *         06/07/16.
  */
 class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumActivity::class.java) {

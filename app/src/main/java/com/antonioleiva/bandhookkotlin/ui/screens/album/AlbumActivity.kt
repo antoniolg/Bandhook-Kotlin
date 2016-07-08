@@ -26,7 +26,7 @@ import com.squareup.picasso.Callback
 import org.jetbrains.anko.find
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 05/07/16.
  */

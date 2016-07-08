@@ -3,7 +3,7 @@ package com.antonioleiva.bandhookkotlin.ui.view
 import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 05/07/16.
  */

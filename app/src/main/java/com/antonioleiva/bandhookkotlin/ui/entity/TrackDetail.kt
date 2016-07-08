@@ -1,7 +1,7 @@
 package com.antonioleiva.bandhookkotlin.ui.entity
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 07/07/16.
  */

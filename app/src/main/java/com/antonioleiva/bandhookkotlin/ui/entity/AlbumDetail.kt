@@ -3,7 +3,7 @@ package com.antonioleiva.bandhookkotlin.ui.entity
 import com.antonioleiva.bandhookkotlin.domain.entity.Track
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 05/07/16.
  */

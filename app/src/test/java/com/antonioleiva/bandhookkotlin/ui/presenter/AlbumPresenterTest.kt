@@ -18,7 +18,7 @@ import org.mockito.Mockito
 import org.mockito.runners.MockitoJUnitRunner
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  * *         06/07/16.
  */
 @RunWith(MockitoJUnitRunner::class)

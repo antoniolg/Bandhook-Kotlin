@@ -4,7 +4,7 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Track
 import com.antonioleiva.bandhookkotlin.ui.entity.TrackDetail
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 07/07/16.
  */

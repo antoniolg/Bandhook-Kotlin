@@ -6,7 +6,7 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  * *         07/07/16.
  */
 class TrackDataMapperTest {

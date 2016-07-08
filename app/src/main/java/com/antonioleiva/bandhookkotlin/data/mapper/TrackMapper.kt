@@ -4,7 +4,7 @@ import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmTrack
 import com.antonioleiva.bandhookkotlin.domain.entity.Track
 
 /**
- * @author alexey@plainvanillagames.com
+ * @author tpom6oh@gmail.com
  *
  * 05/07/16.
  */
