@@ -9,4 +9,4 @@ import com.antonioleiva.bandhookkotlin.domain.interactor.base.Event
  * 03/07/16.
  */
 
-data class AlbumDetailEvent(val album: Album?) : Event
+data class AlbumEvent(val album: Album?) : Event

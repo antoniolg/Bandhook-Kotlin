@@ -98,7 +98,7 @@ class ArtistPresenterTest {
     @Test
     fun testOnTopAlbumsEvent() {
         // Given
-        val album = Album("album id", "album name", null, Artist("artist id", "artist name"), emptyList())
+        val album = Album("album id", "album name", Artist("artist id", "artist name"), null, emptyList())
         val topAlbumsEvent = TopAlbumsEvent(listOf(album))
         val desiredAlbums = albumsMapper.transformAlbums(topAlbumsEvent.topAlbums)
 

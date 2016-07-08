@@ -22,7 +22,7 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 class ArtistMapper(val imageMapper: ImageMapper = ImageMapper()) {
 
     fun transform(artists: List<LastFmArtist>): List<Artist> {
-        return artists.filter { artistHasQualityInfo(it) }.map { transform(it) }
+        return artists.take(10).filter { artistHasQualityInfo(it) }.map { transform(it) }
     }
 
     fun transform(artist: LastFmArtist): Artist = Artist(

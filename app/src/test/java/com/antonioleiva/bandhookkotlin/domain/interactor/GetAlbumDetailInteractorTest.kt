@@ -2,7 +2,7 @@ package com.antonioleiva.bandhookkotlin.domain.interactor
 
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumDetailEvent
+import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -29,7 +29,7 @@ class GetAlbumDetailInteractorTest {
     @Before
     fun setUp() {
         `when`(albumRepository.getAlbum(albumId)).thenReturn(Album("album id", "album name",
-                "album url", Artist("artist id", "artist name", null, null, null), emptyList()))
+                Artist("artist id", "artist name", null, null, null), "album url", emptyList()))
 
         getAlbumDetailInteractor = GetAlbumDetailInteractor(albumRepository)
     }
@@ -51,7 +51,7 @@ class GetAlbumDetailInteractorTest {
         val event = getAlbumDetailInteractor.invoke()
 
         // Then
-        assertEquals(AlbumDetailEvent::class.java, event.javaClass)
-        assertEquals(albumId, (event as AlbumDetailEvent).album?.id)
+        assertEquals(AlbumEvent::class.java, event.javaClass)
+        assertEquals(albumId, (event as AlbumEvent).album?.id)
     }
 }

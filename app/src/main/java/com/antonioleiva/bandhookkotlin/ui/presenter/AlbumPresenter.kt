@@ -3,7 +3,7 @@ package com.antonioleiva.bandhookkotlin.ui.presenter
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetAlbumDetailInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumDetailEvent
+import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumEvent
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.AlbumDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
 
@@ -25,7 +25,7 @@ open class AlbumPresenter(
         interactorExecutor.execute(albumDetailInteractor)
     }
 
-    fun onEvent(event: AlbumDetailEvent) {
+    fun onEvent(event: AlbumEvent) {
         view.showAlbum(albumDetailMapper.transform(event.album))
     }
 }

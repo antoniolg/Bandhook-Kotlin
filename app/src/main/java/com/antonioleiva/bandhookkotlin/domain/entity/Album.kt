@@ -16,4 +16,4 @@
 
 package com.antonioleiva.bandhookkotlin.domain.entity
 
-data class Album(val id: String, val name: String, val url: String?, val artist: Artist, val tracks: List<Track>)
+data class Album(val id: String, val name: String, val artist: Artist, val url: String? = null, val tracks: List<Track> = emptyList())

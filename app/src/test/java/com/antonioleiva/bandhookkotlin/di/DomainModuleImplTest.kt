@@ -36,31 +36,55 @@ class DomainModuleImplTest {
 
     @Test
     fun testGetRecommendedArtistsInteractorProvider() {
-        assertNotNull(domainModule.recommendedArtistsInteractorProvider)
+        // When
+        val recommendedArtistsInteractorProvider = domainModule.recommendedArtistsInteractorProvider
+
+        // Then
+        assertNotNull(recommendedArtistsInteractorProvider)
     }
 
     @Test
     fun testGetArtistDetailInteractorProvider() {
-        assertNotNull(domainModule.artistDetailInteractorProvider)
+        // When
+        val artistDetailInteractor = domainModule.artistDetailInteractorProvider
+
+        // Then
+        assertNotNull(artistDetailInteractor)
     }
 
     @Test
     fun testGetTopAlbumsInteractorProvider() {
-        assertNotNull(domainModule.topAlbumsInteractorProvider)
+        // When
+        val topAlbumsInteractorProvider = domainModule.topAlbumsInteractorProvider
+
+        // Then
+        assertNotNull(topAlbumsInteractorProvider)
     }
 
     @Test
     fun testGetAlbumInteractorProvider() {
-        assertNotNull(domainModule.albumInteractorProvider)
+        // When
+        val albumInteractorProvider = domainModule.albumInteractorProvider
+
+        // Then
+        assertNotNull(albumInteractorProvider)
     }
 
     @Test
     fun testGetArtistRepository() {
-        assertNotNull(domainModule.artistRepository)
+        // When
+        val artistRepository = domainModule.artistRepository
+
+        // Then
+        assertNotNull(artistRepository)
     }
 
     @Test
     fun testGetAlbumRepository() {
-        assertNotNull(domainModule.albumRepository)
+        // When
+        val albumRepository = domainModule.albumRepository
+
+        // Then
+        assertNotNull(albumRepository)
     }
 }

@@ -18,7 +18,7 @@ class AlbumDetailDataMapperTest {
 
     @Before
     fun setUp() {
-        album = Album("album id", "album name", "album url", Artist("artist id", "artist name"), emptyList())
+        album = Album("album id", "album name", Artist("artist id", "artist name"), "album url", emptyList())
 
         albumDetailDataMapper = AlbumDetailDataMapper()
     }

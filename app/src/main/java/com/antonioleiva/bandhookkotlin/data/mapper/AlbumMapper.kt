@@ -31,8 +31,8 @@ class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapp
             return Album(
                     album.mbid,
                     album.name,
-                    imageMapper.getMainImageUrl(album.images),
                     Artist("", album.artist),
+                    imageMapper.getMainImageUrl(album.images),
                     trackMapper.transform(album.tracks.tracks))
         } else {
             return null
@@ -44,8 +44,8 @@ class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapp
             return Album(
                     album.mbid,
                     album.name,
-                    imageMapper.getMainImageUrl(album.images),
                     artistMapper.transform(album.artist),
+                    imageMapper.getMainImageUrl(album.images),
                     trackMapper.transform(album.tracks?.tracks))
         } else {
             return null

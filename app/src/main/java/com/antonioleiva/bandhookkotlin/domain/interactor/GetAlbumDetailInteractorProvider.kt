@@ -2,7 +2,7 @@ package com.antonioleiva.bandhookkotlin.domain.interactor
 
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Event
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Interactor
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumDetailEvent
+import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 
 /**
@@ -19,7 +19,7 @@ class GetAlbumDetailInteractor(val albumRepository: AlbumRepository) : Interacto
         val id = albumId ?: throw IllegalStateException("Album id should be specified")
 
         val album = albumRepository.getAlbum(id)
-        return AlbumDetailEvent(album)
+        return AlbumEvent(album)
     }
 
 }

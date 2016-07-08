@@ -9,5 +9,5 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Track
  */
 data class AlbumDetail(val id: String,
                        val name: String,
-                       val url: String?,
-                       val tracks: List<Track>)
+                       val url: String? = null,
+                       val tracks: List<Track> = emptyList())

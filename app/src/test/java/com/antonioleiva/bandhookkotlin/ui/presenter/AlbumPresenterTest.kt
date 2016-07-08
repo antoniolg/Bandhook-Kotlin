@@ -5,7 +5,7 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetAlbumDetailInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumDetailEvent
+import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.AlbumDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
@@ -60,7 +60,7 @@ class AlbumPresenterTest {
     @Test
     fun testOnEvent() {
         // Given
-        val albumDetailEvent = AlbumDetailEvent(Album("album id", "album name", "album url", Artist("artist id", "artist name"), emptyList()))
+        val albumDetailEvent = AlbumEvent(Album("album id", "album name", Artist("artist id", "artist name"), "album url", emptyList()))
         val desiredAlbum = albumDetailMapper.transform(albumDetailEvent.album)
 
         // When
