@@ -20,6 +20,7 @@ import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.*
 import com.antonioleiva.bandhookkotlin.data.mapper.ArtistMapper
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,7 +36,7 @@ class CloudArtistDataSetTest {
     lateinit var lastFmService: LastFmService
 
     lateinit var lastFmResponse: LastFmResponse
-    lateinit var recomendedArtistList: List<LastFmArtist>
+    lateinit var recommendedArtistList: List<LastFmArtist>
     lateinit var lastFmArtist: LastFmArtist
 
     val artistMapper = ArtistMapper()
@@ -45,15 +46,17 @@ class CloudArtistDataSetTest {
     private val artistMbid = "artist mbid"
     private val language = "lang"
 
+    private val lastFmAlbumDetail = LastFmAlbumDetail("album name", artistMbid, "album url", "album artist", "album release",
+            emptyList(), LastFmTracklist(emptyList()))
+
     @Before
     fun setUp() {
         lastFmArtist = LastFmArtist("artist name", artistMbid, "artist url", null, null, null)
-        recomendedArtistList = listOf(lastFmArtist)
+        recommendedArtistList = listOf(lastFmArtist)
 
         lastFmResponse = LastFmResponse(LastFmResult(LastFmArtistMatches(emptyList())),
-                lastFmArtist, LastFmTopAlbums(emptyList()), LastFmArtistList(recomendedArtistList),
-                LastFmAlbumDetail("album name", artistMbid, "album url", "album artist", "album release",
-                        emptyList(), LastFmTracklist(emptyList())))
+                lastFmArtist, LastFmTopAlbums(emptyList()), LastFmArtistList(recommendedArtistList),
+                lastFmAlbumDetail)
 
         cloudArtistDataSet = CloudArtistDataSet(language, lastFmService)
 
@@ -68,7 +71,7 @@ class CloudArtistDataSetTest {
 
         // Then
         verify(lastFmService).requestSimilar(cloudArtistDataSet.coldplayMbid)
-        assertEquals(artistMapper.transform(recomendedArtistList), recommendedArtists)
+        assertEquals(artistMapper.transform(recommendedArtistList), recommendedArtists)
     }
 
     @Test
@@ -79,5 +82,23 @@ class CloudArtistDataSetTest {
         // Then
         verify(lastFmService).requestArtistInfo(artistMbid, language)
         assertEquals(artistMapper.transform(lastFmArtist), requestedArtist)
+    }
+
+    @Test
+    fun testRequestArtist_unknownId() {
+        // Given
+        val unknownArtisMbid = "unknown artist mbid"
+        val unknownArtistResponse = LastFmResponse(LastFmResult(LastFmArtistMatches(emptyList())),
+                LastFmArtist("unknown artist name", null, "unknown artist url"),
+                LastFmTopAlbums(emptyList()),
+                LastFmArtistList(emptyList()), lastFmAlbumDetail)
+        `when`(lastFmService.requestArtistInfo(unknownArtisMbid, language)).thenReturn(unknownArtistResponse)
+
+        // When
+        val requestedArtist = cloudArtistDataSet.requestArtist(unknownArtisMbid)
+
+        // Then
+        verify(lastFmService).requestArtistInfo(unknownArtisMbid, language)
+        assertNull(requestedArtist)
     }
 }
