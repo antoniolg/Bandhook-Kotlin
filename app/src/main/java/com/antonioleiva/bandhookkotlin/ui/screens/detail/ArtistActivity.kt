@@ -49,7 +49,7 @@ import org.jetbrains.anko.find
 
 class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injector by Inject.instance {
 
-    override val layoutResource: Int = R.layout.activity_artist
+    override val layoutResource = R.layout.activity_artist
 
     val image by lazy { find<ImageView>(R.id.collapse_image) }
     val collapsingToolbarLayout by lazy { find<CollapsingToolbarLayout>(R.id.collapse_toolbar) }
