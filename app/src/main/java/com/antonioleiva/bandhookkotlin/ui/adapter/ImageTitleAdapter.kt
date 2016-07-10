@@ -23,10 +23,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
+import com.antonioleiva.bandhookkotlin.ui.util.inflate
 import com.antonioleiva.bandhookkotlin.ui.util.singleClick
 import com.squareup.picasso.Picasso
 import org.jetbrains.anko.find
-import org.jetbrains.anko.layoutInflater
 import kotlin.properties.Delegates
 
 class ImageTitleAdapter() : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
@@ -36,7 +36,7 @@ class ImageTitleAdapter() : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>()
     var onItemClickListener: ((ImageTitle) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = parent.context.layoutInflater.inflate(R.layout.item_view, parent, false)
+        val v = parent.inflate(R.layout.item_view)
         return ViewHolder(v, onItemClickListener)
     }
 

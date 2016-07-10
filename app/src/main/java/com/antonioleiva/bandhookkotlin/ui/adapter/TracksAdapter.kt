@@ -23,8 +23,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.entity.TrackDetail
+import com.antonioleiva.bandhookkotlin.ui.util.inflate
 import org.jetbrains.anko.find
-import org.jetbrains.anko.layoutInflater
 import kotlin.properties.Delegates
 
 open class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
@@ -41,7 +41,7 @@ open class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder? {
-        val v = parent.context.layoutInflater.inflate(R.layout.track_item_view, parent, false)
+        val v = parent.inflate(R.layout.track_item_view)
         return TracksAdapter.ViewHolder(v)
     }
 
