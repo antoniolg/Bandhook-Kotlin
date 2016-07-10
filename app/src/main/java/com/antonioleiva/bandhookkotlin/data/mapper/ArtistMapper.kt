@@ -27,16 +27,8 @@ class ArtistMapper {
         return artists.filter { artistHasQualityInfo(it) }.mapNotNull { transform(it) }
     }
 
-    fun transform(artist: LastFmArtist): Artist? {
-        if (artist.mbid != null) {
-            return Artist(
-                    artist.mbid,
-                    artist.name,
-                    getImageUrl(artist.images),
-                    artist.bio?.content)
-        } else {
-            return null
-        }
+    fun transform(artist: LastFmArtist) = artist.mbid?.let {
+            Artist(artist.mbid, artist.name, getImageUrl(artist.images), artist.bio?.content)
     }
 
     private fun artistHasQualityInfo(it: LastFmArtist): Boolean {
