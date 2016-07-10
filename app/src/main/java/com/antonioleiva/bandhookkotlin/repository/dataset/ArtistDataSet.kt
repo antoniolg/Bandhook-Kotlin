@@ -21,5 +21,5 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 interface ArtistDataSet {
 
     fun requestRecommendedArtists(): List<Artist>
-    fun requestArtist(id: String): Artist
+    fun requestArtist(id: String): Artist?
 }

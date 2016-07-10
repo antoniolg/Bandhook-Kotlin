@@ -22,16 +22,18 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 class ArtistMapper(val imageMapper: ImageMapper = ImageMapper()) {
 
     fun transform(artists: List<LastFmArtist>): List<Artist> {
-        return artists.take(10).filter { artistHasQualityInfo(it) }.map { transform(it) }
+        return artists.filter { artistHasQualityInfo(it) }.mapNotNull { transform(it) }
     }
 
-    fun transform(artist: LastFmArtist): Artist = Artist(
-            artist.mbid,
-            artist.name,
-            imageMapper.getMainImageUrl(artist.images),
-            artist.bio?.content)
+    fun transform(artist: LastFmArtist) = artist.mbid?.let {
+        Artist(artist.mbid, artist.name, imageMapper.getMainImageUrl(artist.images), artist.bio?.content)
+    }
 
     private fun artistHasQualityInfo(it: LastFmArtist): Boolean {
-        return !it.mbid.isEmpty() && it.images != null && it.images.size > 0
+        return !isArtistMbidEmpty(it) && it.images != null && it.images.size > 0
+    }
+
+    private fun isArtistMbidEmpty(artist: LastFmArtist): Boolean {
+        return artist.mbid?.isEmpty() ?: true
     }
 }

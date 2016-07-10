@@ -22,7 +22,7 @@ import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 
 class ArtistDetailDataMapper {
 
-    fun transform(artist: Artist): ArtistDetail = ArtistDetail(
+    fun transform(artist: Artist) = ArtistDetail(
             artist.id,
             artist.name,
             artist.url,

@@ -20,11 +20,6 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Track
 import com.antonioleiva.bandhookkotlin.ui.entity.TrackDetail
 
 class TrackDataMapper {
-    fun transform(domainTrack: Track): TrackDetail {
-        return TrackDetail(domainTrack.name, domainTrack.duration)
-    }
-
-    fun transform(domainTrack: List<Track>): List<TrackDetail> {
-        return domainTrack.map { transform(it) }
-    }
+    fun transform(domainTrack: Track) = TrackDetail(domainTrack.name, domainTrack.duration)
+    fun transform(domainTrack: List<Track>) : List<TrackDetail> = domainTrack.map { transform(it) }
 }

@@ -36,29 +36,19 @@ class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapp
         return album.mbid?.isEmpty() ?: true
     }
 
-    fun transform(album: LastFmAlbumDetail): Album? {
-        if (album.mbid != null) {
-            return Album(
-                    album.mbid,
+    fun transform(album: LastFmAlbumDetail) = album.mbid?.let {
+            Album(album.mbid,
                     album.name,
                     Artist("", album.artist),
                     imageMapper.getMainImageUrl(album.images),
                     trackMapper.transform(album.tracks.tracks))
-        } else {
-            return null
-        }
     }
 
-    fun transform(album: LastFmAlbum): Album? {
-        if (album.mbid != null) {
-            return Album(
-                    album.mbid,
+    fun transform(album: LastFmAlbum) = album.mbid?.let {
+            Album(album.mbid,
                     album.name,
                     artistMapper.transform(album.artist),
                     imageMapper.getMainImageUrl(album.images),
                     trackMapper.transform(album.tracks?.tracks))
-        } else {
-            return null
-        }
     }
 }

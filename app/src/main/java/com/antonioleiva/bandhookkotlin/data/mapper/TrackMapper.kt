@@ -21,9 +21,6 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Track
 
 class TrackMapper() {
 
-    fun transform(tracks: List<LastFmTrack>?) : List<Track> {
-        return tracks?.map { transform(it) } ?: emptyList()
-    }
-
-    fun transform(track: LastFmTrack) : Track = Track(track.name, track.duration)
+    fun transform(tracks: List<LastFmTrack>?) : List<Track> = tracks?.map { transform(it) } ?: emptyList()
+    fun transform(track: LastFmTrack) = Track(track.name, track.duration)
 }

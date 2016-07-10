@@ -20,7 +20,7 @@ import com.google.gson.annotations.SerializedName
 
 class LastFmArtist (
         val name: String,
-        val mbid: String,
+        val mbid: String?,
         val url: String,
         @SerializedName("image") val images: List<LastFmImage>?,
         val similar: LastFmSimilar?,
