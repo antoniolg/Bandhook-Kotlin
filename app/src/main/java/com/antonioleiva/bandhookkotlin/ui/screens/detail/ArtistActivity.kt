@@ -18,6 +18,7 @@ package com.antonioleiva.bandhookkotlin.ui.screens.detail
 
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.support.annotation.VisibleForTesting
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
@@ -55,6 +56,7 @@ class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injec
     val viewPager by lazy { find<ViewPager>(R.id.viewpager) }
     val tabLayout by lazy { find<TabLayout>(R.id.tabs) }
 
+    @VisibleForTesting
     var presenter = ArtistPresenter(this, bus, artistDetailInteractorProvider, topAlbumsInteractorProvider,
             interactorExecutor, ArtistDetailDataMapper(), ImageTitleDataMapper())
 

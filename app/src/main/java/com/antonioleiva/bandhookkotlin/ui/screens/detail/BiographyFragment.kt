@@ -27,7 +27,7 @@ import com.antonioleiva.bandhookkotlin.R
 
 class BiographyFragment: Fragment() {
 
-    var biographyTextView: TextView? = null
+    private var biographyTextView: TextView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

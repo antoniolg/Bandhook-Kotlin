@@ -42,6 +42,8 @@ class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumA
 
     lateinit var image: ImageView
 
+    private val id = "id"
+
     public override fun setUp() {
         super.setUp()
 
@@ -51,7 +53,7 @@ class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumA
         injectInstrumentation(InstrumentationRegistry.getInstrumentation())
 
         val intent = Intent(instrumentation.context, ArtistActivity::class.java)
-        intent.putExtra("id", "id")
+        intent.putExtra(id, id)
         setActivityIntent(intent)
 
         albumActivity = getActivity()
@@ -72,7 +74,7 @@ class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumA
         assertNull(albumActivity.title)
         assertEquals(BaseActivity.IMAGE_TRANSITION_NAME, albumActivity.image.transitionName)
         assertEquals(albumActivity.adapter, albumActivity.trackList.adapter)
-        assertEquals(- albumActivity.albumListBreakingEdgeHeight, albumActivity.listCard.translationY)
+        assertEquals(-albumActivity.albumListBreakingEdgeHeight, albumActivity.listCard.translationY)
     }
 
     @UiThreadTest
@@ -87,7 +89,7 @@ class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumA
         // Then
         verify(presenter).onPause()
         verify(presenter).onResume()
-        verify(presenter).init("id")
+        verify(presenter).init(id)
     }
 
     @UiThreadTest
@@ -100,13 +102,14 @@ class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumA
         `when`(picassoRequestCreator.centerCrop()).thenReturn(picassoRequestCreator)
         val picassoCallbackArgumentCaptor = ArgumentCaptor.forClass(Callback.EmptyCallback::class.java)
         val track = Track("track name", 10)
-        val albumDetail = AlbumDetail("id", "name", "url", listOf(track, track))
+        val albumDetail = AlbumDetail("album id", "name", "url", listOf(track, track))
 
         // When
         albumActivity.showAlbum(albumDetail)
 
         // Then
         verify(picasso).load(albumDetail.url)
+        verify(picassoRequestCreator).fit()
         verify(picassoRequestCreator).into(eq(image), picassoCallbackArgumentCaptor.capture())
 
         // When

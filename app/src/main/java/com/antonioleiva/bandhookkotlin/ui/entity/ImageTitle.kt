@@ -21,7 +21,7 @@ data class ImageTitle(val id: String, val name: String, private val rawUrl: Stri
     val url: String?
 
     init {
-        // Picasso handles nulls nicely, but not an empty string
+        // Picasso handles nulls nicely, but not empty strings
         url = if ("" == rawUrl) null else rawUrl
     }
 }

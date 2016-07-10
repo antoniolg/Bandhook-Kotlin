@@ -19,7 +19,7 @@ package com.antonioleiva.bandhookkotlin.data
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.*
 import com.antonioleiva.bandhookkotlin.data.mapper.ArtistMapper
-import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -68,7 +68,7 @@ class CloudArtistDataSetTest {
 
         // Then
         verify(lastFmService).requestSimilar(cloudArtistDataSet.coldplayMbid)
-        Assert.assertEquals(artistMapper.transform(recomendedArtistList), recommendedArtists)
+        assertEquals(artistMapper.transform(recomendedArtistList), recommendedArtists)
     }
 
     @Test
@@ -78,6 +78,6 @@ class CloudArtistDataSetTest {
 
         // Then
         verify(lastFmService).requestArtistInfo(artistMbid, language)
-        Assert.assertEquals(artistMapper.transform(lastFmArtist), requestedArtist)
+        assertEquals(artistMapper.transform(lastFmArtist), requestedArtist)
     }
 }

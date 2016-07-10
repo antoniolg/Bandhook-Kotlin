@@ -43,6 +43,8 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
     lateinit var biographyFragment: BiographyFragment
     lateinit var albumsFragment: AlbumsFragment
 
+    private val id = "id"
+
     public override fun setUp() {
         super.setUp()
 
@@ -52,7 +54,7 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
         injectInstrumentation(InstrumentationRegistry.getInstrumentation())
 
         val intent = Intent(instrumentation.context, ArtistActivity::class.java)
-        intent.putExtra("id", "id")
+        intent.putExtra(id, id)
         setActivityIntent(intent)
 
         artistActivity = getActivity()
@@ -97,7 +99,7 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
         // Then
         verify(presenter).onPause()
         verify(presenter).onResume()
-        verify(presenter).init("id")
+        verify(presenter).init(id)
     }
 
     @UiThreadTest
@@ -109,7 +111,7 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
         `when`(picassoRequestCreator.fit()).thenReturn(picassoRequestCreator)
         `when`(picassoRequestCreator.centerCrop()).thenReturn(picassoRequestCreator)
         val picassoCallbackArgumentCaptor = ArgumentCaptor.forClass(Callback.EmptyCallback::class.java)
-        val artistDetail = ArtistDetail("id", "name", "url", "bio")
+        val artistDetail = ArtistDetail("artist id", "name", "url", "bio")
 
         // When
         artistActivity.showArtist(artistDetail)

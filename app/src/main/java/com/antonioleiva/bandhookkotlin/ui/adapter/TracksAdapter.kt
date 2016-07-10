@@ -52,6 +52,9 @@ open class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
 
     open class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
+        private val timeStampPattern = "%d:%02d"
+        private val timeSystemBaseNumber = 60
+
         private val trackNumberTextView: TextView = view.find(R.id.track_number)
         private val trackNameTextView: TextView = view.find(R.id.track_name)
         private val trackLengthTextView: TextView = view.find(R.id.track_length)
@@ -64,9 +67,9 @@ open class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
         }
 
         private fun secondsToTrackDurationString(item: TrackDetail): String {
-            val fullMinutes = item.duration / 60
-            val restSeconds = item.duration % 60
-            val trackLength = String.format("%d:%02d", fullMinutes, restSeconds)
+            val fullMinutes = item.duration / timeSystemBaseNumber
+            val restSeconds = item.duration % timeSystemBaseNumber
+            val trackLength = String.format(timeStampPattern, fullMinutes, restSeconds)
             return trackLength
         }
     }

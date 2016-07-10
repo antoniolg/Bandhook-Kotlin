@@ -19,6 +19,7 @@ package com.antonioleiva.bandhookkotlin.ui.screens.album
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
+import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -51,6 +52,7 @@ class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
     val albumListBreakingEdgeHeight by lazy { resources.getDimension(R.dimen.album_breaking_edge_height) }
     val trackDataMapper = TrackDataMapper()
 
+    @VisibleForTesting
     var presenter = AlbumPresenter(this, bus, albumInteractorProvider,
             interactorExecutor, AlbumDetailDataMapper())
 
