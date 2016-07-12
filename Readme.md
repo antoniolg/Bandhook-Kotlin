@@ -23,7 +23,7 @@ This sample project is still in development, and could easily break or have some
 
 You can use Android Studio or Intellij to work with this repository.
 
-First thing you will need to compile this project is to get an [API Key from Last.fm](http://www.lastfm.es/api). It will we used to connect to the service that will provide artists info. Then create the next String resource in a `config.xml` file:
+First thing you will need to compile this project is to get an [API Key from Last.fm](http://www.lastfm.es/api). It will we used to connect to the service that will provide artists info. Then create a resource file `app/src/main/res/values/api_key.xml` (this path is ignored by git) with the following content:
 
 ```xml
 <string name="last_fm_api_key">YOUR_KEY</string>
