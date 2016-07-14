@@ -34,10 +34,11 @@ class ArtistRepositoryImp(val artistDataSets: List<ArtistDataSet>) : ArtistRepos
     }
 
     override fun getArtist(id: String): Artist {
-        // TODO test if result can be null
         for (dataSet in artistDataSets) {
             var result = dataSet.requestArtist(id)
-            return result;
+            if (result != null) {
+                return result;
+            }
         }
         return Artist("empty", "empty", "empty")
     }

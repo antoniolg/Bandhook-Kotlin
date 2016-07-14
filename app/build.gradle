@@ -65,4 +65,6 @@ dependencies {
     compile "com.path:android-priority-jobqueue:1.1.2"
     compile "org.jetbrains.anko:anko-sdk15:$parent.ext.ankoVersion"
     compile "org.jetbrains.anko:anko-support-v4:$parent.ext.ankoVersion"
+
+    testCompile "junit:junit:4.12"
 }

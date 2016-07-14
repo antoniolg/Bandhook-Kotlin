@@ -24,20 +24,22 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 class ArtistMapper {
 
     fun transform(artists: List<LastFmArtist>): List<Artist> {
-        return artists.filter { artistHasQualityInfo(it) }.map { transform(it) }
+        return artists.filter { artistHasQualityInfo(it) }.mapNotNull { transform(it) }
     }
 
-    fun transform(artist: LastFmArtist): Artist = Artist(
-            artist.mbid,
-            artist.name,
-            getImage(artist.images),
-            artist.bio?.content)
+    fun transform(artist: LastFmArtist) = artist.mbid?.let {
+            Artist(artist.mbid, artist.name, getImageUrl(artist.images), artist.bio?.content)
+    }
 
     private fun artistHasQualityInfo(it: LastFmArtist): Boolean {
-        return !it.mbid.isEmpty() && it.images.size > 0
+        return !isArtistMbidEmpty(it) && it.images.size > 0
     }
 
-    private fun getImage(images: List<LastFmImage>): String {
+    private fun isArtistMbidEmpty(artist: LastFmArtist): Boolean {
+        return artist.mbid?.isEmpty() ?: true
+    }
+
+    private fun getImageUrl(images: List<LastFmImage>): String {
         val image = images.firstOrNull { it.size == LastFmImageType.MEGA.type }
         return image?.url ?: images.last().url
     }

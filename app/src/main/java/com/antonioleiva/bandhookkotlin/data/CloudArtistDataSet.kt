@@ -29,7 +29,7 @@ public class CloudArtistDataSet(val language: String, val lastFmService: LastFmS
         return ArtistMapper().transform(result.similarArtists.artists)
     }
 
-    override fun requestArtist(id: String): Artist {
+    override fun requestArtist(id: String): Artist? {
         val result = lastFmService.requestArtistInfo(id, language)
         return ArtistMapper().transform(result.artist)
     }
