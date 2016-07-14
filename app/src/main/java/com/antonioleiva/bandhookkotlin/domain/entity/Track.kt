@@ -16,4 +16,4 @@
 
 package com.antonioleiva.bandhookkotlin.domain.entity
 
-public data class Track(val id: String, val name: String, val album: Album)
+data class Track(val name: String, val duration: Int)

@@ -22,7 +22,7 @@ class LastFmArtist (
         val name: String,
         val mbid: String?,
         val url: String,
-        @SerializedName("image") val images: List<LastFmImage>,
-        val similar: LastFmSimilar?,
-        val bio: LastFmBio?
+        @SerializedName("image") val images: List<LastFmImage>? = null,
+        val similar: LastFmSimilar? = null,
+        val bio: LastFmBio? = null
 )

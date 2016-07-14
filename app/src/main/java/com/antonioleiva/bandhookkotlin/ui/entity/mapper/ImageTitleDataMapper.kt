@@ -16,6 +16,7 @@
 
 package com.antonioleiva.bandhookkotlin.ui.entity.mapper
 
+import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 
@@ -23,5 +24,9 @@ class ImageTitleDataMapper() {
 
     fun transformArtists(artists: List<Artist>): List<ImageTitle> {
         return artists.map { ImageTitle(it.id, it.name, it.url) }
+    }
+
+    fun transformAlbums(albums: List<Album>): List<ImageTitle> {
+        return albums.map { ImageTitle(it.id, it.name, it.url) }
     }
 }

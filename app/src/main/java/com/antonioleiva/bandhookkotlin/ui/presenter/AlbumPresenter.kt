@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Antonio Leiva
+ * Copyright (C) 2016 Alexey Verein
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,27 +16,27 @@
 
 package com.antonioleiva.bandhookkotlin.ui.presenter
 
-import com.antonioleiva.bandhookkotlin.domain.interactor.GetArtistDetailInteractor
+import com.antonioleiva.bandhookkotlin.domain.interactor.GetAlbumDetailInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistDetailEvent
-import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
-import com.antonioleiva.bandhookkotlin.ui.view.DetailView
+import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumEvent
+import com.antonioleiva.bandhookkotlin.ui.entity.mapper.AlbumDetailDataMapper
+import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
 
-class DetailPresenter(
-        override val view: DetailView,
+open class AlbumPresenter(
+        override val view: AlbumView,
         override val bus: Bus,
-        val artistDetailInteractor: GetArtistDetailInteractor,
+        val albumInteractor: GetAlbumDetailInteractor,
         val interactorExecutor: InteractorExecutor,
-        val mapper: ArtistDetailDataMapper) : Presenter<DetailView> {
+        val albumDetailMapper: AlbumDetailDataMapper) : Presenter<AlbumView> {
 
-    fun init(id: String) {
-        val interactor = artistDetailInteractor;
-        interactor.id = id
-        interactorExecutor.execute(interactor)
+    open fun init(albumId: String) {
+        val albumDetailInteractor = albumInteractor
+        albumInteractor.albumId = albumId
+        interactorExecutor.execute(albumDetailInteractor)
     }
 
-    fun onEvent(event: ArtistDetailEvent) {
-        view.showArtist(mapper.transform(event.artist))
+    fun onEvent(event: AlbumEvent) {
+        view.showAlbum(albumDetailMapper.transform(event.album))
     }
 }

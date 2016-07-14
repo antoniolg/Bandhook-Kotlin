@@ -31,7 +31,7 @@ import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
-import com.antonioleiva.bandhookkotlin.ui.screens.detail.DetailActivity
+import com.antonioleiva.bandhookkotlin.ui.screens.detail.ArtistActivity
 import com.antonioleiva.bandhookkotlin.ui.util.navigate
 import com.antonioleiva.bandhookkotlin.ui.view.MainView
 import org.jetbrains.anko.find
@@ -90,7 +90,7 @@ class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector b
     }
 
     override fun navigateToDetail(id: String) {
-        navigate<DetailActivity>(id, findItemById(id), BaseActivity.IMAGE_TRANSITION_NAME)
+        navigate<ArtistActivity>(id, findItemById(id), BaseActivity.IMAGE_TRANSITION_NAME)
     }
 
     private fun findItemById(id: String): View {

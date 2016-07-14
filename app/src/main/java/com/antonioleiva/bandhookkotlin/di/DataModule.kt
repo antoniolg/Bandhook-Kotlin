@@ -27,9 +27,9 @@ import retrofit.RestAdapter
 import retrofit.client.OkClient
 import java.io.IOException
 
-public interface DataModule : LastFmServiceSingleton
+interface DataModule : LastFmServiceSingleton
 
-public interface LastFmServiceSingleton {
+interface LastFmServiceSingleton {
     val lastFmService: LastFmService
 }
 
@@ -56,8 +56,8 @@ class DataModuleImpl(appModule: AppModule) : DataModule, AppContext by appModule
                 .setRequestInterceptor(LastFmRequestInterceptor(apiKey, cacheDuration))
                 .setLogLevel(if (BuildConfig.DEBUG) RestAdapter.LogLevel.FULL else RestAdapter.LogLevel.NONE)
                 .setClient(OkClient(okHttpClient))
-                .build();
+                .build()
 
-        lastFmService = restAdapter.create(LastFmService::class.java) ;
+        lastFmService = restAdapter.create(LastFmService::class.java)
     }
 }

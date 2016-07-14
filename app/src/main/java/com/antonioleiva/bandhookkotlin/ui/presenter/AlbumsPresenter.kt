@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Antonio Leiva
+ * Copyright (C) 2016 Alexey Verein
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin.ui.view
+package com.antonioleiva.bandhookkotlin.ui.presenter
 
-import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
+import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 
-interface DetailView : PresentationView {
-    fun showArtist(artistDetail: ArtistDetail)
+interface  AlbumsPresenter {
+    fun onAlbumClicked(item: ImageTitle)
 }

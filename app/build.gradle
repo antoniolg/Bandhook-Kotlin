@@ -57,7 +57,9 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
+    compile "com.android.support:cardview-v7:$supportVersion"
     compile "com.android.support:palette-v7:$supportVersion"
+    compile "com.android.support:design:$supportVersion"
     compile "de.greenrobot:eventbus:2.4.0"
     compile "com.squareup.picasso:picasso:2.5.0"
     compile "com.squareup.okhttp:okhttp:2.2.0"
@@ -66,5 +68,12 @@ dependencies {
     compile "org.jetbrains.anko:anko-sdk15:$parent.ext.ankoVersion"
     compile "org.jetbrains.anko:anko-support-v4:$parent.ext.ankoVersion"
 
+    androidTestCompile "org.mockito:mockito-core:1.10.19"
+    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
+    androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
+    androidTestCompile "com.android.support:support-annotations:$supportVersion"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
+
     testCompile "junit:junit:4.12"
+    testCompile "org.mockito:mockito-core:1.10.19"
 }

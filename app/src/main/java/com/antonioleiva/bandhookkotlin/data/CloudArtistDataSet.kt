@@ -21,11 +21,13 @@ import com.antonioleiva.bandhookkotlin.data.mapper.ArtistMapper
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.repository.dataset.ArtistDataSet
 
-public class CloudArtistDataSet(val language: String, val lastFmService: LastFmService) : ArtistDataSet {
+class CloudArtistDataSet(val language: String, val lastFmService: LastFmService) : ArtistDataSet {
+
+    val coldplayMbid = "cc197bad-dc9c-440d-a5b5-d52ba2e14234"
 
     override fun requestRecommendedArtists(): List<Artist> {
         // Search for coldplay similar artists.
-        val result = lastFmService.requestSimilar("cc197bad-dc9c-440d-a5b5-d52ba2e14234")
+        val result = lastFmService.requestSimilar(coldplayMbid)
         return ArtistMapper().transform(result.similarArtists.artists)
     }
 
