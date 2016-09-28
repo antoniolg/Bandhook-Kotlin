@@ -15,12 +15,12 @@
  */
 
 buildscript {
-    ext.kotlin_version = "1.0.1"
+    ext.kotlin_version = '1.0.4'
     repositories {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:2.1.0"
+        classpath 'com.android.tools.build:gradle:2.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -41,5 +41,6 @@ allprojects {
         androidVersionName = "0.1"
         supportVersion = "24.0.0"
         ankoVersion= "0.8.3"
+        daggerVersion = "2.6"
     }
 }

@@ -46,11 +46,15 @@ android {
     }
 
     dexOptions {
-        incremental true
         preDexLibraries = false
         jumboMode = false
         javaMaxHeapSize "4g"
     }
+}
+
+// Required for annotation processing plugins like Dagger
+kapt {
+    generateStubs = true
 }
 
 dependencies {
@@ -67,6 +71,8 @@ dependencies {
     compile "com.path:android-priority-jobqueue:1.1.2"
     compile "org.jetbrains.anko:anko-sdk15:$parent.ext.ankoVersion"
     compile "org.jetbrains.anko:anko-support-v4:$parent.ext.ankoVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    compile "com.google.dagger:dagger:$daggerVersion"
 
     androidTestCompile "org.mockito:mockito-core:1.10.19"
     androidTestCompile "com.google.dexmaker:dexmaker:1.2"
