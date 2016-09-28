@@ -18,11 +18,11 @@ package com.antonioleiva.bandhookkotlin.ui.util
 
 import android.os.Build
 
-public fun supportsKitKat(code:() -> Unit){
+fun supportsKitKat(code:() -> Unit){
     supportsVersion(code, 19)
 }
 
-public fun supportsLollipop(code:() -> Unit){
+fun supportsLollipop(code:() -> Unit){
     supportsVersion(code, 21)
 }
 

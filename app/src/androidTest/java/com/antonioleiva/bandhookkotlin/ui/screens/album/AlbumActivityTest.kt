@@ -56,7 +56,7 @@ class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumA
         intent.putExtra(id, id)
         setActivityIntent(intent)
 
-        albumActivity = getActivity()
+        albumActivity = activity
 
         image = albumActivity.image
     }

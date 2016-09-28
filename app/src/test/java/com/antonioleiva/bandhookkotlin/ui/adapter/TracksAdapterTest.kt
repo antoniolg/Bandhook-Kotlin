@@ -104,7 +104,7 @@ class TracksAdapterTest {
     @Test
     fun testOnCreateViewHolder() {
         // When
-        var createdViewHolder = trackAdapter.onCreateViewHolder(viewGroup, 0)
+        val createdViewHolder = trackAdapter.onCreateViewHolder(viewGroup, 0)
 
         // Then
         assertTrue(createdViewHolder is TracksAdapter.ViewHolder)

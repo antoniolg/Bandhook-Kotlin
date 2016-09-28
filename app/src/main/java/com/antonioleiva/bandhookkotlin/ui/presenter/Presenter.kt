@@ -18,7 +18,7 @@ package com.antonioleiva.bandhookkotlin.ui.presenter
 
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
 
-interface Presenter<T> {
+interface Presenter<out T> {
 
     val view: T
     val bus: Bus

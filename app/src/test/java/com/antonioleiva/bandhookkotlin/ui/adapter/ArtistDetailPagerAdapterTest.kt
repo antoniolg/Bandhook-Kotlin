@@ -49,7 +49,7 @@ class ArtistDetailPagerAdapterTest {
         artistDetailPagerAdapter.addFragment(fragment, title)
 
         // Then
-        assertEquals(title, artistDetailPagerAdapter.fragments.get(fragment))
+        assertEquals(title, artistDetailPagerAdapter.fragments[fragment])
     }
 
     @Test
