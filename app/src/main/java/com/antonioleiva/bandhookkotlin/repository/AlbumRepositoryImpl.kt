@@ -24,7 +24,7 @@ class AlbumRepositoryImpl(val albumDataSets: List<AlbumDataSet>) : AlbumReposito
 
     override fun getAlbum(id: String): Album? {
         for (dataSet in albumDataSets) {
-            var result = dataSet.requestAlbum(id)
+            val result = dataSet.requestAlbum(id)
             if (result != null) {
                 return result
             }
@@ -35,7 +35,7 @@ class AlbumRepositoryImpl(val albumDataSets: List<AlbumDataSet>) : AlbumReposito
 
     override fun getTopAlbums(artistId: String?, artistName: String?): List<Album> {
         for (dataSet in albumDataSets) {
-            var result = dataSet.requestTopAlbums(artistId, artistName)
+            val result = dataSet.requestTopAlbums(artistId, artistName)
             if (result.isNotEmpty()) {
                 return result
             }

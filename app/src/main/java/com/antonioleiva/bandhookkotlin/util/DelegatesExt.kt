@@ -23,6 +23,6 @@ object DelegatesExt {
     fun <T> provider(initializer: () -> T): ReadOnlyProperty<Any?, T> = Provider(initializer)
 }
 
-private class Provider<T>(private val initializer: () -> T) : ReadOnlyProperty<Any?, T> {
+private class Provider<out T>(private val initializer: () -> T) : ReadOnlyProperty<Any?, T> {
     override fun getValue(thisRef: Any?, property: KProperty<*>): T = initializer()
 }

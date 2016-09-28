@@ -40,7 +40,7 @@ class TrackDataMapperTest {
     @Test
     fun testTransformTrack() {
         // When
-        var transformedTrack = trackDataMapper.transform(track)
+        val transformedTrack = trackDataMapper.transform(track)
 
         // Then
         assertEquals(track.name, transformedTrack.name)
@@ -50,7 +50,7 @@ class TrackDataMapperTest {
     @Test
     fun testTransformTracks() {
         // When
-        var transformedTracks = trackDataMapper.transform(tracks)
+        val transformedTracks = trackDataMapper.transform(tracks)
 
         // Then
         assertEquals(2, transformedTracks.size)
