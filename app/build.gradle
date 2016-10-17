@@ -61,7 +61,7 @@ dependencies {
     compile "com.android.support:palette-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
     compile "de.greenrobot:eventbus:2.4.0"
-    compile "com.squareup.picasso:picasso:2.5.0"
+    compile "com.squareup.picasso:picasso:2.5.2"
     compile "com.squareup.okhttp:okhttp:2.2.0"
     compile "com.squareup.retrofit:retrofit:1.9.0"
     compile "com.path:android-priority-jobqueue:1.1.2"
