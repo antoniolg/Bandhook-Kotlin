@@ -22,37 +22,43 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.antonioleiva.bandhookkotlin.R
-import com.antonioleiva.bandhookkotlin.di.Inject
-import com.antonioleiva.bandhookkotlin.di.Injector
+import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
+import com.antonioleiva.bandhookkotlin.di.subcomponent.main.MainActivityModule
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.activity.HidingToolbarActivity
 import com.antonioleiva.bandhookkotlin.ui.activity.scrollwrapper.RecyclerViewScrollWrapper
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
-import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
 import com.antonioleiva.bandhookkotlin.ui.screens.detail.ArtistActivity
 import com.antonioleiva.bandhookkotlin.ui.util.navigate
 import com.antonioleiva.bandhookkotlin.ui.view.MainView
 import org.jetbrains.anko.find
 import org.jetbrains.anko.findOptional
+import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainView, HidingToolbarActivity, Injector by Inject.instance {
+class MainActivity : BaseActivity(), MainView, HidingToolbarActivity {
 
     override val layoutResource = R.layout.activity_main
-
-    val adapter = ImageTitleAdapter()
-    val presenter = MainPresenter(this, bus, recommendedArtistsInteractorProvider,
-            interactorExecutor, ImageTitleDataMapper())
-
     val recycler by lazy { find<RecyclerView>(R.id.recycler) }
     val background by lazy { findOptional<View>(R.id.background) }
+
+    @Inject
+    lateinit var presenter: MainPresenter
+
+    @Inject
+    lateinit var adapter: ImageTitleAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val scrollWrapper = RecyclerViewScrollWrapper(recycler)
         init(scrollWrapper)
         initHidingToolbar(scrollWrapper)
+    }
+
+    override fun injectDependencies(applicationComponent: ApplicationComponent) {
+        applicationComponent.plus(MainActivityModule(this))
+                .injectTo(this)
     }
 
     fun init(scrollWrapper: RecyclerViewScrollWrapper) {
