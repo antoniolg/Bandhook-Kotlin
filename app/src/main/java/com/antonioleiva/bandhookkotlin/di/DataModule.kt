@@ -8,12 +8,14 @@ import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
 import com.antonioleiva.bandhookkotlin.di.qualifier.ApiKey
 import com.antonioleiva.bandhookkotlin.di.qualifier.ApplicationQualifier
 import com.antonioleiva.bandhookkotlin.di.qualifier.CacheDuration
-import com.squareup.okhttp.Cache
-import com.squareup.okhttp.OkHttpClient
 import dagger.Module
 import dagger.Provides
-import retrofit.RestAdapter
-import retrofit.client.OkClient
+import okhttp3.Cache
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -29,29 +31,28 @@ class DataModule {
     fun provideCacheDuration(@ApplicationQualifier context: Context) = context.resources.getInteger(R.integer.cache_duration)
 
     @Provides @Singleton
-    fun provideOkHttpClient(cache: Cache): OkHttpClient {
-        val okHttp = OkHttpClient()
-        okHttp.cache = cache
-        return okHttp
-    }
-
-    @Provides @Singleton
-    fun provideOkClient(okHttpClient: OkHttpClient) = OkClient(okHttpClient)
+    fun provideOkHttpClient(cache: Cache, interceptor: LastFmRequestInterceptor): OkHttpClient =
+            OkHttpClient().newBuilder()
+                    .cache(cache)
+                    .addInterceptor(interceptor)
+                    .addInterceptor(HttpLoggingInterceptor().apply {
+                        level = if (BuildConfig.DEBUG) Level.BODY else Level.NONE
+                    })
+                    .build()
 
     @Provides @Singleton
     fun provideRequestInterceptor(@ApiKey apiKey: String, @CacheDuration cacheDuration: Int)
             = LastFmRequestInterceptor(apiKey, cacheDuration)
 
     @Provides @Singleton
-    fun provideRestAdapter(okClient: OkClient, lastFmRequestInterceptor: LastFmRequestInterceptor): RestAdapter {
-        return RestAdapter.Builder()
-                .setEndpoint("http://ws.audioscrobbler.com")
-                .setRequestInterceptor(lastFmRequestInterceptor)
-                .setLogLevel(if (BuildConfig.DEBUG) RestAdapter.LogLevel.FULL else RestAdapter.LogLevel.NONE)
-                .setClient(okClient)
+    fun provideRestAdapter(client: OkHttpClient): Retrofit {
+        return Retrofit.Builder()
+                .baseUrl("http://ws.audioscrobbler.com")
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build()
     }
 
     @Provides @Singleton
-    fun providesLastFmService(restAdapter: RestAdapter): LastFmService = restAdapter.create(LastFmService::class.java)
+    fun providesLastFmService(retrofit: Retrofit): LastFmService = retrofit.create(LastFmService::class.java)
 }

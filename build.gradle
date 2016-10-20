@@ -42,5 +42,7 @@ allprojects {
         supportVersion = "24.0.0"
         ankoVersion= "0.8.3"
         daggerVersion = "2.6"
+        retrofitVersion = "2.1.0"
+        okhttpVersion = "3.3.1"
     }
 }

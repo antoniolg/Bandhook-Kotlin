@@ -17,23 +17,24 @@
 package com.antonioleiva.bandhookkotlin.data.lastfm
 
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmResponse
-import retrofit.http.GET
-import retrofit.http.Query
+import retrofit2.Call
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface LastFmService {
 
     @GET("/2.0/?method=artist.search")
-    fun searchArtist(@Query("artist") artist: String): LastFmResponse
+    fun searchArtist(@Query("artist") artist: String): Call<LastFmResponse>
 
     @GET("/2.0/?method=artist.getinfo")
-    fun requestArtistInfo(@Query("mbid") id: String, @Query("lang") language: String): LastFmResponse
+    fun requestArtistInfo(@Query("mbid") id: String, @Query("lang") language: String): Call<LastFmResponse>
 
     @GET("/2.0/?method=artist.gettopalbums")
-    fun requestAlbums(@Query("mbid") id: String, @Query("artist") artist: String): LastFmResponse
+    fun requestAlbums(@Query("mbid") id: String, @Query("artist") artist: String): Call<LastFmResponse>
 
     @GET("/2.0/?method=artist.getsimilar")
-    fun requestSimilar(@Query("mbid") id: String): LastFmResponse
+    fun requestSimilar(@Query("mbid") id: String): Call<LastFmResponse>
 
     @GET("/2.0/?method=album.getInfo")
-    fun requestAlbum(@Query("mbid") id: String): LastFmResponse
+    fun requestAlbum(@Query("mbid") id: String): Call<LastFmResponse>
 }

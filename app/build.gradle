@@ -66,8 +66,13 @@ dependencies {
     compile "com.android.support:design:$supportVersion"
     compile "de.greenrobot:eventbus:2.4.0"
     compile "com.squareup.picasso:picasso:2.5.0"
-    compile "com.squareup.okhttp:okhttp:2.2.0"
-    compile "com.squareup.retrofit:retrofit:1.9.0"
+    compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    compile "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    compile ("com.squareup.retrofit2:retrofit:$retrofitVersion"){
+        // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
+        exclude module: 'okhttp'
+    }
+    compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     compile "com.path:android-priority-jobqueue:1.1.2"
     compile "org.jetbrains.anko:anko-sdk15:$parent.ext.ankoVersion"
     compile "org.jetbrains.anko:anko-support-v4:$parent.ext.ankoVersion"

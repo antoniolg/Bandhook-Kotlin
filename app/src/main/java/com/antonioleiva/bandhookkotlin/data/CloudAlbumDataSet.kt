@@ -23,18 +23,17 @@ import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
 
 class CloudAlbumDataSet(val lastFmService: LastFmService) : AlbumDataSet {
 
-    override fun requestAlbum(mbid: String): Album? {
-        val result = lastFmService.requestAlbum(mbid)
-        return AlbumMapper().transform(result.album)
-    }
+    override fun requestAlbum(mbid: String): Album?
+            = lastFmService.requestAlbum(mbid).unwrapCall { AlbumMapper().transform(album) }
 
     override fun requestTopAlbums(artistId: String?, artistName: String?): List<Album> {
         val mbid = artistId ?: ""
         val name = artistName ?: ""
 
         if (!mbid.isEmpty() || !name.isEmpty()) {
-            val result = lastFmService.requestAlbums(mbid, name)
-            return AlbumMapper().transform(result.topAlbums.albums)
+            return lastFmService.requestAlbums(mbid, name).unwrapCall {
+                AlbumMapper().transform(topAlbums.albums)
+            }
         }
 
         return emptyList()
