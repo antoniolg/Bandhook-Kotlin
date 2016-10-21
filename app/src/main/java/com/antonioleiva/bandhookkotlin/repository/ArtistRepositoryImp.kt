@@ -24,7 +24,7 @@ class ArtistRepositoryImp(val artistDataSets: List<ArtistDataSet>) : ArtistRepos
 
     override fun getRecommendedArtists(): List<Artist> {
         for (dataSet in artistDataSets) {
-            var result = dataSet.requestRecommendedArtists()
+            val result = dataSet.requestRecommendedArtists()
             if (result.isNotEmpty()) {
                 return result
             }
@@ -35,9 +35,9 @@ class ArtistRepositoryImp(val artistDataSets: List<ArtistDataSet>) : ArtistRepos
 
     override fun getArtist(id: String): Artist {
         for (dataSet in artistDataSets) {
-            var result = dataSet.requestArtist(id)
+            val result = dataSet.requestArtist(id)
             if (result != null) {
-                return result;
+                return result
             }
         }
         return Artist("empty", "empty", "empty")

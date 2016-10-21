@@ -16,12 +16,24 @@
 
 package com.antonioleiva.bandhookkotlin.data.lastfm
 
-import retrofit.RequestInterceptor
+import okhttp3.Interceptor
+import okhttp3.Response
 
-class LastFmRequestInterceptor(val apiKey: String, val cacheDuration: Int) : RequestInterceptor {
-    override fun intercept(request: RequestInterceptor.RequestFacade) {
-        request.addQueryParam("api_key", apiKey)
-        request.addQueryParam("format", "json")
-        request.addHeader("Cache-Control", "public, max-age=$cacheDuration")
+
+class LastFmRequestInterceptor(val apiKey: String, val cacheDuration: Int) : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
+
+        val url = request.url().newBuilder()
+                .addQueryParameter("api_key", apiKey)
+                .addQueryParameter("format", "json")
+                .build()
+
+        val newRequest = request.newBuilder()
+                .url(url)
+                .addHeader("Cache-Control", "public, max-age=$cacheDuration")
+                .build()
+
+        return chain.proceed(newRequest)
     }
 }

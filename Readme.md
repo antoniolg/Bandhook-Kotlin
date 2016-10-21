@@ -29,7 +29,7 @@ First thing you will need to compile this project is to get an [API Key from Las
 <string name="last_fm_api_key">YOUR_KEY</string>
 ```
 
-Two plugins for Android Studio are also required: `Kotlin` and `Kotlin Extensions for Android`
+The `Kotlin` plugin for Android Studio is also required.
 
 Many ideas on how this project is organized were taken from [Clean Contacts](https://github.com/PaNaVTEC/Clean-Contacts/blob/master/Readme.md) project, by [PaNaVTEC](https://github.com/PaNaVTEC). There are some slight differences, but reading [How to start section](https://github.com/PaNaVTEC/Clean-Contacts/blob/master/Readme.md#how-to-start-with-this-repository) will be helpful.
 

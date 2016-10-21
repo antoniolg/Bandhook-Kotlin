@@ -17,21 +17,25 @@
 package com.antonioleiva.bandhookkotlin
 
 import android.app.Application
-import com.antonioleiva.bandhookkotlin.di.*
+import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
+import com.antonioleiva.bandhookkotlin.di.ApplicationModule
+import com.antonioleiva.bandhookkotlin.di.DaggerApplicationComponent
 
 class App : Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-        instantiateInjector()
+    companion object {
+        lateinit var graph: ApplicationComponent
     }
 
-    fun instantiateInjector() {
-        val appModule = AppModuleImpl(this)
-        val dataModule = DataModuleImpl(appModule)
-        val repositoryModule = RepositoryModuleImpl(appModule, dataModule)
-        val domainModule = DomainModuleImpl(repositoryModule)
-        Inject.instance = InjectorImpl(appModule, domainModule, repositoryModule, dataModule)
+    override fun onCreate() {
+        super.onCreate()
+        initializeDagger()
+    }
+
+    fun initializeDagger() {
+        graph = DaggerApplicationComponent.builder()
+                .applicationModule(ApplicationModule(this))
+                .build()
     }
 }
 

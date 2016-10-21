@@ -27,46 +27,61 @@ import android.view.MenuItem
 import android.view.WindowManager
 import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.R
-import com.antonioleiva.bandhookkotlin.di.Inject
-import com.antonioleiva.bandhookkotlin.di.Injector
+import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
+import com.antonioleiva.bandhookkotlin.di.subcomponent.album.AlbumActivityModule
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.TracksAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
 import com.antonioleiva.bandhookkotlin.ui.entity.TrackDetail
-import com.antonioleiva.bandhookkotlin.ui.entity.mapper.AlbumDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.TrackDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.AlbumPresenter
 import com.antonioleiva.bandhookkotlin.ui.util.getNavigationId
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
 import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import org.jetbrains.anko.find
+import javax.inject.Inject
 
-class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
+class AlbumActivity : BaseActivity(), AlbumView {
+
+    companion object {
+        private val listAnimationStartDelay = 500L
+        private val noTranslation = 0f
+        private val transparent = 0f
+    }
 
     override val layoutResource = R.layout.activity_album
-
     val image by lazy { find<ImageView>(R.id.album_image) }
     val trackList by lazy { find<RecyclerView>(R.id.tracks_list) }
     val listCard by lazy { find<CardView>(R.id.card_view) }
     val albumListBreakingEdgeHeight by lazy { resources.getDimension(R.dimen.album_breaking_edge_height) }
-    val trackDataMapper = TrackDataMapper()
 
-    @VisibleForTesting
-    var presenter = AlbumPresenter(this, bus, albumInteractorProvider,
-            interactorExecutor, AlbumDetailDataMapper())
+    @Inject @VisibleForTesting
+    lateinit var presenter: AlbumPresenter
 
-    var adapter = TracksAdapter()
+    @Inject
+    lateinit var trackDataMapper: TrackDataMapper
 
-    private val listAnimationStartDelay = 500L
-    private val noTranslation = 0f
-    private val transparent = 0f
+    @Inject
+    lateinit var adapter: TracksAdapter
+
+    @Inject
+    lateinit var layoutManager: LinearLayoutManager
+
+    @Inject
+    lateinit var picasso: Picasso
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpTransition()
         setUpActionBar()
         setUpTrackList()
+    }
+
+    override fun injectDependencies(applicationComponent: ApplicationComponent) {
+        applicationComponent.plus(AlbumActivityModule(this))
+                .injectTo(this)
     }
 
     private fun setUpTransition() {
@@ -76,7 +91,7 @@ class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
 
     private fun setUpTrackList() {
         trackList.adapter = adapter
-        trackList.layoutManager = LinearLayoutManager(this)
+        trackList.layoutManager = layoutManager
         listCard.translationY = -albumListBreakingEdgeHeight
     }
 
@@ -116,8 +131,8 @@ class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
         listCard.animate().setStartDelay(listAnimationStartDelay).translationY(noTranslation)
     }
 
-    private fun populateTrackList(TrackDetails: List<TrackDetail>) {
-        adapter.items = TrackDetails
+    private fun populateTrackList(trackDetails: List<TrackDetail>) {
+        adapter.items = trackDetails
     }
 
     private fun makeStatusBarTransparent() {
@@ -136,7 +151,7 @@ class AlbumActivity : BaseActivity(), AlbumView, Injector by Inject.instance  {
     }
 
     override fun onBackPressed() {
-        listCard.animate().alpha(transparent).setListener(object: AnimatorListenerAdapter() {
+        listCard.animate().alpha(transparent).setListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
                 supportFinishAfterTransition()
             }

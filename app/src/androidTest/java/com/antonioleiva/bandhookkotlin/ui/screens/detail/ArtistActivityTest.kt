@@ -57,7 +57,7 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
         intent.putExtra(id, id)
         setActivityIntent(intent)
 
-        artistActivity = getActivity()
+        artistActivity = activity
 
         image = artistActivity.image
         biographyFragment = artistActivity.biographyFragment

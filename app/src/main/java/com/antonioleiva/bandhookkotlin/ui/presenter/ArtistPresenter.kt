@@ -41,9 +41,9 @@ open class ArtistPresenter(
         artistDetailInteractor.id = artistId
         interactorExecutor.execute(artistDetailInteractor)
 
-        val topAlbumsInteratcor = topAlbumsInteractor
-        topAlbumsInteratcor.artistId = artistId
-        interactorExecutor.execute(topAlbumsInteractor)
+        val topAlbumsInteractor = topAlbumsInteractor
+        topAlbumsInteractor.artistId = artistId
+        interactorExecutor.execute(this.topAlbumsInteractor)
     }
 
     fun onEvent(event: ArtistDetailEvent) {

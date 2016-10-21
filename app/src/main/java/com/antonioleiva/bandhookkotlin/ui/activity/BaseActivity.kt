@@ -19,7 +19,9 @@ package com.antonioleiva.bandhookkotlin.ui.activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import com.antonioleiva.bandhookkotlin.App
 import com.antonioleiva.bandhookkotlin.R
+import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import org.jetbrains.anko.find
 
 abstract class BaseActivity : AppCompatActivity() {
@@ -33,7 +35,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        injectDependencies(App.graph)
         setContentView(layoutResource)
         setSupportActionBar(toolbar)
     }
+
+    abstract fun injectDependencies(applicationComponent: ApplicationComponent)
 }

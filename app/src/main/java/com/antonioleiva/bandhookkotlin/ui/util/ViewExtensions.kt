@@ -32,7 +32,7 @@ fun View.animateExit() = animateTranslationY(-height, AccelerateInterpolator(3f)
 fun View.animateTranslationY(translationY: Int, interpolator: Interpolator) {
     with(ObjectAnimator.ofFloat(this, "translationY", translationY.toFloat()))
     {
-        setDuration(context.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong())
+        duration = context.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
         setInterpolator(interpolator)
         start()
     }

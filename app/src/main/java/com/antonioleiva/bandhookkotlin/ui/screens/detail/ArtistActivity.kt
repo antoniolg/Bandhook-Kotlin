@@ -28,14 +28,12 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.R
-import com.antonioleiva.bandhookkotlin.di.Inject
-import com.antonioleiva.bandhookkotlin.di.Injector
+import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
+import com.antonioleiva.bandhookkotlin.di.subcomponent.detail.ArtistActivityModule
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.ArtistDetailPagerAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
-import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
-import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.fragment.AlbumsFragmentContainer
 import com.antonioleiva.bandhookkotlin.ui.presenter.AlbumsPresenter
 import com.antonioleiva.bandhookkotlin.ui.presenter.ArtistPresenter
@@ -45,23 +43,29 @@ import com.antonioleiva.bandhookkotlin.ui.util.navigate
 import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.ArtistView
 import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import org.jetbrains.anko.find
+import javax.inject.Inject
 
-class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injector by Inject.instance {
+class ArtistActivity : BaseActivity(), ArtistView, AlbumsFragmentContainer {
 
     override val layoutResource = R.layout.activity_artist
-
     val image by lazy { find<ImageView>(R.id.collapse_image) }
     val collapsingToolbarLayout by lazy { find<CollapsingToolbarLayout>(R.id.collapse_toolbar) }
     val viewPager by lazy { find<ViewPager>(R.id.viewpager) }
     val tabLayout by lazy { find<TabLayout>(R.id.tabs) }
 
-    @VisibleForTesting
-    var presenter = ArtistPresenter(this, bus, artistDetailInteractorProvider, topAlbumsInteractorProvider,
-            interactorExecutor, ArtistDetailDataMapper(), ImageTitleDataMapper())
+    @Inject @VisibleForTesting
+    lateinit var presenter: ArtistPresenter
 
-    val biographyFragment = BiographyFragment()
-    val albumsFragment = AlbumsFragment()
+    @Inject
+    lateinit var picasso: Picasso
+
+    @Inject
+    lateinit var biographyFragment: BiographyFragment
+
+    @Inject
+    lateinit var albumsFragment: AlbumsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +74,11 @@ class ArtistActivity: BaseActivity(), ArtistView, AlbumsFragmentContainer, Injec
         setUpTopBar()
         setUpViewPager()
         setUpTabLayout()
+    }
+
+    override fun injectDependencies(applicationComponent: ApplicationComponent) {
+        applicationComponent.plus(ArtistActivityModule(this))
+                .injectTo(this)
     }
 
     private fun setUpTransition() {

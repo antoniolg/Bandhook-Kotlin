@@ -63,7 +63,7 @@ open class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
 
             trackNumberTextView.text = "${position + 1}"
             trackNameTextView.text = item.name
-            trackLengthTextView.text = "${secondsToTrackDurationString(item)}"
+            trackLengthTextView.text = secondsToTrackDurationString(item)
         }
 
         private fun secondsToTrackDurationString(item: TrackDetail): String {
