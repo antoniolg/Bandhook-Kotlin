@@ -19,6 +19,7 @@ package com.antonioleiva.bandhookkotlin.data
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.*
 import com.antonioleiva.bandhookkotlin.data.mapper.ArtistMapper
+import com.antonioleiva.bandhookkotlin.data.mock.FakeCall
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Before
@@ -28,6 +29,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
 import org.mockito.runners.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class CloudArtistDataSetTest {
@@ -60,8 +62,8 @@ class CloudArtistDataSetTest {
 
         cloudArtistDataSet = CloudArtistDataSet(language, lastFmService)
 
-        `when`(lastFmService.requestSimilar(cloudArtistDataSet.coldplayMbid)).thenReturn(lastFmResponse)
-        `when`(lastFmService.requestArtistInfo(artistMbid, language)).thenReturn(lastFmResponse)
+        `when`(lastFmService.requestSimilar(cloudArtistDataSet.coldplayMbid)).thenReturn(FakeCall(Response.success(lastFmResponse), null))
+        `when`(lastFmService.requestArtistInfo(artistMbid, language)).thenReturn(FakeCall(Response.success(lastFmResponse), null))
     }
 
     @Test
@@ -92,7 +94,7 @@ class CloudArtistDataSetTest {
                 LastFmArtist("unknown artist name", null, "unknown artist url"),
                 LastFmTopAlbums(emptyList()),
                 LastFmArtistList(emptyList()), lastFmAlbumDetail)
-        `when`(lastFmService.requestArtistInfo(unknownArtisMbid, language)).thenReturn(unknownArtistResponse)
+        `when`(lastFmService.requestArtistInfo(unknownArtisMbid, language)).thenReturn(FakeCall(Response.success(unknownArtistResponse), null))
 
         // When
         val requestedArtist = cloudArtistDataSet.requestArtist(unknownArtisMbid)
