@@ -20,7 +20,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.0'
+        classpath 'com.android.tools.build:gradle:2.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -32,17 +32,17 @@ allprojects {
 
     ext {
         // Android config
-        androidBuildToolsVersion = "23.0.3"
+        androidBuildToolsVersion = '25.0.0'
         androidMinSdkVersion = 16
-        androidTargetSdkVersion = 23
-        androidCompileSdkVersion = 23
-        androidApplicationId = "com.antonioleiva.bandhookkotlin"
+        androidTargetSdkVersion = 25
+        androidCompileSdkVersion = 25
+        androidApplicationId = 'com.antonioleiva.bandhookkotlin'
         androidVersionCode = 1
-        androidVersionName = "0.1"
-        supportVersion = "24.0.0"
-        ankoVersion= "0.8.3"
-        daggerVersion = "2.6"
-        retrofitVersion = "2.1.0"
-        okhttpVersion = "3.3.1"
+        androidVersionName = '0.1'
+        supportVersion = '25.0.0'
+        ankoVersion= '0.9'
+        daggerVersion = '2.7'
+        retrofitVersion = '2.1.0'
+        okhttpVersion = '3.4.1'
     }
 }
