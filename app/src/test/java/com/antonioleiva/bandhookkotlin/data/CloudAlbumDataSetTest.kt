@@ -19,6 +19,7 @@ package com.antonioleiva.bandhookkotlin.data
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.*
 import com.antonioleiva.bandhookkotlin.data.mapper.AlbumMapper
+import com.antonioleiva.bandhookkotlin.data.mock.FakeCall
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -26,6 +27,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.runners.MockitoJUnitRunner
+import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
 class CloudAlbumDataSetTest {
@@ -64,8 +66,8 @@ class CloudAlbumDataSetTest {
         lastFmResponse = LastFmResponse(LastFmResult(LastFmArtistMatches(emptyList())), artist, topAlbums, LastFmArtistList(emptyList()),
                 knownAlbumDetail)
 
-        `when`(lastFmService.requestAlbum(albumMbid)).thenReturn(lastFmResponse)
-        `when`(lastFmService.requestAlbums(anyString(), anyString())).thenReturn(lastFmResponse)
+        `when`(lastFmService.requestAlbum(albumMbid)).thenReturn(FakeCall(Response.success(lastFmResponse), null))
+        `when`(lastFmService.requestAlbums(anyString(), anyString())).thenReturn(FakeCall(Response.success(lastFmResponse), null))
     }
 
     @Test
@@ -83,7 +85,7 @@ class CloudAlbumDataSetTest {
         // Given
         val unknownAlbumResponse = LastFmResponse(LastFmResult(LastFmArtistMatches(emptyList())), artist, topAlbums,
                 LastFmArtistList(emptyList()), unknownAlbumDetail)
-        `when`(lastFmService.requestAlbum(albumMbid)).thenReturn(unknownAlbumResponse)
+        `when`(lastFmService.requestAlbum(albumMbid)).thenReturn(FakeCall(Response.success(unknownAlbumResponse), null))
 
         // When
         val album = cloudAlbumDataSet.requestAlbum(albumMbid)
