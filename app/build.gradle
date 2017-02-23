@@ -58,6 +58,8 @@ kapt {
 }
 
 dependencies {
+    compile 'nl.komponents.kovenant:kovenant-functional:3.3.0'
+    compile "org.funktionale:funktionale-all:1.0.0-final"
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
