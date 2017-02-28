@@ -58,6 +58,7 @@ kapt {
 }
 
 dependencies {
+    compile 'com.github.pakoito.Komprehensions:komprehensions:1.3.0'
     compile 'nl.komponents.kovenant:kovenant-functional:3.3.0'
     compile "org.funktionale:funktionale-all:1.0.0-final"
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

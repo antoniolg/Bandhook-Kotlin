@@ -1,9 +1,12 @@
 package com.antonioleiva.bandhookkotlin
 
 import nl.komponents.kovenant.Promise
-import nl.komponents.kovenant.functional.*
+import nl.komponents.kovenant.functional.bind
 import nl.komponents.kovenant.then
 import org.funktionale.either.Disjunction
+import org.funktionale.either.flatMap
+import org.funktionale.option.Option
+import org.funktionale.option.getOrElse
 
 /**
  * A Result is a deferred promise containing either a controlled error and successful value or an unknown exception.
@@ -20,7 +23,14 @@ object ResultT {
      * Lift any value to the monadic context of a Result
      */
     fun <E, A> pure(a: A): Result<E, A> {
-        return Promise.ofSuccess(Disjunction.right(a))
+        return fromDisjunction(Disjunction.right(a))
+    }
+
+    /**
+     * Lift any value to the monadic context of a Result
+     */
+    fun <E, A> fromDisjunction(fa: Disjunction<E, A>): Result<E, A> {
+        return Promise.ofSuccess(fa)
     }
 
     /**
@@ -58,10 +68,23 @@ object ResultT {
     /**
      * map over the left exceptional case
      */
-    fun <E, A, EE> mapLeft(r: Result<E, A>, fa: (E) -> EE): Result<EE, A> {
+    fun <E, A, EE> recover(r: Result<E, A>, fa: (E) -> EE): Result<EE, A> {
         return r.then { it ->
             it.swap().map { fa(it) }.swap()
         }
+    }
+
+    /**
+     * map over the left exceptional case
+     */
+    fun <E, A> swap(r: Result<E, A>): Result<A, E> = r.then { it.swap() }
+
+
+    /**
+     * flatMap over the left exceptional case
+     */
+    fun <E, A, EE> recoverWith(r: Result<E, A>, fa: (E) -> Result<EE, A>): Result<EE, A> {
+        return r.swap().flatMap { fa(it).swap() }.swap()
     }
 
     /**
@@ -75,6 +98,8 @@ object ResultT {
 
     /**
      * Combine the results of r1 with r2 given both promises are successful
+     * Since promises may have already started this operation is non-deterministic as there is
+     * no guarantees as to which one finishes first.
      */
     fun <E, A, B> zip(r1: Result<E, A>, r2: Result<E, B>): Result<E, Pair<A, B>> {
         return r1.flatMap { a -> r2.map { b -> Pair(a, b) } }
@@ -82,7 +107,7 @@ object ResultT {
 
     /**
      * Given a result and a function in the Promise context, applies the
-     * function to the result returning a transformed result.
+     * function to the result returning a transformed result. Delegates to zip which is non-deterministic
      */
     fun <E, A, B> ap(ff: Result<E, (A) -> B>, fa: Result<E, A>): Result<E, B> {
         return fa.zip(ff).map { it.second(it.first) }
@@ -106,12 +131,20 @@ fun <E, A, B> Result<E, A>.fold(fe: (E) -> B, fa: (A) -> B): Promise<B, Exceptio
     return ResultT.fold(this, fe, fa)
 }
 
+fun <E, A> Result<E, A>.swap(): Result<A, E> {
+    return ResultT.swap(this)
+}
+
 fun <E, A, B> Result<E, A>.map(fa: (A) -> B): Result<E, B> {
     return ResultT.map(this, fa)
 }
 
-fun <E, A, EE> Result<E, A>.mapLeft(fa: (E) -> EE): Result<EE, A> {
-    return ResultT.mapLeft(this, fa)
+fun <E, A, EE> Result<E, A>.recover(fa: (E) -> EE): Result<EE, A> {
+    return ResultT.recover(this, fa)
+}
+
+fun <E, A, EE> Result<E, A>.recoverWith(fa: (E) -> Result<EE, A>): Result<EE, A> {
+    return ResultT.recoverWith(this, fa)
 }
 
 fun <E, A, B> Result<E, A>.flatMap(fa: (A) -> Result<E, B>): Result<E, B> {
@@ -121,3 +154,22 @@ fun <E, A, B> Result<E, A>.flatMap(fa: (A) -> Result<E, B>): Result<E, B> {
 fun <E, A, B> Result<E, A>.zip(that: Result<E, B>): Result<E, Pair<A, B>> {
     return ResultT.zip(this, that)
 }
+
+fun <A, B> Option<A>.zip(that: Option<B>): Option<Pair<A, B>> {
+    return this.flatMap { a -> that.map { b -> Pair(a, b) } }
+}
+
+fun <A, B> Option<A>.toList(): List<A> {
+    return this.map { listOf(it) }.getOrElse { emptyList() }
+}
+
+fun <L, R> L.left(): Disjunction<L, R> {
+    return Disjunction.Left<L, R>(this)
+}
+
+fun <L, R> R.right(): Disjunction<L, R> {
+    return Disjunction.Right<L, R>(this)
+}
+
+
+

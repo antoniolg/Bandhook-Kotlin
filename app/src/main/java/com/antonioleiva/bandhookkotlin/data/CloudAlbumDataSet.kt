@@ -16,15 +16,26 @@
 
 package com.antonioleiva.bandhookkotlin.data
 
+import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
+import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmResponse
 import com.antonioleiva.bandhookkotlin.data.mapper.AlbumMapper
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
+import com.antonioleiva.bandhookkotlin.left
 import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
+import com.antonioleiva.bandhookkotlin.right
 
 class CloudAlbumDataSet(val lastFmService: LastFmService) : AlbumDataSet {
 
-    override fun requestAlbum(mbid: String): Album?
-            = lastFmService.requestAlbum(mbid).unwrapCall { AlbumMapper().transform(album) }
+    override fun requestAlbum(mbid: String): Result<AlbumNotFound, Album> {
+        return lastFmService.requestAlbum(mbid).asResult<AlbumNotFound, LastFmResponse, Album> {
+            AlbumMapper().transform(album).fold(
+                    { AlbumNotFound(mbid).left<AlbumNotFound, Album>() },
+                    { it.right<AlbumNotFound, Album>() }
+            )
+        }
+    }
 
     override fun requestTopAlbums(artistId: String?, artistName: String?): List<Album> {
         val mbid = artistId ?: ""

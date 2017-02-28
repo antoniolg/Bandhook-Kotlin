@@ -20,6 +20,8 @@ import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmAlbum
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmAlbumDetail
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
+import org.funktionale.option.Option
+import org.funktionale.option.toOption
 
 class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapper: ImageMapper = ImageMapper(),
                   val trackMapper: TrackMapper = TrackMapper()) {
@@ -36,8 +38,8 @@ class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapp
         return album.mbid?.isEmpty() ?: true
     }
 
-    fun transform(album: LastFmAlbumDetail) = album.mbid?.let {
-            Album(album.mbid,
+    fun transform(album: LastFmAlbumDetail): Option<Album> = album.mbid.toOption().map { mbid ->
+            Album(mbid,
                     album.name,
                     Artist("", album.artist),
                     imageMapper.getMainImageUrl(album.images),

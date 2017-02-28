@@ -16,22 +16,32 @@
 
 package com.antonioleiva.bandhookkotlin.repository
 
+import com.antonioleiva.bandhookkotlin.*
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.*
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
+import org.funktionale.collections.tail
 
 class AlbumRepositoryImpl(val albumDataSets: List<AlbumDataSet>) : AlbumRepository {
 
-    override fun getAlbum(id: String): Album? {
-        for (dataSet in albumDataSets) {
-            val result = dataSet.requestAlbum(id)
-            if (result != null) {
-                return result
+    /** Trampolined (async) recursion until all DataSets are exhausted or a right result is found */
+    fun <E, A> recurseDataSets(currentDataSets: List<AlbumDataSet>, acc: Result<E, A>, f : (AlbumDataSet) -> Result<E, A>): Result<E, A> =
+        if (currentDataSets.isEmpty()) { acc }
+        else {
+            val current = currentDataSets.get(0)
+            f(current).recoverWith {
+                recurseDataSets(currentDataSets.tail(), f(current), f) }
             }
-        }
 
-        return null
-    }
+
+    override fun getAlbum(id: String): Result<AlbumNotFound, Album> =
+        recurseDataSets(
+                currentDataSets = albumDataSets,
+                acc = ResultT.raiseError<AlbumNotFound, Album>(AlbumNotFound(id)),
+                f = { it.requestAlbum(id) }
+        )
+
 
     override fun getTopAlbums(artistId: String?, artistName: String?): List<Album> {
         for (dataSet in albumDataSets) {

@@ -25,6 +25,7 @@ buildscript {
         maven {
             url "http://dl.bintray.com/kotlin/kotlin-eap-1.1/"
         }
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
@@ -42,6 +43,7 @@ allprojects {
         maven {
             url "http://dl.bintray.com/kotlin/kotlin-eap-1.1/"
         }
+        maven { url "https://jitpack.io" }
     }
 
     ext {

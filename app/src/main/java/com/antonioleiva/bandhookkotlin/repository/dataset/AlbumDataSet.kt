@@ -16,11 +16,13 @@
 
 package com.antonioleiva.bandhookkotlin.repository.dataset
 
+import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.*
 
 interface AlbumDataSet {
 
     fun requestTopAlbums(artistId: String?, artistName: String?): List<Album>
-    fun requestAlbum(mbid: String): Album?
+    fun requestAlbum(mbid: String): Result<AlbumNotFound, Album>
 
 }
