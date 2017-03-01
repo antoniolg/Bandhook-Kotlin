@@ -97,6 +97,17 @@ object ResultT {
     }
 
     /**
+     * Side effects
+     */
+    fun <E, A> onComplete(
+            r: Result<E, A>,
+            onSuccess: (A) -> Unit,
+            onError: (E) -> Unit,
+            onUnhandledException: (Exception) -> Unit): Unit {
+        r.success { it.fold(onError, onSuccess)} fail onUnhandledException
+    }
+
+    /**
      * Combine the results of r1 with r2 given both promises are successful
      * Since promises may have already started this operation is non-deterministic as there is
      * no guarantees as to which one finishes first.
@@ -139,6 +150,13 @@ fun <E, A, B> Result<E, A>.map(fa: (A) -> B): Result<E, B> {
     return ResultT.map(this, fa)
 }
 
+fun <E, A> Result<E, A>.onComplete(
+        onSuccess: (A) -> Unit,
+        onError: (E) -> Unit,
+        onUnhandledException: (Exception) -> Unit): Unit {
+    ResultT.onComplete(this, onSuccess, onError, onUnhandledException)
+}
+
 fun <E, A, EE> Result<E, A>.recover(fa: (E) -> EE): Result<EE, A> {
     return ResultT.recover(this, fa)
 }
@@ -157,10 +175,6 @@ fun <E, A, B> Result<E, A>.zip(that: Result<E, B>): Result<E, Pair<A, B>> {
 
 fun <A, B> Option<A>.zip(that: Option<B>): Option<Pair<A, B>> {
     return this.flatMap { a -> that.map { b -> Pair(a, b) } }
-}
-
-fun <A, B> Option<A>.toList(): List<A> {
-    return this.map { listOf(it) }.getOrElse { emptyList() }
 }
 
 fun <L, R> L.left(): Disjunction<L, R> {

@@ -29,6 +29,7 @@ import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.album.AlbumActivityModule
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.TracksAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
@@ -111,20 +112,24 @@ class AlbumActivity : BaseActivity(), AlbumView {
         presenter.onPause()
     }
 
-    override fun showAlbum(albumDetail: AlbumDetail?) {
-        if (albumDetail != null) {
-            picasso.load(albumDetail.url).fit().centerCrop().into(image, object : Callback.EmptyCallback() {
-                override fun onSuccess() {
-                    makeStatusBarTransparent()
-                    supportStartPostponedEnterTransition()
-                    populateTrackList(trackDataMapper.transform(albumDetail.tracks))
-                    animateTrackListUp()
-                }
-            })
-        } else {
-            supportStartPostponedEnterTransition()
-            supportFinishAfterTransition()
-        }
+    override fun showAlbum(albumDetail: AlbumDetail) = runOnUiThread {
+        picasso.load(albumDetail.url).fit().centerCrop().into(image, object : Callback.EmptyCallback() {
+            override fun onSuccess() {
+                makeStatusBarTransparent()
+                supportStartPostponedEnterTransition()
+                populateTrackList(trackDataMapper.transform(albumDetail.tracks))
+                animateTrackListUp()
+            }
+        })
+    }
+
+    override fun showAlbumNotFound(e: BizException.AlbumNotFound) = runOnUiThread {
+        supportStartPostponedEnterTransition()
+        supportFinishAfterTransition()
+    }
+
+    override fun showUnhandledException(e: Exception) {
+        //TODO show unhandled exceptions
     }
 
     private fun animateTrackListUp() {

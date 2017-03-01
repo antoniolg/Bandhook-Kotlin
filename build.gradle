@@ -15,21 +15,16 @@
  */
 
 buildscript {
-    ext.kotlin_version = '1.1.0-rc-91'
+    ext.kotlin_version = '1.1.0'
     repositories {
         jcenter()
         mavenCentral()
-        maven {
-            url "http://dl.bintray.com/kotlin/kotlin-dev/"
-        }
-        maven {
-            url "http://dl.bintray.com/kotlin/kotlin-eap-1.1/"
-        }
         maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.0-rc-84"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.1.0"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 

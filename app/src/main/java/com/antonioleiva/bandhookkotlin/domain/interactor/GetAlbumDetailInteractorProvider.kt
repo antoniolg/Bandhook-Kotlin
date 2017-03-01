@@ -16,20 +16,10 @@
 
 package com.antonioleiva.bandhookkotlin.domain.interactor
 
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.Event
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.Interactor
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 
-class GetAlbumDetailInteractor(val albumRepository: AlbumRepository) : Interactor {
+class GetAlbumDetailInteractor(val albumRepository: AlbumRepository)  {
 
-    var albumId: String? = null
-
-    override fun invoke(): Event {
-        val id = albumId ?: throw IllegalStateException("Album id should be specified")
-
-        val album = albumRepository.getAlbum(id)
-        return AlbumEvent(album)
-    }
+    fun getAlbum(albumId: String) = albumRepository.getAlbum(albumId)
 
 }

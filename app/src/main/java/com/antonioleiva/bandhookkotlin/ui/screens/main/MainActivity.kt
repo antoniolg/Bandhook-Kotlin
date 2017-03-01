@@ -61,6 +61,10 @@ class MainActivity : BaseActivity(), MainView, HidingToolbarActivity {
                 .injectTo(this)
     }
 
+    override fun showUnhandledException(e: Exception) {
+        //TODO show unhandled exceptions
+    }
+
     fun init(scrollWrapper: RecyclerViewScrollWrapper) {
         recycler.adapter = adapter
         adapter.onItemClickListener = { presenter.onArtistClicked(it) }

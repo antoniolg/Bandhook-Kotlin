@@ -125,6 +125,10 @@ class ArtistActivity : BaseActivity(), ArtistView, AlbumsFragmentContainer {
         })
     }
 
+    override fun showUnhandledException(e: Exception) {
+        //TODO show unhandled exceptions
+    }
+
     override fun showAlbums(albums: List<ImageTitle>) {
         albumsFragment.adapter.items = albums
     }
