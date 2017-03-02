@@ -44,12 +44,6 @@ android {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/NOTICE'
     }
-
-    dexOptions {
-        preDexLibraries = false
-        jumboMode = false
-        javaMaxHeapSize "4g"
-    }
 }
 
 // Required for annotation processing plugins like Dagger
@@ -66,8 +60,8 @@ dependencies {
     compile "com.android.support:cardview-v7:$supportVersion"
     compile "com.android.support:palette-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
-    compile "de.greenrobot:eventbus:2.4.0"
-    compile "com.squareup.picasso:picasso:2.5.0"
+    compile "de.greenrobot:eventbus:2.4.1"
+    compile "com.squareup.picasso:picasso:2.5.2"
     compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     compile ("com.squareup.retrofit2:retrofit:$retrofitVersion"){
@@ -75,18 +69,18 @@ dependencies {
         exclude module: 'okhttp'
     }
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    compile "com.path:android-priority-jobqueue:1.1.2"
+    compile "com.birbit:android-priority-jobqueue:2.0.1"
     compile "org.jetbrains.anko:anko-sdk15:$parent.ext.ankoVersion"
     compile "org.jetbrains.anko:anko-support-v4:$parent.ext.ankoVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     compile "com.google.dagger:dagger:$daggerVersion"
 
-    androidTestCompile "org.mockito:mockito-core:1.10.19"
+    androidTestCompile "org.mockito:mockito-core:2.7.13"
     androidTestCompile "com.google.dexmaker:dexmaker:1.2"
     androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
     androidTestCompile "com.android.support:support-annotations:$supportVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:2.3-alpha"
 
     testCompile "junit:junit:4.12"
-    testCompile "org.mockito:mockito-core:1.10.19"
+    testCompile "org.mockito:mockito-core:2.7.13"
 }

@@ -17,11 +17,11 @@
 package com.antonioleiva.bandhookkotlin.domain.interactor.base
 
 import android.content.Context
-import com.path.android.jobqueue.JobManager
-import com.path.android.jobqueue.config.Configuration
+import com.birbit.android.jobqueue.JobManager
+import com.birbit.android.jobqueue.config.Configuration
 
 class CustomJobManager(context: Context)
-: JobManager(context, CustomJobManager.getJobManagerConfiguration(context)) {
+: JobManager(CustomJobManager.getJobManagerConfiguration(context)) {
 
     companion object {
 
