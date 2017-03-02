@@ -42,14 +42,3 @@ fun Activity.getNavigationId(): String {
     return intent.getStringExtra("id")
 }
 
-fun Context.getDimen(dimenRes: Int): Int {
-    return resources.getDimensionPixelSize(dimenRes)
-}
-
-fun Context.getAttrId(themeRes: Int, attrRes: Int): Int {
-    val a = theme.obtainStyledAttributes(themeRes, intArrayOf(attrRes))
-    val attributeResourceId = a.getResourceId(0, 0)
-    a.recycle()
-    return attributeResourceId
-}
-

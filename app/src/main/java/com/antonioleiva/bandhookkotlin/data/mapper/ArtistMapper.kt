@@ -30,7 +30,7 @@ class ArtistMapper(val imageMapper: ImageMapper = ImageMapper()) {
     }
 
     private fun artistHasQualityInfo(it: LastFmArtist): Boolean {
-        return !isArtistMbidEmpty(it) && it.images != null && it.images.size > 0
+        return !isArtistMbidEmpty(it) && it.images != null && it.images.isNotEmpty()
     }
 
     private fun isArtistMbidEmpty(artist: LastFmArtist): Boolean {

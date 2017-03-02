@@ -76,18 +76,6 @@ class MainActivity : BaseActivity(), MainView {
         adapter.items = artists
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_settings -> return true
-            else -> return onOptionsItemSelected(item)
-        }
-    }
-
     override fun navigateToDetail(id: String) {
         navigate<ArtistActivity>(id, findItemById(id), BaseActivity.IMAGE_TRANSITION_NAME)
     }

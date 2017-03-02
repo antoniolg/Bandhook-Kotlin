@@ -23,7 +23,7 @@ import android.util.AttributeSet
 import kotlin.properties.Delegates
 
 /**
- * AutofitRecyclerView was orignally explained by Chiu-Ki Chan and explained on its blog:
+ * AutofitRecyclerView was originally explained by Chiu-Ki Chan and explained on its blog:
  * http://blog.sqisland.com/2014/12/recyclerview-autofit-grid.html
  *
  * I just converted to Kotlin code.

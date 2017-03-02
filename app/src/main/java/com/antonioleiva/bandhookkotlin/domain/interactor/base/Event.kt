@@ -16,6 +16,4 @@
 
 package com.antonioleiva.bandhookkotlin.domain.interactor.base
 
-interface Event {
-
-}
+interface Event

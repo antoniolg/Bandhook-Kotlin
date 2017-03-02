@@ -19,4 +19,4 @@ package com.antonioleiva.bandhookkotlin.domain.interactor.event
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Event
 
-class ArtistsEvent(val artists: List<Artist>) : Event
+data class ArtistsEvent(val artists: List<Artist>) : Event

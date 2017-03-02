@@ -16,32 +16,17 @@
 
 package com.antonioleiva.bandhookkotlin.repository
 
-import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
 
 class AlbumRepositoryImpl(val albumDataSets: List<AlbumDataSet>) : AlbumRepository {
 
-    override fun getAlbum(id: String): Album? {
-        for (dataSet in albumDataSets) {
-            val result = dataSet.requestAlbum(id)
-            if (result != null) {
-                return result
-            }
-        }
+    override fun getAlbum(id: String) = albumDataSets
+            .map { it.requestAlbum(id) }
+            .firstOrNull { it != null }
 
-        return null
-    }
-
-    override fun getTopAlbums(artistId: String?, artistName: String?): List<Album> {
-        for (dataSet in albumDataSets) {
-            val result = dataSet.requestTopAlbums(artistId, artistName)
-            if (result.isNotEmpty()) {
-                return result
-            }
-        }
-
-        return emptyList()
-    }
-
+    override fun getTopAlbums(artistId: String?, artistName: String?) = albumDataSets
+                .map { it.requestTopAlbums(artistId, artistName) }
+                .firstOrNull { it.isNotEmpty() }
+                ?: emptyList()
 }

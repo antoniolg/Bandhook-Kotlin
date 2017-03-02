@@ -27,10 +27,10 @@ import com.antonioleiva.bandhookkotlin.ui.util.inflate
 import org.jetbrains.anko.find
 import kotlin.properties.Delegates
 
-open class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
+open class TracksAdapter : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
 
     var items: List<TrackDetail> by Delegates.observable(emptyList())
-                    { prop, old, new -> notifyDataSetChange() }
+                    { _, _, _ -> notifyDataSetChange() }
 
     override fun getItemCount(): Int {
         return items.count()
