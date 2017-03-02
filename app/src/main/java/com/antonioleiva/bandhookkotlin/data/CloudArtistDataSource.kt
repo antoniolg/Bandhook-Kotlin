@@ -35,16 +35,16 @@ class CloudArtistDataSource(val language: String, val lastFmService: LastFmServi
     override fun get(id: String): Result<ArtistNotFound, Artist> =
             lastFmService.requestArtistInfo(id, language).asResult {
                 ArtistMapper().transform(artist).fold(
-                        { ArtistNotFound(id).left<ArtistNotFound, Artist>() },
-                        { it.right<ArtistNotFound, Artist>() }
+                        { ArtistNotFound(id).left() },
+                        { it.right() }
                 )
             }
 
     override fun requestRecommendedArtists(): Result<RecomendationsNotFound, NonEmptyList<Artist>> =
             lastFmService.requestSimilar(coldplayMbid).asResult {
                 val results = ArtistMapper().transform(similarArtists.artists)
-                if (results.isEmpty()) RecomendationsNotFound.left<RecomendationsNotFound, NonEmptyList<Artist>>()
-                else NonEmptyList.of(results[0], results.tail()).right<RecomendationsNotFound, NonEmptyList<Artist>>()
+                if (results.isEmpty()) RecomendationsNotFound.left()
+                else NonEmptyList.of(results[0], results.tail()).right()
             }
 
 }

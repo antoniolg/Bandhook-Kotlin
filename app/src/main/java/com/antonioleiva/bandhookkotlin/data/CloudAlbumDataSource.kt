@@ -31,8 +31,8 @@ class CloudAlbumDataSource(val lastFmService: LastFmService) : AlbumDataSource {
     override fun get(id: String): Result<AlbumNotFound, Album> {
         return lastFmService.requestAlbum(id).asResult<AlbumNotFound, LastFmResponse, Album> {
             AlbumMapper().transform(album).fold(
-                    { AlbumNotFound(id).left<AlbumNotFound, Album>() },
-                    { it.right<AlbumNotFound, Album>() }
+                    { AlbumNotFound(id).left() },
+                    { it.right() }
             )
         }
     }
