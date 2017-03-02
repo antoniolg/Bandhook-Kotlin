@@ -29,7 +29,7 @@ import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.album.AlbumActivityModule
-import com.antonioleiva.bandhookkotlin.domain.entity.BizException
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.TracksAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
@@ -123,7 +123,7 @@ class AlbumActivity : BaseActivity(), AlbumView {
         })
     }
 
-    override fun showAlbumNotFound(e: BizException.AlbumNotFound) = runOnUiThread {
+    override fun showAlbumNotFound(e: AlbumNotFound) = runOnUiThread {
         supportStartPostponedEnterTransition()
         supportFinishAfterTransition()
     }

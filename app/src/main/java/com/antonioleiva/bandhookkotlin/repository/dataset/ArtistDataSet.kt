@@ -16,10 +16,13 @@
 
 package com.antonioleiva.bandhookkotlin.repository.dataset
 
+import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
 
 interface ArtistDataSet {
 
     fun requestRecommendedArtists(): List<Artist>
-    fun requestArtist(id: String): Artist?
+    fun requestArtist(mbid: String): Result<ArtistNotFound, Artist>
+
 }

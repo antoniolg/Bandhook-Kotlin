@@ -16,14 +16,29 @@
 
 package com.antonioleiva.bandhookkotlin.data
 
+import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
+import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmResponse
 import com.antonioleiva.bandhookkotlin.data.mapper.ArtistMapper
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
+import com.antonioleiva.bandhookkotlin.left
 import com.antonioleiva.bandhookkotlin.repository.dataset.ArtistDataSet
+import com.antonioleiva.bandhookkotlin.right
 
 class CloudArtistDataSet(val language: String, val lastFmService: LastFmService) : ArtistDataSet {
 
     val coldplayMbid = "cc197bad-dc9c-440d-a5b5-d52ba2e14234"
+
+    override fun requestArtist(mbid: String): Result<ArtistNotFound, Artist> {
+        return lastFmService.requestArtistInfo(mbid, language).asResult<ArtistNotFound,
+                LastFmResponse, Artist> {
+            ArtistMapper().transform(artist).fold(
+                    { ArtistNotFound(mbid).left<ArtistNotFound, Artist>() },
+                    { it.right<ArtistNotFound, Artist>() }
+            )
+        }
+    }
 
     override fun requestRecommendedArtists(): List<Artist> =
             lastFmService.requestSimilar(coldplayMbid).unwrapCall {
@@ -31,8 +46,4 @@ class CloudArtistDataSet(val language: String, val lastFmService: LastFmService)
                 ArtistMapper().transform(similarArtists.artists)
             }
 
-    override fun requestArtist(id: String): Artist? =
-            lastFmService.requestArtistInfo(id, language).unwrapCall {
-                return ArtistMapper().transform(artist)
-            }
 }

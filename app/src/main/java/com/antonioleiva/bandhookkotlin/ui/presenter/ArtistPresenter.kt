@@ -20,8 +20,8 @@ import com.antonioleiva.bandhookkotlin.domain.interactor.GetArtistDetailInteract
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetTopAlbumsInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistDetailEvent
 import com.antonioleiva.bandhookkotlin.domain.interactor.event.TopAlbumsEvent
+import com.antonioleiva.bandhookkotlin.onComplete
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ArtistDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
@@ -37,17 +37,15 @@ open class ArtistPresenter(
         val albumsMapper: ImageTitleDataMapper) : Presenter<ArtistView>, AlbumsPresenter {
 
     open fun init(artistId: String) {
-        val artistDetailInteractor = artistDetailInteractor
-        artistDetailInteractor.id = artistId
-        interactorExecutor.execute(artistDetailInteractor)
+        artistDetailInteractor.getArtist(artistId).onComplete(
+                onSuccess = { view.showArtist(artistDetailMapper.transform(it)) },
+                onError = { view.showArtistNotFound(it) },
+                onUnhandledException = { view.showUnhandledException(it) }
+        )
 
         val topAlbumsInteractor = topAlbumsInteractor
         topAlbumsInteractor.artistId = artistId
         interactorExecutor.execute(this.topAlbumsInteractor)
-    }
-
-    fun onEvent(event: ArtistDetailEvent) {
-        view.showArtist(artistDetailMapper.transform(event.artist))
     }
 
     fun onEvent(event: TopAlbumsEvent) {

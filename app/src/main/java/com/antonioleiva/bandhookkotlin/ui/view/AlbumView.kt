@@ -16,10 +16,10 @@
 
 package com.antonioleiva.bandhookkotlin.ui.view
 
-import com.antonioleiva.bandhookkotlin.domain.entity.BizException.*
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
 
-interface AlbumView: PresentationView {
+interface AlbumView : PresentationView {
     fun showAlbum(albumDetail: AlbumDetail)
     fun showAlbumNotFound(e: AlbumNotFound)
 }

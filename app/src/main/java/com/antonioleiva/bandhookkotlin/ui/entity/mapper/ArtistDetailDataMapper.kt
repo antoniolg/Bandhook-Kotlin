@@ -28,4 +28,5 @@ class ArtistDetailDataMapper {
             artist.url,
             artist.bio,
             artist.albums?.map { ImageTitle(it.id, it.name, it.url) })
+
 }

@@ -18,7 +18,7 @@ package com.antonioleiva.bandhookkotlin.repository.dataset
 
 import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
-import com.antonioleiva.bandhookkotlin.domain.entity.BizException.*
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 
 interface AlbumDataSet {
 

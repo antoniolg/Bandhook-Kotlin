@@ -39,18 +39,18 @@ class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapp
     }
 
     fun transform(album: LastFmAlbumDetail): Option<Album> = album.mbid.toOption().map { mbid ->
-            Album(mbid,
-                    album.name,
-                    Artist("", album.artist),
-                    imageMapper.getMainImageUrl(album.images),
-                    trackMapper.transform(album.tracks.tracks))
+        Album(mbid,
+                album.name,
+                Artist("", album.artist).toOption(),
+                imageMapper.getMainImageUrl(album.images),
+                trackMapper.transform(album.tracks.tracks))
     }
 
     fun transform(album: LastFmAlbum) = album.mbid?.let {
-            Album(album.mbid,
-                    album.name,
-                    artistMapper.transform(album.artist),
-                    imageMapper.getMainImageUrl(album.images),
-                    trackMapper.transform(album.tracks?.tracks))
+        Album(album.mbid,
+                album.name,
+                artistMapper.transform(album.artist),
+                imageMapper.getMainImageUrl(album.images),
+                trackMapper.transform(album.tracks?.tracks))
     }
 }
