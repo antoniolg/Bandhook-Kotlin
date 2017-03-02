@@ -21,35 +21,20 @@ import com.antonioleiva.bandhookkotlin.ResultT
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
-import com.antonioleiva.bandhookkotlin.recoverWith
-import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
-import org.funktionale.collections.tail
+import com.antonioleiva.bandhookkotlin.repository.datasource.AlbumDataSource
 
-class AlbumRepositoryImpl(val albumDataSets: List<AlbumDataSet>) : AlbumRepository {
+class AlbumRepositoryImpl(override val dataSources: List<AlbumDataSource>) : AlbumRepository {
 
-    /** Trampolined (async) recursion until all DataSets are exhausted or a right result is found */
-    fun <E, A> recurseDataSets(currentDataSets: List<AlbumDataSet>, acc: Result<E, A>, f: (AlbumDataSet) -> Result<E, A>): Result<E, A> =
-            if (currentDataSets.isEmpty()) {
-                acc
-            } else {
-                val current = currentDataSets.get(0)
-                f(current).recoverWith {
-                    recurseDataSets(currentDataSets.tail(), f(current), f)
-                }
-            }
-
-
-    override fun getAlbum(id: String): Result<AlbumNotFound, Album> =
-            recurseDataSets(
-                    currentDataSets = albumDataSets,
+    override fun get(id: String): Result<AlbumNotFound, Album> =
+            recurseDataSources(
+                    currentDataSources = dataSources,
                     acc = ResultT.raiseError<AlbumNotFound, Album>(AlbumNotFound(id)),
-                    f = { it.requestAlbum(id) }
+                    f = { it.get(id) }
             )
 
-
     override fun getTopAlbums(artistId: String?, artistName: String?): List<Album> {
-        for (dataSet in albumDataSets) {
-            val result = dataSet.requestTopAlbums(artistId, artistName)
+        for (dataSource in dataSources) {
+            val result = dataSource.requestTopAlbums(artistId, artistName)
             if (result.isNotEmpty()) {
                 return result
             }

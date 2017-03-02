@@ -20,8 +20,7 @@ import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmArtist
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmBio
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmImage
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmImageType
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -51,8 +50,8 @@ class ArtistMapperTest {
                 listOf(megaLastFmImage, smallLastFmImage), null, null)
 
         artistsList = listOf(validLastFmArtistWithMegaImage,
-                             invalidLastFmArtist,
-                             validLastFmArtistWithoutMegaImage)
+                invalidLastFmArtist,
+                validLastFmArtistWithoutMegaImage)
 
         artistMapper = ArtistMapper()
     }
@@ -71,25 +70,31 @@ class ArtistMapperTest {
     @Test
     fun testTransformArtist_ValidArtistWithMegaImage() {
         // When
-        val artist = artistMapper.transform(validLastFmArtistWithMegaImage)
+        val artistOption = artistMapper.transform(validLastFmArtistWithMegaImage)
 
         // Then
-        assertEquals(validLastFmArtistWithMegaImage.mbid, artist?.id)
-        assertEquals(validLastFmArtistWithMegaImage.name, artist?.name)
-        assertEquals(validLastFmArtistWithMegaImage.bio?.content, artist?.bio)
-        assertEquals(megaImageUrl, artist?.url)
+        assertTrue(artistOption.isDefined())
+        artistOption.forEach {
+            assertEquals(validLastFmArtistWithMegaImage.mbid, it.id)
+            assertEquals(validLastFmArtistWithMegaImage.name, it.name)
+            assertEquals(validLastFmArtistWithMegaImage.bio?.content, it.bio)
+            assertEquals(megaImageUrl, it.url)
+        }
     }
 
     @Test
     fun testTransformArtist_ValidArtistWithoutMegaImage() {
         // When
-        val artist = artistMapper.transform(validLastFmArtistWithoutMegaImage)
+        val artistOption = artistMapper.transform(validLastFmArtistWithMegaImage)
 
         // Then
-        assertEquals(validLastFmArtistWithoutMegaImage.mbid, artist?.id)
-        assertEquals(validLastFmArtistWithoutMegaImage.name, artist?.name)
-        assertEquals(validLastFmArtistWithoutMegaImage.bio?.content, artist?.bio)
-        assertEquals(smallImageUrl, artist?.url)
+        assertTrue(artistOption.isDefined())
+        artistOption.forEach {
+            assertEquals(validLastFmArtistWithoutMegaImage.mbid, it.id)
+            assertEquals(validLastFmArtistWithoutMegaImage.name, it.name)
+            assertEquals(validLastFmArtistWithoutMegaImage.bio?.content, it.bio)
+            assertEquals(smallImageUrl, it.url)
+        }
     }
 
     @Test

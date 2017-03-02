@@ -26,7 +26,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.runners.MockitoJUnitRunner
+import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class GetAlbumDetailInteractorTest {
@@ -40,7 +40,7 @@ class GetAlbumDetailInteractorTest {
 
     @Before
     fun setUp() {
-        `when`(albumRepository.getAlbum(albumId)).thenReturn(Album("album id", "album name",
+        `when`(albumRepository.get(albumId)).thenReturn(Album("album id", "album name",
                 Artist("artist id", "artist name", null, null, null), "album url", emptyList()))
 
         getAlbumDetailInteractor = GetAlbumDetailInteractor(albumRepository)

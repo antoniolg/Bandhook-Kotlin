@@ -110,16 +110,19 @@ class AlbumMapperTest {
     @Test
     fun testTransformAlbumDetail_validAlbumDetail() {
         // When
-        val album = albumMapper.transform(lastFmAlbumDetail)
+        val albumOption = albumMapper.transform(lastFmAlbumDetail)
 
         // Then
-        assertNotNull(album)
-        assertEquals(lastFmAlbumDetail.mbid, album?.id)
-        assertEquals(lastFmAlbumDetail.name, album?.name)
-        assertNotNull(album?.url)
-        assertEquals(lastFmAlbumDetail.artist, album?.artist?.name)
-        assertEquals(lastFmAlbumDetail.tracks.tracks[0].name, album?.tracks?.get(0)?.name)
-        assertEquals(lastFmAlbumDetail.tracks.tracks[0].duration, album?.tracks?.get(0)?.duration)
+        assertTrue(albumOption.isDefined())
+        albumOption.forEach {
+            assertEquals(lastFmAlbumDetail.mbid, it.id)
+            assertEquals(lastFmAlbumDetail.name, it.name)
+            assertNotNull(it.url)
+            assertTrue(it.artist.isDefined())
+            it.artist.forEach { assertEquals(lastFmAlbumDetail.artist, it.name) }
+            assertEquals(lastFmAlbumDetail.tracks.tracks[0].name, it.tracks.get(0)?.name)
+            assertEquals(lastFmAlbumDetail.tracks.tracks[0].duration, it.tracks.get(0)?.duration)
+        }
     }
 
     @Test
@@ -141,8 +144,10 @@ class AlbumMapperTest {
         assertEquals(lastFmAlbum.mbid, album?.id)
         assertEquals(lastFmAlbum.name, album?.name)
         assertNotNull(album?.url)
-        assertEquals(lastFmAlbum.artist.name, album?.artist?.name)
-        assertEquals(lastFmAlbum.artist.mbid, album?.artist?.id)
+        album?.artist?.forEach {
+            assertEquals(lastFmAlbum.artist.name, it.name)
+            assertEquals(lastFmAlbum.artist.mbid, it.id)
+        }
         assertEquals(lastFmAlbum.tracks?.tracks?.get(0)?.name, album?.tracks?.get(0)?.name)
         assertEquals(lastFmAlbum.tracks?.tracks?.get(0)?.duration, album?.tracks?.get(0)?.duration)
     }

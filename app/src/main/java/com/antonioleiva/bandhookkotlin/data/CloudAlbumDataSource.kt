@@ -23,15 +23,15 @@ import com.antonioleiva.bandhookkotlin.data.mapper.AlbumMapper
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.left
-import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
+import com.antonioleiva.bandhookkotlin.repository.datasource.AlbumDataSource
 import com.antonioleiva.bandhookkotlin.right
 
-class CloudAlbumDataSet(val lastFmService: LastFmService) : AlbumDataSet {
+class CloudAlbumDataSource(val lastFmService: LastFmService) : AlbumDataSource {
 
-    override fun requestAlbum(mbid: String): Result<AlbumNotFound, Album> {
-        return lastFmService.requestAlbum(mbid).asResult<AlbumNotFound, LastFmResponse, Album> {
+    override fun get(id: String): Result<AlbumNotFound, Album> {
+        return lastFmService.requestAlbum(id).asResult<AlbumNotFound, LastFmResponse, Album> {
             AlbumMapper().transform(album).fold(
-                    { AlbumNotFound(mbid).left<AlbumNotFound, Album>() },
+                    { AlbumNotFound(id).left<AlbumNotFound, Album>() },
                     { it.right<AlbumNotFound, Album>() }
             )
         }
@@ -49,4 +49,5 @@ class CloudAlbumDataSet(val lastFmService: LastFmService) : AlbumDataSet {
 
         return emptyList()
     }
+
 }

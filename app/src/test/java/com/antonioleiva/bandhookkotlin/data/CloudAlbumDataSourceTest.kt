@@ -26,23 +26,23 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mockito.runners.MockitoJUnitRunner
+import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
-class CloudAlbumDataSetTest {
+class CloudAlbumDataSourceTest {
 
     @Mock
     lateinit var lastFmService: LastFmService
 
-    lateinit var cloudAlbumDataSet: CloudAlbumDataSet
+    lateinit var cloudAlbumDataSource: CloudAlbumDataSource
     lateinit var lastFmResponse: LastFmResponse
     lateinit var knownAlbumDetail: LastFmAlbumDetail
     lateinit var unknownAlbumDetail: LastFmAlbumDetail
     lateinit var album: LastFmAlbum
     lateinit var artist: LastFmArtist
     lateinit var topAlbums: LastFmTopAlbums
-    lateinit var albums:  List<LastFmAlbum>
+    lateinit var albums: List<LastFmAlbum>
 
     private val albumMapper = AlbumMapper()
     private val albumMbid = "album mbid"
@@ -51,7 +51,7 @@ class CloudAlbumDataSetTest {
 
     @Before
     fun setUp() {
-        cloudAlbumDataSet = CloudAlbumDataSet(lastFmService)
+        cloudAlbumDataSource = CloudAlbumDataSource(lastFmService)
 
         artist = LastFmArtist(artistName, artistMbid, "artist url", emptyList(), null, null)
         album = LastFmAlbum("album name", albumMbid, "album url",
@@ -73,7 +73,7 @@ class CloudAlbumDataSetTest {
     @Test
     fun testRequestAlbum_knownAlbum() {
         // When
-        val album = cloudAlbumDataSet.requestAlbum(albumMbid)
+        val album = cloudAlbumDataSource.get(albumMbid)
 
         // Then
         verify(lastFmService).requestAlbum(albumMbid)
@@ -88,7 +88,7 @@ class CloudAlbumDataSetTest {
         `when`(lastFmService.requestAlbum(albumMbid)).thenReturn(FakeCall(Response.success(unknownAlbumResponse), null))
 
         // When
-        val album = cloudAlbumDataSet.requestAlbum(albumMbid)
+        val album = cloudAlbumDataSource.get(albumMbid)
 
         // Then
         verify(lastFmService).requestAlbum(albumMbid)
@@ -98,7 +98,7 @@ class CloudAlbumDataSetTest {
     @Test
     fun testRequestTopAlbums_byArtistMbid() {
         // When
-        val albums = cloudAlbumDataSet.requestTopAlbums(artistMbid, null)
+        val albums = cloudAlbumDataSource.requestTopAlbums(artistMbid, null)
 
         // Then
         verify(lastFmService).requestAlbums(artistMbid, "")
@@ -108,7 +108,7 @@ class CloudAlbumDataSetTest {
     @Test
     fun testRequestTopAlbums_byArtistName() {
         // When
-        val albums = cloudAlbumDataSet.requestTopAlbums(null, artistName)
+        val albums = cloudAlbumDataSource.requestTopAlbums(null, artistName)
 
         // Then
         verify(lastFmService).requestAlbums("", artistName)
@@ -118,7 +118,7 @@ class CloudAlbumDataSetTest {
     @Test
     fun testRequestTopAlbums_byArtistNameAndMbid() {
         // When
-        val albums = cloudAlbumDataSet.requestTopAlbums(artistMbid, artistName)
+        val albums = cloudAlbumDataSource.requestTopAlbums(artistMbid, artistName)
 
         // Then
         verify(lastFmService).requestAlbums(artistMbid, artistName)
@@ -128,7 +128,7 @@ class CloudAlbumDataSetTest {
     @Test
     fun testRequestTopAlbums_noArguments() {
         // When
-        val albums = cloudAlbumDataSet.requestTopAlbums(null, null)
+        val albums = cloudAlbumDataSource.requestTopAlbums(null, null)
 
         // Then
         verify(lastFmService, never()).requestAlbums(anyString(), anyString())

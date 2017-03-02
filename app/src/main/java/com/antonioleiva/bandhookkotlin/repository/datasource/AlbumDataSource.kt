@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin.repository.dataset
+package com.antonioleiva.bandhookkotlin.repository.datasource
 
-import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 
-interface AlbumDataSet {
+interface AlbumDataSource : DataSource<AlbumNotFound, Album, String> {
 
     fun requestTopAlbums(artistId: String?, artistName: String?): List<Album>
-    fun requestAlbum(mbid: String): Result<AlbumNotFound, Album>
 
 }
