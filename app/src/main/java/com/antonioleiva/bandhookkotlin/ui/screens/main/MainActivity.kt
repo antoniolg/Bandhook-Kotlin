@@ -25,8 +25,6 @@ import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.main.MainActivityModule
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
-import com.antonioleiva.bandhookkotlin.ui.activity.HidingToolbarActivity
-import com.antonioleiva.bandhookkotlin.ui.activity.scrollwrapper.RecyclerViewScrollWrapper
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
@@ -37,7 +35,7 @@ import org.jetbrains.anko.find
 import org.jetbrains.anko.findOptional
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainView, HidingToolbarActivity {
+class MainActivity : BaseActivity(), MainView {
 
     override val layoutResource = R.layout.activity_main
     val recycler by lazy { find<RecyclerView>(R.id.recycler) }
@@ -51,9 +49,7 @@ class MainActivity : BaseActivity(), MainView, HidingToolbarActivity {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val scrollWrapper = RecyclerViewScrollWrapper(recycler)
-        init(scrollWrapper)
-        initHidingToolbar(scrollWrapper)
+        init()
     }
 
     override fun injectDependencies(applicationComponent: ApplicationComponent) {
@@ -61,12 +57,9 @@ class MainActivity : BaseActivity(), MainView, HidingToolbarActivity {
                 .injectTo(this)
     }
 
-    fun init(scrollWrapper: RecyclerViewScrollWrapper) {
+    fun init() {
         recycler.adapter = adapter
         adapter.onItemClickListener = { presenter.onArtistClicked(it) }
-        scrollWrapper.scrollObservers.add { wrapper ->
-            background?.translationY = (-wrapper.scrollY / 2).toFloat()
-        }
     }
 
     override fun onResume() {
