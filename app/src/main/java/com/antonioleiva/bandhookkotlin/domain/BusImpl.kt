@@ -28,4 +28,5 @@ class BusImpl : EventBus(), Bus {
     override fun post(event: Any) {
         mainThread.post({ super.post(event) })
     }
+
 }
