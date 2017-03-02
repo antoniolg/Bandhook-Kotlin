@@ -16,11 +16,13 @@
 
 package com.antonioleiva.bandhookkotlin.repository.datasource
 
+import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 
-interface AlbumDataSource : DataSource<AlbumNotFound, Album, String> {
+interface AlbumDataSource {
 
+    fun get(id: String): Result<AlbumNotFound, Album>
     fun requestTopAlbums(artistId: String?, artistName: String?): List<Album>
 
 }

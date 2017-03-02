@@ -3,6 +3,7 @@ package com.antonioleiva.bandhookkotlin
 import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.functional.bind
 import nl.komponents.kovenant.then
+import org.funktionale.collections.tail
 import org.funktionale.either.Disjunction
 import org.funktionale.either.flatMap
 import org.funktionale.option.Option
@@ -123,6 +124,17 @@ object ResultT {
     fun <E, A, B> ap(ff: Result<E, (A) -> B>, fa: Result<E, A>): Result<E, B> {
         return fa.zip(ff).map { it.second(it.first) }
     }
+
+    fun <E, A, B> firstSuccessIn(fa: List<B>,
+                                 acc: Result<E, A>,
+                                 f: (B) -> Result<E, A>): Result<E, A> =
+            if (fa.isEmpty()) acc
+            else {
+                val current = fa[0]
+                f(current).recoverWith {
+                    firstSuccessIn(fa.tail(), f(current), f)
+                }
+            }
 
 }
 

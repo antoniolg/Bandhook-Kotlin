@@ -23,11 +23,11 @@ import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.repository.datasource.AlbumDataSource
 
-class AlbumRepositoryImpl(override val dataSources: List<AlbumDataSource>) : AlbumRepository {
+class AlbumRepositoryImpl(val dataSources: List<AlbumDataSource>) : AlbumRepository {
 
     override fun get(id: String): Result<AlbumNotFound, Album> =
-            recurseDataSources(
-                    currentDataSources = dataSources,
+            ResultT.firstSuccessIn(
+                    fa = dataSources,
                     acc = ResultT.raiseError<AlbumNotFound, Album>(AlbumNotFound(id)),
                     f = { it.get(id) }
             )

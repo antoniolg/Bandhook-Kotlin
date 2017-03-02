@@ -23,11 +23,11 @@ import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 import com.antonioleiva.bandhookkotlin.repository.datasource.ArtistDataSource
 
-class ArtistRepositoryImpl(override val dataSources: List<ArtistDataSource>) : ArtistRepository {
+class ArtistRepositoryImpl(val dataSources: List<ArtistDataSource>) : ArtistRepository {
 
     override fun get(id: String): Result<ArtistNotFound, Artist> =
-            recurseDataSources(
-                    currentDataSources = dataSources,
+            ResultT.firstSuccessIn(
+                    fa = dataSources,
                     acc = ResultT.raiseError<ArtistNotFound, Artist>(ArtistNotFound(id)),
                     f = { it.get(id) }
             )
