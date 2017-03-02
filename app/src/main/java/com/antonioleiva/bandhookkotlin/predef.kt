@@ -105,7 +105,7 @@ object ResultT {
             onSuccess: (A) -> Unit,
             onError: (E) -> Unit,
             onUnhandledException: (Exception) -> Unit): Unit {
-        r.success { it.fold(onError, onSuccess)} fail onUnhandledException
+        r.success { it.fold(onError, onSuccess) } fail onUnhandledException
     }
 
     /**
@@ -202,26 +202,29 @@ class NonEmptyList<out A>(val head: A, vararg t: A) : Collection<A> {
 
     val all: List<A> = listOf(head, *t)
 
-    inline fun <reified B> map(f: (A) -> B): NonEmptyList<B> = unsafeFromList(all.map(f))
+    inline fun <reified B> map(f: (A) -> B): NonEmptyList<B> =
+            unsafeFromList(all.map(f))
 
-    inline fun <reified B> flatMap(f: (A) -> List<B>): NonEmptyList<B> = unsafeFromList(all.flatMap(f))
+    inline fun <reified B> flatMap(f: (A) -> List<B>): NonEmptyList<B> =
+            unsafeFromList(all.flatMap(f))
 
     override val size: Int
         get() = all.size
 
-    override fun contains(element: @UnsafeVariance A): Boolean = all.contains(element)
+    override fun contains(element: @UnsafeVariance A): Boolean =
+            all.contains(element)
 
     override fun containsAll(elements: Collection<@UnsafeVariance A>): Boolean =
-        all.containsAll(elements)
+            all.containsAll(elements)
 
     override fun isEmpty(): Boolean = false
 
     override fun iterator(): Iterator<A> = all.iterator()
 
     companion object Factory {
-        inline fun <reified A> of (h: A, vararg t: A): NonEmptyList<A> = NonEmptyList(h, *t)
-        inline fun <reified A> of (h: A, t: List<A>): NonEmptyList<A> = NonEmptyList(h, *t.toTypedArray())
-        inline fun <reified A> unsafeFromList(l : List<A>): NonEmptyList<A> = of(l[0], l.tail())
+        inline fun <reified A> of(h: A, vararg t: A): NonEmptyList<A> = NonEmptyList(h, *t)
+        inline fun <reified A> of(h: A, t: List<A>): NonEmptyList<A> = NonEmptyList(h, *t.toTypedArray())
+        inline fun <reified A> unsafeFromList(l: List<A>): NonEmptyList<A> = of(l[0], l.tail())
     }
 }
 

@@ -16,10 +16,14 @@
 
 package com.antonioleiva.bandhookkotlin.domain.interactor
 
+import com.antonioleiva.bandhookkotlin.Result
+import com.antonioleiva.bandhookkotlin.domain.entity.Album
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.*
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 
 class GetAlbumDetailInteractor(val albumRepository: AlbumRepository) {
 
-    fun getAlbum(albumId: String) = albumRepository.get(albumId)
+    fun getAlbum(albumId: String): Result<AlbumNotFound, Album> =
+            albumRepository.get(albumId)
 
 }

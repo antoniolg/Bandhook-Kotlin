@@ -16,31 +16,30 @@
 
 package com.antonioleiva.bandhookkotlin.repository
 
+import com.antonioleiva.bandhookkotlin.NonEmptyList
 import com.antonioleiva.bandhookkotlin.Result
-import com.antonioleiva.bandhookkotlin.ResultT
+import com.antonioleiva.bandhookkotlin.ResultT.firstSuccessIn
+import com.antonioleiva.bandhookkotlin.ResultT.raiseError
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
-import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.*
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 import com.antonioleiva.bandhookkotlin.repository.datasource.ArtistDataSource
 
 class ArtistRepositoryImpl(val dataSources: List<ArtistDataSource>) : ArtistRepository {
 
     override fun get(id: String): Result<ArtistNotFound, Artist> =
-            ResultT.firstSuccessIn(
+            firstSuccessIn(
                     fa = dataSources,
-                    acc = ResultT.raiseError<ArtistNotFound, Artist>(ArtistNotFound(id)),
+                    acc = raiseError<ArtistNotFound, Artist>(ArtistNotFound(id)),
                     f = { it.get(id) }
             )
 
-    override fun getRecommendedArtists(): List<Artist> {
-        for (dataSource in dataSources) {
-            val result = dataSource.requestRecommendedArtists()
-            if (result.isNotEmpty()) {
-                return result
-            }
-        }
+    override fun getRecommendedArtists(): Result<RecomendationsNotFound, NonEmptyList<Artist>> =
+            firstSuccessIn(
+                    fa = dataSources,
+                    acc = raiseError<RecomendationsNotFound, NonEmptyList<Artist>>(RecomendationsNotFound),
+                    f = { it.requestRecommendedArtists() }
+            )
 
-        return emptyList()
-    }
 
 }
