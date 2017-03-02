@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin.repository.dataset
+package com.antonioleiva.bandhookkotlin.repository.datasource
 
-import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
 
-interface ArtistDataSet {
+interface ArtistDataSource : DataSource<ArtistNotFound, Artist, String> {
 
     fun requestRecommendedArtists(): List<Artist>
-    fun requestArtist(mbid: String): Result<ArtistNotFound, Artist>
 
 }

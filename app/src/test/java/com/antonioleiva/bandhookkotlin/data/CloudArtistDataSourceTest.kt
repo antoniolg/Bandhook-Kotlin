@@ -28,11 +28,11 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
-import org.mockito.runners.MockitoJUnitRunner
+import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Response
 
 @RunWith(MockitoJUnitRunner::class)
-class CloudArtistDataSetTest {
+class CloudArtistDataSourceTest {
 
     @Mock
     lateinit var lastFmService: LastFmService
@@ -43,7 +43,7 @@ class CloudArtistDataSetTest {
 
     val artistMapper = ArtistMapper()
 
-    lateinit var cloudArtistDataSet: CloudArtistDataSet
+    lateinit var cloudArtistDataSource: CloudArtistDataSource
 
     private val artistMbid = "artist mbid"
     private val language = "lang"
@@ -60,26 +60,26 @@ class CloudArtistDataSetTest {
                 lastFmArtist, LastFmTopAlbums(emptyList()), LastFmArtistList(recommendedArtistList),
                 lastFmAlbumDetail)
 
-        cloudArtistDataSet = CloudArtistDataSet(language, lastFmService)
+        cloudArtistDataSource = CloudArtistDataSource(language, lastFmService)
 
-        `when`(lastFmService.requestSimilar(cloudArtistDataSet.coldplayMbid)).thenReturn(FakeCall(Response.success(lastFmResponse), null))
+        `when`(lastFmService.requestSimilar(cloudArtistDataSource.coldplayMbid)).thenReturn(FakeCall(Response.success(lastFmResponse), null))
         `when`(lastFmService.requestArtistInfo(artistMbid, language)).thenReturn(FakeCall(Response.success(lastFmResponse), null))
     }
 
     @Test
     fun testRequestRecommendedArtists() {
         // When
-        val recommendedArtists = cloudArtistDataSet.requestRecommendedArtists()
+        val recommendedArtists = cloudArtistDataSource.requestRecommendedArtists()
 
         // Then
-        verify(lastFmService).requestSimilar(cloudArtistDataSet.coldplayMbid)
+        verify(lastFmService).requestSimilar(cloudArtistDataSource.coldplayMbid)
         assertEquals(artistMapper.transform(recommendedArtistList), recommendedArtists)
     }
 
     @Test
     fun testRequestArtist() {
         // When
-        val requestedArtist = cloudArtistDataSet.requestArtist(artistMbid)
+        val requestedArtist = cloudArtistDataSource.get(artistMbid)
 
         // Then
         verify(lastFmService).requestArtistInfo(artistMbid, language)
@@ -97,7 +97,7 @@ class CloudArtistDataSetTest {
         `when`(lastFmService.requestArtistInfo(unknownArtisMbid, language)).thenReturn(FakeCall(Response.success(unknownArtistResponse), null))
 
         // When
-        val requestedArtist = cloudArtistDataSet.requestArtist(unknownArtisMbid)
+        val requestedArtist = cloudArtistDataSource.get(unknownArtisMbid)
 
         // Then
         verify(lastFmService).requestArtistInfo(unknownArtisMbid, language)

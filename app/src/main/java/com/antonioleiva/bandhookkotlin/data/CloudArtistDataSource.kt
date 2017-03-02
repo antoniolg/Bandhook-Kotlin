@@ -23,18 +23,18 @@ import com.antonioleiva.bandhookkotlin.data.mapper.ArtistMapper
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
 import com.antonioleiva.bandhookkotlin.left
-import com.antonioleiva.bandhookkotlin.repository.dataset.ArtistDataSet
+import com.antonioleiva.bandhookkotlin.repository.datasource.ArtistDataSource
 import com.antonioleiva.bandhookkotlin.right
 
-class CloudArtistDataSet(val language: String, val lastFmService: LastFmService) : ArtistDataSet {
+class CloudArtistDataSource(val language: String, val lastFmService: LastFmService) : ArtistDataSource {
 
     val coldplayMbid = "cc197bad-dc9c-440d-a5b5-d52ba2e14234"
 
-    override fun requestArtist(mbid: String): Result<ArtistNotFound, Artist> {
-        return lastFmService.requestArtistInfo(mbid, language).asResult<ArtistNotFound,
+    override fun get(id: String): Result<ArtistNotFound, Artist> {
+        return lastFmService.requestArtistInfo(id, language).asResult<ArtistNotFound,
                 LastFmResponse, Artist> {
             ArtistMapper().transform(artist).fold(
-                    { ArtistNotFound(mbid).left<ArtistNotFound, Artist>() },
+                    { ArtistNotFound(id).left<ArtistNotFound, Artist>() },
                     { it.right<ArtistNotFound, Artist>() }
             )
         }

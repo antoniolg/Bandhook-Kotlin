@@ -21,34 +21,20 @@ import com.antonioleiva.bandhookkotlin.ResultT
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
-import com.antonioleiva.bandhookkotlin.recoverWith
-import com.antonioleiva.bandhookkotlin.repository.dataset.ArtistDataSet
-import org.funktionale.collections.tail
+import com.antonioleiva.bandhookkotlin.repository.datasource.ArtistDataSource
 
-class ArtistRepositoryImp(val artistDataSets: List<ArtistDataSet>) : ArtistRepository {
+class ArtistRepositoryImpl(override val dataSources: List<ArtistDataSource>) : ArtistRepository {
 
-    /** Trampolined (async) recursion until all DataSets are exhausted or a right result is found */
-    fun <E, A> recurseDataSets(currentDataSets: List<ArtistDataSet>, acc: Result<E, A>, f:
-    (ArtistDataSet) -> Result<E, A>): Result<E, A> =
-            if (currentDataSets.isEmpty()) {
-                acc
-            } else {
-                val current = currentDataSets.get(0)
-                f(current).recoverWith {
-                    recurseDataSets(currentDataSets.tail(), f(current), f)
-                }
-            }
-
-    override fun getArtist(id: String): Result<ArtistNotFound, Artist> =
-            recurseDataSets(
-                    currentDataSets = artistDataSets,
+    override fun get(id: String): Result<ArtistNotFound, Artist> =
+            recurseDataSources(
+                    currentDataSources = dataSources,
                     acc = ResultT.raiseError<ArtistNotFound, Artist>(ArtistNotFound(id)),
-                    f = { it.requestArtist(id) }
+                    f = { it.get(id) }
             )
 
     override fun getRecommendedArtists(): List<Artist> {
-        for (dataSet in artistDataSets) {
-            val result = dataSet.requestRecommendedArtists()
+        for (dataSource in dataSources) {
+            val result = dataSource.requestRecommendedArtists()
             if (result.isNotEmpty()) {
                 return result
             }
