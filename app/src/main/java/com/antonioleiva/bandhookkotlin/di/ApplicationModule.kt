@@ -9,7 +9,7 @@ import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.CustomJobManager
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutorImpl
-import com.path.android.jobqueue.JobManager
+import com.birbit.android.jobqueue.JobManager
 import com.squareup.picasso.Picasso
 import dagger.Module
 import dagger.Provides

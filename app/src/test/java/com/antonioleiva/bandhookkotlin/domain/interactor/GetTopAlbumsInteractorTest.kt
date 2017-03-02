@@ -26,7 +26,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.runners.MockitoJUnitRunner
+import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class GetTopAlbumsInteractorTest {
@@ -45,7 +45,6 @@ class GetTopAlbumsInteractorTest {
     fun setUp() {
         album = Album("album id", "Album name", Artist("artist id", "artist name"), null, emptyList())
 
-        `when`(albumRepository.getTopAlbums(artistId, artistName)).thenReturn(listOf(album))
         `when`(albumRepository.getTopAlbums(null, artistName)).thenReturn(listOf(album))
         `when`(albumRepository.getTopAlbums(artistId, null)).thenReturn(listOf(album))
 

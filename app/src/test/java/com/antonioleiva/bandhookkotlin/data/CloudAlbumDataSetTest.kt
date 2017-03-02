@@ -26,8 +26,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.*
-import org.mockito.runners.MockitoJUnitRunner
 import retrofit2.Response
+import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class CloudAlbumDataSetTest {

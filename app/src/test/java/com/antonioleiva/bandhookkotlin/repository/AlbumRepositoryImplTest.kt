@@ -27,7 +27,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
-import org.mockito.runners.MockitoJUnitRunner
+import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
 class AlbumRepositoryImplTest {
@@ -67,18 +67,13 @@ class AlbumRepositoryImplTest {
     }
 
     private fun mockRequestTopAlbumsReturns() {
-        `when`(firstAlbumDataSet.requestTopAlbums(artistIdInBothDataSets, artistName)).thenReturn(albumsInBothDataSets)
         `when`(firstAlbumDataSet.requestTopAlbums(null, artistName)).thenReturn(albumsInBothDataSets)
         `when`(firstAlbumDataSet.requestTopAlbums(artistIdInBothDataSets, null)).thenReturn(albumsInBothDataSets)
-        `when`(secondAlbumDataSet.requestTopAlbums(artistIdInBothDataSets, artistName)).thenReturn(albumsInBothDataSets)
-        `when`(secondAlbumDataSet.requestTopAlbums(null, artistName)).thenReturn(albumsInBothDataSets)
-        `when`(secondAlbumDataSet.requestTopAlbums(artistIdInBothDataSets, null)).thenReturn(albumsInBothDataSets)
         `when`(secondAlbumDataSet.requestTopAlbums(artistIdInSecondDataSet, null)).thenReturn(albumsInSecondDataSet)
     }
 
     private fun mockRequestAlbumReturns() {
         `when`(firstAlbumDataSet.requestAlbum(albumIdInBothDataSets)).thenReturn(albumInBothDataSets)
-        `when`(secondAlbumDataSet.requestAlbum(albumIdInBothDataSets)).thenReturn(albumInBothDataSets)
         `when`(secondAlbumDataSet.requestAlbum(albumIdInSecondDataSet)).thenReturn(albumInSecondDataSet)
     }
 
