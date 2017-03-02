@@ -18,7 +18,7 @@ package com.antonioleiva.bandhookkotlin.domain.interactor
 
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 
-class GetAlbumDetailInteractor(val albumRepository: AlbumRepository)  {
+class GetAlbumDetailInteractor(val albumRepository: AlbumRepository) {
 
     fun getAlbum(albumId: String) = albumRepository.getAlbum(albumId)
 

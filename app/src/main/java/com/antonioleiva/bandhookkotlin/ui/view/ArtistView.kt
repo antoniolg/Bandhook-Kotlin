@@ -16,11 +16,13 @@
 
 package com.antonioleiva.bandhookkotlin.ui.view
 
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
 import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 
 interface ArtistView : PresentationView {
     fun showArtist(artistDetail: ArtistDetail)
+    fun showArtistNotFound(e: ArtistNotFound)
 
     fun showAlbums(albums: List<ImageTitle>)
 

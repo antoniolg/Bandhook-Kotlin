@@ -18,15 +18,27 @@ package com.antonioleiva.bandhookkotlin.data.mapper
 
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmArtist
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
+import org.funktionale.option.Option
+import org.funktionale.option.toOption
 
 class ArtistMapper(val imageMapper: ImageMapper = ImageMapper()) {
 
-    fun transform(artists: List<LastFmArtist>): List<Artist> {
-        return artists.filter { artistHasQualityInfo(it) }.mapNotNull { transform(it) }
+    fun transformOld(artist: LastFmArtist) = artist.mbid?.let {
+        Artist(artist.mbid,
+                artist.name,
+                imageMapper.getMainImageUrl(artist.images),
+                artist.bio?.content)
     }
 
-    fun transform(artist: LastFmArtist) = artist.mbid?.let {
-        Artist(artist.mbid, artist.name, imageMapper.getMainImageUrl(artist.images), artist.bio?.content)
+    fun transform(artists: List<LastFmArtist>): List<Artist> {
+        return artists.filter { artistHasQualityInfo(it) }.mapNotNull { transformOld(it) }
+    }
+
+    fun transform(artist: LastFmArtist): Option<Artist> = artist.mbid.toOption().map { mbid ->
+        Artist(mbid,
+                artist.name,
+                imageMapper.getMainImageUrl(artist.images),
+                artist.bio?.content)
     }
 
     private fun artistHasQualityInfo(it: LastFmArtist): Boolean {
