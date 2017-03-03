@@ -40,7 +40,7 @@ class GetAlbumDetailInteractorTest {
 
     @Before
     fun setUp() {
-        `when`(albumRepository.get(albumId)).thenReturn(Album("album id", "album name",
+        `when`(albumRepository.getAlbum(albumId)).thenReturn(Album("album id", "album name",
                 Artist("artist id", "artist name", null, null, null), "album url", emptyList()))
 
         getAlbumDetailInteractor = GetAlbumDetailInteractor(albumRepository)

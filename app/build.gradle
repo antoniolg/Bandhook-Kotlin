@@ -60,7 +60,6 @@ dependencies {
     compile "com.android.support:cardview-v7:$supportVersion"
     compile "com.android.support:palette-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
-    compile "de.greenrobot:eventbus:2.4.1"
     compile "com.squareup.picasso:picasso:2.5.2"
     compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
@@ -69,7 +68,6 @@ dependencies {
         exclude module: 'okhttp'
     }
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    compile "com.birbit:android-priority-jobqueue:2.0.1"
     compile "org.jetbrains.anko:anko-sdk15:$parent.ext.ankoVersion"
     compile "org.jetbrains.anko:anko-support-v4:$parent.ext.ankoVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"

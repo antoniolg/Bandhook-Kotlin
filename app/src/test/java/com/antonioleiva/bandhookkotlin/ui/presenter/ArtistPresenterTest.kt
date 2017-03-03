@@ -21,7 +21,6 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetArtistDetailInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetTopAlbumsInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
 import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistDetailEvent
 import com.antonioleiva.bandhookkotlin.domain.interactor.event.TopAlbumsEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
@@ -70,7 +69,7 @@ class ArtistPresenterTest {
 
 
         artistPresenter = ArtistPresenter(artistView, bus, artistDetailInteractor, topAlbumsInteractor,
-                interactorExecutor, artistDetailMapper, albumsMapper)
+                artistDetailMapper, albumsMapper)
     }
 
     @Test

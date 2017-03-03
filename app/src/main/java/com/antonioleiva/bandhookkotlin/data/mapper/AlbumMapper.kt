@@ -26,8 +26,8 @@ import org.funktionale.option.toOption
 class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapper: ImageMapper = ImageMapper(),
                   val trackMapper: TrackMapper = TrackMapper()) {
 
-    fun transform(albums: List<LastFmAlbum>): List<Album> {
-        return albums.filter { albumHasQualityInfo(it) }.mapNotNull { transform(it) }
+    fun transform(albums: List<LastFmAlbum>): Option<List<Album>> {
+        return albums.filter { albumHasQualityInfo(it) }.mapNotNull { transform(it) }.toOption()
     }
 
     private fun albumHasQualityInfo(album: LastFmAlbum): Boolean {

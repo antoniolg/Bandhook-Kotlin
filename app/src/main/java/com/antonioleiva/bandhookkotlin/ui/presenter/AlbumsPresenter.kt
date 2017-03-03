@@ -18,6 +18,6 @@ package com.antonioleiva.bandhookkotlin.ui.presenter
 
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 
-interface  AlbumsPresenter {
+interface AlbumsPresenter {
     fun onAlbumClicked(item: ImageTitle)
 }

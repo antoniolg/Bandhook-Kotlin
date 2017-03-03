@@ -31,6 +31,7 @@ import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.detail.ArtistActivityModule
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.TopAlbumsNotFound
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.ArtistDetailPagerAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
@@ -130,6 +131,11 @@ class ArtistActivity : BaseActivity(), ArtistView, AlbumsFragmentContainer {
     // not the same original kind of logic than in AlbumActivity but it is included to be used on
     // the ArtistPresenter in a similar way than the AlbumPresenter does with albums not found
     override fun showArtistNotFound(e: ArtistNotFound) = runOnUiThread {
+        supportStartPostponedEnterTransition()
+        supportFinishAfterTransition()
+    }
+
+    override fun showTopAlbumsNotFound(e: TopAlbumsNotFound) = runOnUiThread {
         supportStartPostponedEnterTransition()
         supportFinishAfterTransition()
     }

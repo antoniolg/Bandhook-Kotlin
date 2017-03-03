@@ -17,24 +17,20 @@
 package com.antonioleiva.bandhookkotlin.ui.presenter
 
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetRecommendedArtistsInteractor
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.MainView
 
 class MainPresenter(
         override val view: MainView,
-        override val bus: Bus,
         val recommendedArtistsInteractor: GetRecommendedArtistsInteractor,
-        val interactorExecutor: InteractorExecutor,
         val mapper: ImageTitleDataMapper) : Presenter<MainView> {
 
     override fun onResume() {
         super.onResume()
         recommendedArtistsInteractor.getRecommendedArtists().onComplete(
                 onSuccess = { view.showArtists(mapper.transformArtists(it)) },
-                onError = { e ->  },
+                onError = { e -> },
                 onUnhandledException = { e -> }
         )
     }

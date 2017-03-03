@@ -20,6 +20,6 @@ import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 
 class GetArtistDetailInteractor(val artistRepository: ArtistRepository) {
 
-    fun getArtist(artistId: String) = artistRepository.get(artistId)
+    fun getArtist(artistId: String) = artistRepository.getArtist(artistId)
 
 }
