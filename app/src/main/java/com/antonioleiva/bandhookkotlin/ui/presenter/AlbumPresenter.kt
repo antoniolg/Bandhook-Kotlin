@@ -18,7 +18,6 @@ package com.antonioleiva.bandhookkotlin.ui.presenter
 
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetAlbumDetailInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
-import com.antonioleiva.bandhookkotlin.onComplete
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.AlbumDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
 

@@ -17,7 +17,6 @@
 package com.antonioleiva.bandhookkotlin.repository
 
 import com.antonioleiva.bandhookkotlin.Result
-import com.antonioleiva.bandhookkotlin.ResultT
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
@@ -26,9 +25,9 @@ import com.antonioleiva.bandhookkotlin.repository.datasource.AlbumDataSource
 class AlbumRepositoryImpl(val dataSources: List<AlbumDataSource>) : AlbumRepository {
 
     override fun get(id: String): Result<AlbumNotFound, Album> =
-            ResultT.firstSuccessIn(
+            Result.firstSuccessIn(
                     fa = dataSources,
-                    acc = ResultT.raiseError<AlbumNotFound, Album>(AlbumNotFound(id)),
+                    acc = Result.raiseError<AlbumNotFound, Album>(AlbumNotFound(id)),
                     f = { it.get(id) }
             )
 

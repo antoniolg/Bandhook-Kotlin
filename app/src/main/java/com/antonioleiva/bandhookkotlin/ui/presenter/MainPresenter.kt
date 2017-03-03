@@ -19,7 +19,6 @@ package com.antonioleiva.bandhookkotlin.ui.presenter
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetRecommendedArtistsInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
 import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
-import com.antonioleiva.bandhookkotlin.onComplete
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.MainView

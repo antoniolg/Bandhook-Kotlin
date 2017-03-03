@@ -18,8 +18,8 @@ package com.antonioleiva.bandhookkotlin.repository
 
 import com.antonioleiva.bandhookkotlin.NonEmptyList
 import com.antonioleiva.bandhookkotlin.Result
-import com.antonioleiva.bandhookkotlin.ResultT.firstSuccessIn
-import com.antonioleiva.bandhookkotlin.ResultT.raiseError
+import com.antonioleiva.bandhookkotlin.Result.Factory.firstSuccessIn
+import com.antonioleiva.bandhookkotlin.Result.Factory.raiseError
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.*
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
