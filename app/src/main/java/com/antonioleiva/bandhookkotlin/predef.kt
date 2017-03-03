@@ -43,16 +43,16 @@ class Result<E, A>(private val value: Promise<Disjunction<E, A>, Exception>) {
      * flatMap over the left exceptional case
      */
     fun <EE> recoverWith(fa: (E) -> Result<EE, A>): Result<EE, A> =
-        swap().flatMap { fa(it).swap() }.swap()
+            swap().flatMap { fa(it).swap() }.swap()
 
 
     /**
      * Monadic bind allows sequential chains of promises
      */
     fun <B> flatMap(fa: (A) -> Result<E, B>): Result<E, B> =
-        Result(value.bind {
-            it.fold(fl = { l -> raiseError<E, B>(l).value }, fr = { r -> fa(r).value })
-        })
+            Result(value.bind {
+                it.fold(fl = { l -> raiseError<E, B>(l).value }, fr = { r -> fa(r).value })
+            })
 
     /**
      * Side effects
@@ -192,6 +192,3 @@ class NonEmptyList<out A>(val head: A, vararg t: A) : Collection<A> {
         inline fun <reified A> unsafeFromList(l: List<A>): NonEmptyList<A> = of(l[0], l.tail())
     }
 }
-
-
-

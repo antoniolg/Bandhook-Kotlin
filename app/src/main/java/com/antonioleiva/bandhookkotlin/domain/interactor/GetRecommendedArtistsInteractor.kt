@@ -19,7 +19,7 @@ package com.antonioleiva.bandhookkotlin.domain.interactor
 import com.antonioleiva.bandhookkotlin.NonEmptyList
 import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
-import com.antonioleiva.bandhookkotlin.domain.entity.BizException.*
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.RecomendationsNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 
 class GetRecommendedArtistsInteractor(val artistRepository: ArtistRepository) {

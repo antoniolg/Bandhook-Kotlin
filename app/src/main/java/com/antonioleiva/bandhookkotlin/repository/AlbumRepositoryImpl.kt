@@ -19,27 +19,25 @@ package com.antonioleiva.bandhookkotlin.repository
 import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.TopAlbumsNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.repository.datasource.AlbumDataSource
 
 class AlbumRepositoryImpl(val dataSources: List<AlbumDataSource>) : AlbumRepository {
 
-    override fun get(id: String): Result<AlbumNotFound, Album> =
+    override fun getAlbum(id: String): Result<AlbumNotFound, Album> =
             Result.firstSuccessIn(
                     fa = dataSources,
-                    acc = Result.raiseError<AlbumNotFound, Album>(AlbumNotFound(id)),
-                    f = { it.get(id) }
+                    f = { it.get(id) },
+                    acc = Result.raiseError(AlbumNotFound(id))
             )
 
-    override fun getTopAlbums(artistId: String?, artistName: String?): List<Album> {
-        for (dataSource in dataSources) {
-            val result = dataSource.requestTopAlbums(artistId, artistName)
-            if (result.isNotEmpty()) {
-                return result
-            }
-        }
-
-        return emptyList()
-    }
+    override fun getTopAlbums(artistId: String?, artistName: String?):
+            Result<TopAlbumsNotFound, List<Album>> =
+            Result.firstSuccessIn(
+                    fa = dataSources,
+                    acc = Result.raiseError(TopAlbumsNotFound(artistId, artistName)),
+                    f = { it.requestTopAlbums(artistId, artistName) }
+            )
 
 }

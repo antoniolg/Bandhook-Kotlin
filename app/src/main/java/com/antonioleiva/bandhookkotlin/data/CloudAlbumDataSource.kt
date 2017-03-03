@@ -18,10 +18,10 @@ package com.antonioleiva.bandhookkotlin.data
 
 import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
-import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmResponse
 import com.antonioleiva.bandhookkotlin.data.mapper.AlbumMapper
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.TopAlbumsNotFound
 import com.antonioleiva.bandhookkotlin.left
 import com.antonioleiva.bandhookkotlin.repository.datasource.AlbumDataSource
 import com.antonioleiva.bandhookkotlin.right
@@ -29,7 +29,7 @@ import com.antonioleiva.bandhookkotlin.right
 class CloudAlbumDataSource(val lastFmService: LastFmService) : AlbumDataSource {
 
     override fun get(id: String): Result<AlbumNotFound, Album> {
-        return lastFmService.requestAlbum(id).asResult<AlbumNotFound, LastFmResponse, Album> {
+        return lastFmService.requestAlbum(id).asResult {
             AlbumMapper().transform(album).fold(
                     { AlbumNotFound(id).left() },
                     { it.right() }
@@ -37,17 +37,19 @@ class CloudAlbumDataSource(val lastFmService: LastFmService) : AlbumDataSource {
         }
     }
 
-    override fun requestTopAlbums(artistId: String?, artistName: String?): List<Album> {
-        val mbid = artistId ?: ""
-        val name = artistName ?: ""
-
-        if (!mbid.isEmpty() || !name.isEmpty()) {
-            return lastFmService.requestAlbums(mbid, name).unwrapCall {
-                AlbumMapper().transform(topAlbums.albums)
-            }
-        }
-
-        return emptyList()
+    override fun requestTopAlbums(artistId: String?, artistName: String?):
+            Result<TopAlbumsNotFound, List<Album>> {
+//        val mbid = artistId ?: ""
+//        val name = artistName ?: ""
+//
+//        if (!mbid.isEmpty() || !name.isEmpty()) {
+//            return lastFmService.requestAlbums(mbid, name).unwrapCall {
+//                AlbumMapper().transform(topAlbums.albums)
+//            }
+//        }
+//
+//        return emptyList()
+        return Result.pure(emptyList())
     }
 
 }

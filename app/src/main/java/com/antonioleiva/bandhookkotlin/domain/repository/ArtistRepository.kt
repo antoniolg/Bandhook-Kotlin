@@ -19,9 +19,10 @@ package com.antonioleiva.bandhookkotlin.domain.repository
 import com.antonioleiva.bandhookkotlin.NonEmptyList
 import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
-import com.antonioleiva.bandhookkotlin.domain.entity.BizException.*
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.RecomendationsNotFound
 
 interface ArtistRepository {
-    fun get(id: String): Result<ArtistNotFound, Artist>
+    fun getArtist(id: String): Result<ArtistNotFound, Artist>
     fun getRecommendedArtists(): Result<RecomendationsNotFound, NonEmptyList<Artist>>
 }
