@@ -7,6 +7,7 @@ import nl.komponents.kovenant.then
 import org.funktionale.collections.tail
 import org.funktionale.either.Disjunction
 import org.funktionale.option.Option
+import org.funktionale.utils.identity
 
 /**
  * A Result is a deferred promise containing either a controlled error and successful value or an unknown exception.
@@ -18,20 +19,18 @@ class Result<E, A>(private val value: Promise<Disjunction<E, A>, Exception>) {
     /**
      * map over the right successful case
      */
-    fun <B> map(fa: (A) -> B): Result<E, B> {
-        return Result(value.then { it ->
-            it.map { fa(it) }
-        })
-    }
+    fun <B> map(fa: (A) -> B): Result<E, B> =
+            Result(value.then { it ->
+                it.map { fa(it) }
+            })
 
     /**
      * map over the left exceptional case
      */
-    fun <EE> recover(r: Result<E, A>, fa: (E) -> EE): Result<EE, A> {
-        return Result(value.then { it ->
-            it.swap().map { fa(it) }.swap()
-        })
-    }
+    fun <EE> recover(r: Result<E, A>, fa: (E) -> EE): Result<EE, A> =
+            Result(value.then { it ->
+                it.swap().map { fa(it) }.swap()
+            })
 
     /**
      * map over the left exceptional case
@@ -67,15 +66,15 @@ class Result<E, A>(private val value: Promise<Disjunction<E, A>, Exception>) {
     /**
      * Combine the results of r1 with r2 given both promises are successful
      * Since promises may have already started this operation is non-deterministic as there is
-     * no guarantees as to which one finishes first.
+     * no guarantees as to which one finishes first but results are nonetheless delivered ordered
      */
-    fun <B> zip(r2: Result<E, B>): Result<E, Pair<A, B>> {
-        return flatMap { a -> r2.map { b -> Pair(a, b) } }
-    }
+    fun <B> zip(r2: Result<E, B>): Result<E, Pair<A, B>> =
+            flatMap { a -> r2.map { b -> Pair(a, b) } }
+
+    fun <B, AA> zipWith(r2: Result<E, B>, f: (A, B) -> AA): Result<E, AA> =
+            flatMap { a -> r2.map { b -> f(a, b) } }
 
     companion object Factory {
-
-        fun <A> async(f: () -> A): Result<Nothing, A> = asyncOf { f().right() }
 
         fun <E, A> asyncOf(f: () -> Disjunction<E, A>): Result<E, A> =
                 Result(task {
@@ -89,39 +88,34 @@ class Result<E, A>(private val value: Promise<Disjunction<E, A>, Exception>) {
         /**
          * Lift any value to the monadic context of a Result
          */
-        fun <E, A> pure(a: A): Result<E, A> {
-            return fromDisjunction(Disjunction.right(a))
-        }
+        fun <E, A> pure(a: A): Result<E, A> =
+                fromDisjunction(Disjunction.right(a))
 
         /**
          * Lift any value to the monadic context of a Result
          */
-        fun <E, A> fromDisjunction(fa: Disjunction<E, A>): Result<E, A> {
-            return Result(Promise.ofSuccess(fa))
-        }
+        fun <E, A> fromDisjunction(fa: Disjunction<E, A>): Result<E, A> =
+                Result(Promise.ofSuccess(fa))
 
         /**
          * Raise an error placing it in the left of the contained disjunction on an already completed promise
          */
-        fun <E, A> raiseError(e: E): Result<E, A> {
-            return Result(Promise.ofSuccess(Disjunction.left(e)))
-        }
+        fun <E, A> raiseError(e: E): Result<E, A> =
+                Result(Promise.ofSuccess(Disjunction.left(e)))
 
         /**
          * Raise an unknown error placing it in the failed case on an already completed promise
          */
-        fun <E, A> raiseUnknownError(e: Exception): Result<E, A> {
-            return Result(Promise.ofFail(e))
-        }
+        fun <E, A> raiseUnknownError(e: Exception): Result<E, A> =
+                Result(Promise.ofFail(e))
 
 
         /**
          * Given a result and a function in the Promise context, applies the
          * function to the result returning a transformed result. Delegates to zip which is non-deterministic
          */
-        fun <E, A, B> ap(ff: Result<E, (A) -> B>, fa: Result<E, A>): Result<E, B> {
-            return fa.zip(ff).map { it.second(it.first) }
-        }
+        fun <E, A, B> ap(ff: Result<E, (A) -> B>, fa: Result<E, A>): Result<E, B> =
+                fa.zip(ff).map { it.second(it.first) }
 
         fun <E, A, B> firstSuccessIn(fa: List<B>,
                                      acc: Result<E, A>,
@@ -134,6 +128,29 @@ class Result<E, A>(private val value: Promise<Disjunction<E, A>, Exception>) {
                         firstSuccessIn(fa.tail(), result, f)
                     }
                 }
+
+        fun <E, A, B> traverse(results: List<A>, f: (A) -> Result<E, B>): Result<E, List<B>> =
+                results.fold(pure(emptyList()), { r1, r2 ->
+                    r1.zipWith(f(r2), { l, a -> l + a})
+                })
+
+        fun <E, A> sequence(results: List<Result<E, A>>): Result<E, List<A>> =
+                traverse(results, identity())
+
+
+        fun <E, A, B> fold(results: List<Result<E, A>>, zero: B, f: (B, A) -> B): Result<E, B> =
+                foldNext(results.iterator(), zero, f)
+
+        fun <B, E, A : B> reduce(results: NonEmptyList<Result<E, A>>, f: (B, A) -> B): Result<E, B> {
+            val iterator = results.all.iterator()
+            return iterator.next().flatMap { a -> foldNext(iterator, a, f) }
+        }
+
+        private fun <E, A, B> foldNext(iterator: Iterator<Result<E, A>>, zero: B, f: (B, A) -> B): Result<E, B> =
+                if (!iterator.hasNext()) pure<E, B>(zero)
+                else iterator.next().flatMap { value -> foldNext(iterator, f(zero, value), f) }
+
+
     }
 
 }
