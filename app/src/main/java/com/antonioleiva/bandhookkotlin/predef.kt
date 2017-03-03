@@ -131,8 +131,9 @@ object ResultT {
             if (fa.isEmpty()) acc
             else {
                 val current = fa[0]
-                f(current).recoverWith {
-                    firstSuccessIn(fa.tail(), f(current), f)
+                val result = f(current)
+                result.recoverWith {
+                    firstSuccessIn(fa.tail(), result, f)
                 }
             }
 
