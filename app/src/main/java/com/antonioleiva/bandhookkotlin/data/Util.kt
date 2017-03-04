@@ -10,3 +10,8 @@ fun <E, T, U> Call<T>.asResult(f: T.() -> Disjunction<E, U>): Result<E, U> =
         Result.asyncOf {
             execute().body().f()
         }
+
+fun <A> Call<A>.asyncResult(): Result<Nothing, A> =
+        Result.async {
+            execute().body()
+        }
