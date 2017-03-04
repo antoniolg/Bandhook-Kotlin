@@ -199,11 +199,13 @@ abstract class AbstractNonEmptyCollection<out A>(
 
 }
 
-class NonEmptyList<out A>(
+class NonEmptyList<out A> private constructor(
         override val head: A,
-        override val tail: List<A>) : AbstractNonEmptyCollection<A>(head, tail) {
+        override val tail: List<A>,
+        val all: List<A>) : AbstractNonEmptyCollection<A>(head, tail) {
 
-    val all: List<A> = listOf(head) + tail
+    constructor(head: A, tail: List<A>) : this(head, tail, listOf(head) + tail)
+    private constructor(list: List<A>) : this(list[0], list.tail(), list)
 
     inline fun <reified B> map(f: (A) -> B): NonEmptyList<B> =
             NonEmptyList(f(head), tail.map(f))
@@ -214,8 +216,8 @@ class NonEmptyList<out A>(
     override fun iterator(): Iterator<A> = all.iterator()
 
     companion object Factory {
-        inline fun <reified A> of(h: A, vararg t: A): NonEmptyList<A> = NonEmptyList(h, t.asList())
-        inline fun <reified A> unsafeFromList(l: List<A>): NonEmptyList<A> = NonEmptyList(l[0], l.tail())
+        inline fun <reified A> of(head: A, vararg t: A): NonEmptyList<A> = NonEmptyList(head, t.asList())
+        fun <A> unsafeFromList(l: List<A>): NonEmptyList<A> = NonEmptyList(l)
     }
 
 }
