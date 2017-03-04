@@ -27,7 +27,7 @@ import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 import com.antonioleiva.bandhookkotlin.ui.fragment.AlbumsFragmentContainer
 
-class AlbumsFragment: Fragment() {
+class AlbumsFragment : Fragment() {
 
     lateinit var adapter: ImageTitleAdapter
         private set

@@ -20,9 +20,6 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetArtistDetailInteractor
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetTopAlbumsInteractor
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistDetailEvent
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.TopAlbumsEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle

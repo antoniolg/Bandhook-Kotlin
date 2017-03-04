@@ -6,7 +6,7 @@ import dagger.Subcomponent
 
 @ActivityScope
 @Subcomponent(modules = arrayOf(
-    AlbumActivityModule::class
+        AlbumActivityModule::class
 ))
 interface AlbumActivityComponent {
     fun injectTo(activity: AlbumActivity)

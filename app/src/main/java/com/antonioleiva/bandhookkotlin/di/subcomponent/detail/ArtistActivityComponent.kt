@@ -6,7 +6,7 @@ import dagger.Subcomponent
 
 @ActivityScope
 @Subcomponent(modules = arrayOf(
-    ArtistActivityModule::class
+        ArtistActivityModule::class
 ))
 interface ArtistActivityComponent {
 

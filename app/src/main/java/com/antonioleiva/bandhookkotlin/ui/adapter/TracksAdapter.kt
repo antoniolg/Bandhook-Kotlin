@@ -30,7 +30,7 @@ import kotlin.properties.Delegates
 open class TracksAdapter() : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
 
     var items: List<TrackDetail> by Delegates.observable(emptyList())
-                    { prop, old, new -> notifyDataSetChange() }
+    { prop, old, new -> notifyDataSetChange() }
 
     override fun getItemCount(): Int {
         return items.count()

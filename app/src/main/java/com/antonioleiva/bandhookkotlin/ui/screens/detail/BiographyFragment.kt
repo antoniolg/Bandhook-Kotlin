@@ -25,7 +25,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.R
 
-class BiographyFragment: Fragment() {
+class BiographyFragment : Fragment() {
 
     private var biographyTextView: TextView? = null
 

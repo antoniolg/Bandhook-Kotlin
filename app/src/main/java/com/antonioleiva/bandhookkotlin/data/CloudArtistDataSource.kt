@@ -44,7 +44,7 @@ class CloudArtistDataSource(val language: String, val lastFmService: LastFmServi
             lastFmService.requestSimilar(coldplayMbid).asResult {
                 val results = ArtistMapper().transform(similarArtists.artists)
                 if (results.isEmpty()) RecomendationsNotFound.left()
-                else NonEmptyList.of(results[0], results.tail()).right()
+                else NonEmptyList(results[0], results.tail()).right()
             }
 
 }

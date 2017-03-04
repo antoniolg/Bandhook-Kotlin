@@ -21,8 +21,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import java.util.*
 
-class ArtistDetailPagerAdapter(fragmentManager: FragmentManager): FragmentPagerAdapter(fragmentManager)
-{
+class ArtistDetailPagerAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
     val fragments = LinkedHashMap<Fragment, String>()
 
     override fun getItem(position: Int): Fragment? {
@@ -30,7 +29,7 @@ class ArtistDetailPagerAdapter(fragmentManager: FragmentManager): FragmentPagerA
     }
 
     override fun getCount(): Int {
-        return  fragments.keys.size
+        return fragments.keys.size
     }
 
     fun addFragment(fragment: Fragment, title: String) {
