@@ -1,12 +1,11 @@
 package com.antonioleiva.bandhookkotlin.data.mock
 
-import java.io.IOException
-import java.util.concurrent.atomic.AtomicBoolean
-
 import okhttp3.Request
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Created by Mahmoud Abdurrahman (ma.abdurrahman@gmail.com) on 2/17/17.
@@ -34,7 +33,7 @@ class FakeCall<T>(val response: Response<T>?, val error: IOException?) : Call<T>
         if (response != null) {
             return response
         }
-        error?.let{ throw error } ?: throw IOException("Should either have a response or throw exception")
+        error?.let { throw error } ?: throw IOException("Should either have a response or throw exception")
     }
 
     override fun enqueue(callback: Callback<T>?) {

@@ -26,7 +26,6 @@ import com.antonioleiva.bandhookkotlin.domain.entity.BizException.Recomendations
 import com.antonioleiva.bandhookkotlin.left
 import com.antonioleiva.bandhookkotlin.repository.datasource.ArtistDataSource
 import com.antonioleiva.bandhookkotlin.right
-import org.funktionale.collections.tail
 
 class CloudArtistDataSource(val language: String, val lastFmService: LastFmService) : ArtistDataSource {
 
@@ -44,7 +43,7 @@ class CloudArtistDataSource(val language: String, val lastFmService: LastFmServi
             lastFmService.requestSimilar(coldplayMbid).asResult {
                 val results = ArtistMapper().transform(similarArtists.artists)
                 if (results.isEmpty()) RecomendationsNotFound.left()
-                else NonEmptyList.of(results[0], results.tail()).right()
+                else NonEmptyList.unsafeFromList(results).right()
             }
 
 }

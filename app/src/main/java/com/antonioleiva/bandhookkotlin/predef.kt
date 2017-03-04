@@ -131,7 +131,7 @@ class Result<E, A>(private val value: Promise<Disjunction<E, A>, Exception>) {
 
         fun <E, A, B> traverse(results: List<A>, f: (A) -> Result<E, B>): Result<E, List<B>> =
                 results.fold(pure(emptyList()), { r1, r2 ->
-                    r1.zipWith(f(r2), { l, a -> l + a})
+                    r1.zipWith(f(r2), { l, a -> l + a })
                 })
 
         fun <E, A> sequence(results: List<Result<E, A>>): Result<E, List<A>> =
@@ -179,33 +179,45 @@ fun <R> R.right(): Disjunction<Nothing, R> {
     return Disjunction.Right<Nothing, R>(this)
 }
 
-class NonEmptyList<out A>(val head: A, vararg t: A) : Collection<A> {
-    val tail: List<A> = t.toList()
+interface NonEmptyCollection<out A> : Collection<A> {
+    val head: A
+    val tail: Collection<A>
+}
 
-    val all: List<A> = listOf(head, *t)
+abstract class AbstractNonEmptyCollection<out A>(
+        override val head: A,
+        override val tail: Collection<A>) : AbstractCollection<A>(), NonEmptyCollection<A> {
+
+    @Suppress("LeakingThis")
+    override val size: Int = 1 + tail.size
+
+    override fun contains(element: @UnsafeVariance A): Boolean {
+        return (head == element).or(tail.contains(element));
+    }
+
+    override fun isEmpty(): Boolean = false
+
+}
+
+class NonEmptyList<out A> private constructor(
+        override val head: A,
+        override val tail: List<A>,
+        val all: List<A>) : AbstractNonEmptyCollection<A>(head, tail) {
+
+    constructor(head: A, tail: List<A>) : this(head, tail, listOf(head) + tail)
+    private constructor(list: List<A>) : this(list[0], list.tail(), list)
 
     inline fun <reified B> map(f: (A) -> B): NonEmptyList<B> =
-            unsafeFromList(all.map(f))
+            NonEmptyList(f(head), tail.map(f))
 
     inline fun <reified B> flatMap(f: (A) -> List<B>): NonEmptyList<B> =
             unsafeFromList(all.flatMap(f))
 
-    override val size: Int
-        get() = all.size
-
-    override fun contains(element: @UnsafeVariance A): Boolean =
-            all.contains(element)
-
-    override fun containsAll(elements: Collection<@UnsafeVariance A>): Boolean =
-            all.containsAll(elements)
-
-    override fun isEmpty(): Boolean = false
-
     override fun iterator(): Iterator<A> = all.iterator()
 
     companion object Factory {
-        inline fun <reified A> of(h: A, vararg t: A): NonEmptyList<A> = NonEmptyList(h, *t)
-        inline fun <reified A> of(h: A, t: List<A>): NonEmptyList<A> = NonEmptyList(h, *t.toTypedArray())
-        inline fun <reified A> unsafeFromList(l: List<A>): NonEmptyList<A> = of(l[0], l.tail())
+        inline fun <reified A> of(head: A, vararg t: A): NonEmptyList<A> = NonEmptyList(head, t.asList())
+        fun <A> unsafeFromList(l: List<A>): NonEmptyList<A> = NonEmptyList(l)
     }
+
 }

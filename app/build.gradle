@@ -51,6 +51,12 @@ kapt {
     generateStubs = true
 }
 
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+
 dependencies {
     compile 'nl.komponents.kovenant:kovenant-functional:3.3.0'
     compile "org.funktionale:funktionale-all:1.0.0-final"

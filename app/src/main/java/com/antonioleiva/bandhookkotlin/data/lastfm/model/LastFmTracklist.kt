@@ -18,6 +18,6 @@ package com.antonioleiva.bandhookkotlin.data.lastfm.model
 
 import com.google.gson.annotations.SerializedName
 
-class LastFmTracklist (
-    @SerializedName("track") val tracks: List<LastFmTrack>
+class LastFmTracklist(
+        @SerializedName("track") val tracks: List<LastFmTrack>
 )

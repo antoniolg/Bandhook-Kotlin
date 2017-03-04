@@ -24,7 +24,7 @@ import android.support.v4.app.ActivityOptionsCompat
 import android.view.View
 
 inline fun <reified T : Activity> Activity.navigate(id: String, sharedView: View? = null,
-                                                           transitionName: String? = null) {
+                                                    transitionName: String? = null) {
     val intent = Intent(this, T::class.java)
     intent.putExtra("id", id)
 

@@ -41,7 +41,7 @@ fun View.animateTranslationY(translationY: Int, interpolator: Interpolator) {
 /**
  * Click listener setter that prevents double click on the view it´s set
  */
-fun View.singleClick(l: (android.view.View?) -> Unit){
+fun View.singleClick(l: (android.view.View?) -> Unit) {
     setOnClickListener(SingleClickListener(l))
 }
 

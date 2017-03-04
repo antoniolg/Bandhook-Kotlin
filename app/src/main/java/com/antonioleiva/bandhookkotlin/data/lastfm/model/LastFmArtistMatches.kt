@@ -18,6 +18,6 @@ package com.antonioleiva.bandhookkotlin.data.lastfm.model
 
 import com.google.gson.annotations.SerializedName
 
-class LastFmArtistMatches (
+class LastFmArtistMatches(
         @SerializedName("artist") val artists: List<LastFmArtist>
 )
