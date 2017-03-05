@@ -16,5 +16,8 @@
   -->
 
 <resources>
+    <color name="primary">#ef6c00</color>
+    <color name="primary_dark">#e65100</color>
+    <color name="accent">@color/primary</color>
     <color name="cardview_dark_background">@color/background_material_dark</color>
 </resources>

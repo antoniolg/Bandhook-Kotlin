@@ -17,13 +17,11 @@
 package com.antonioleiva.bandhookkotlin.ui.screens.main
 
 import android.os.Bundle
-import android.support.v7.widget.RecyclerView
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.main.MainActivityModule
+import com.antonioleiva.bandhookkotlin.ui.activity.AnkoBaseActivity
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
@@ -31,15 +29,11 @@ import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
 import com.antonioleiva.bandhookkotlin.ui.screens.detail.ArtistActivity
 import com.antonioleiva.bandhookkotlin.ui.util.navigate
 import com.antonioleiva.bandhookkotlin.ui.view.MainView
-import org.jetbrains.anko.find
-import org.jetbrains.anko.findOptional
 import javax.inject.Inject
 
-class MainActivity : BaseActivity(), MainView {
+class MainActivity : AnkoBaseActivity<MainLayout>(), MainView {
 
-    override val layoutResource = R.layout.activity_main
-    val recycler by lazy { find<RecyclerView>(R.id.recycler) }
-    val background by lazy { findOptional<View>(R.id.background) }
+    override val ui = MainLayout()
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -58,7 +52,7 @@ class MainActivity : BaseActivity(), MainView {
     }
 
     fun init() {
-        recycler.adapter = adapter
+        ui.recycler.adapter = adapter
         adapter.onItemClickListener = { presenter.onArtistClicked(it) }
     }
 
@@ -82,6 +76,6 @@ class MainActivity : BaseActivity(), MainView {
 
     private fun findItemById(id: String): View {
         val pos = adapter.findPositionById(id)
-        return recycler.layoutManager.findViewByPosition(pos).findViewById(R.id.image)
+        return ui.recycler.layoutManager.findViewByPosition(pos).findViewById(R.id.image)
     }
 }
