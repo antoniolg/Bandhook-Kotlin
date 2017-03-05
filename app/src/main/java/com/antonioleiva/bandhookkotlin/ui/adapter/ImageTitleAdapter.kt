@@ -29,9 +29,9 @@ import com.squareup.picasso.Picasso
 import org.jetbrains.anko.find
 import kotlin.properties.Delegates
 
-class ImageTitleAdapter() : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
+class ImageTitleAdapter : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
 
-    var items: List<ImageTitle> by Delegates.observable(emptyList()) { prop, old, new -> notifyDataSetChanged() }
+    var items: List<ImageTitle> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
 
     var onItemClickListener: ((ImageTitle) -> Unit)? = null
 

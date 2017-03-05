@@ -31,7 +31,7 @@ class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapp
     }
 
     private fun albumHasQualityInfo(album: LastFmAlbum): Boolean {
-        return !isAlbumMbidEmpty(album) && album.images.size > 0
+        return !isAlbumMbidEmpty(album) && album.images.isNotEmpty()
     }
 
     private fun isAlbumMbidEmpty(album: LastFmAlbum): Boolean {

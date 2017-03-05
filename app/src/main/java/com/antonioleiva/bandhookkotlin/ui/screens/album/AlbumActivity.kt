@@ -18,6 +18,7 @@ package com.antonioleiva.bandhookkotlin.ui.screens.album
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.CardView
@@ -85,6 +86,7 @@ class AlbumActivity : BaseActivity(), AlbumView {
                 .injectTo(this)
     }
 
+    @SuppressLint("NewApi")
     private fun setUpTransition() {
         supportPostponeEnterTransition()
         supportsLollipop { image.transitionName = IMAGE_TRANSITION_NAME }
@@ -140,6 +142,7 @@ class AlbumActivity : BaseActivity(), AlbumView {
         adapter.items = trackDetails
     }
 
+    @SuppressLint("InlinedApi")
     private fun makeStatusBarTransparent() {
         supportsLollipop {
             window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,

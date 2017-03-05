@@ -63,29 +63,24 @@ class AlbumRepositoryImplTest {
 
         mockRequestTopAlbumsReturns()
 
-        albumRepository = AlbumRepositoryImpl(listOf(firstAlbumDataSources, secondAlbumDataSource))
+        albumRepository = AlbumRepositoryImpl(listOf(firstAlbumDataSource, secondAlbumDataSource))
     }
 
     private fun mockRequestTopAlbumsReturns() {
-        `when`(firstAlbumDataSources.requestTopAlbums(artistIdInBothDataSources, artistName)).thenReturn(albumsInBothDataSources)
-        `when`(firstAlbumDataSources.requestTopAlbums(null, artistName)).thenReturn(albumsInBothDataSources)
-        `when`(firstAlbumDataSources.requestTopAlbums(artistIdInBothDataSources, null)).thenReturn(albumsInBothDataSources)
-        `when`(secondAlbumDataSource.requestTopAlbums(artistIdInBothDataSources, artistName)).thenReturn(albumsInBothDataSources)
-        `when`(secondAlbumDataSource.requestTopAlbums(null, artistName)).thenReturn(albumsInBothDataSources)
-        `when`(secondAlbumDataSource.requestTopAlbums(artistIdInBothDataSources, null)).thenReturn(albumsInBothDataSources)
+        `when`(firstAlbumDataSource.requestTopAlbums(null, artistName)).thenReturn(albumsInBothDataSources)
+        `when`(firstAlbumDataSource.requestTopAlbums(artistIdInBothDataSources, null)).thenReturn(albumsInBothDataSources)
         `when`(secondAlbumDataSource.requestTopAlbums(artistIdInSecondDataSource, null)).thenReturn(albumsInSecondDataSource)
     }
 
     private fun mockRequestAlbumReturns() {
-        `when`(firstAlbumDataSources.requestAlbum(albumIdInBothDataSources)).thenReturn(albumInBothDataSources)
-        `when`(secondAlbumDataSources.requestAlbum(albumIdInBothDataSources)).thenReturn(albumInBothDataSources)
-        `when`(secondAlbumDataSources.requestAlbum(albumIdInSecondDataSource)).thenReturn(albumInSecondDataSource)
+        `when`(firstAlbumDataSource.get(albumIdInBothDataSources)).thenReturn(albumInBothDataSources)
+        `when`(secondAlbumDataSource.get(albumIdInSecondDataSource)).thenReturn(albumInSecondDataSource)
     }
 
     @Test
     fun testGetAlbum_existingInBothDataSources() {
         // When
-        val album = albumRepository.getAlbum(albumIdInBothDataSources)
+        val album = albumRepository.get(albumIdInBothDataSources)
 
         // Then
         assertEquals(albumInBothDataSources, album)
@@ -94,7 +89,7 @@ class AlbumRepositoryImplTest {
     @Test
     fun testGetAlbum_existingOnlyInSecondDataSource() {
         // When
-        val album = albumRepository.getAlbum(albumIdInSecondDataSource)
+        val album = albumRepository.get(albumIdInSecondDataSource)
 
         // Then
         assertEquals(albumInSecondDataSource, album)

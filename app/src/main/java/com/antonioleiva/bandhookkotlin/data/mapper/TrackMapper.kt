@@ -19,7 +19,7 @@ package com.antonioleiva.bandhookkotlin.data.mapper
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmTrack
 import com.antonioleiva.bandhookkotlin.domain.entity.Track
 
-class TrackMapper() {
+class TrackMapper {
 
     fun transform(tracks: List<LastFmTrack>?): List<Track> = tracks?.map { transform(it) } ?: emptyList()
     fun transform(track: LastFmTrack) = Track(track.name, track.duration)

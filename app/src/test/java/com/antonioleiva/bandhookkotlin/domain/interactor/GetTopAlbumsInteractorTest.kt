@@ -44,7 +44,6 @@ class GetTopAlbumsInteractorTest {
     fun setUp() {
         album = Album("album id", "Album name", Artist("artist id", "artist name"), null, emptyList())
 
-        `when`(albumRepository.getTopAlbums(artistId, artistName)).thenReturn(listOf(album))
         `when`(albumRepository.getTopAlbums(null, artistName)).thenReturn(listOf(album))
         `when`(albumRepository.getTopAlbums(artistId, null)).thenReturn(listOf(album))
 
