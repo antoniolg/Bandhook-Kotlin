@@ -16,18 +16,21 @@
 
 package com.antonioleiva.bandhookkotlin.data
 
-import com.antonioleiva.bandhookkotlin.*
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
 import com.antonioleiva.bandhookkotlin.data.mapper.AlbumMapper
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.TopAlbumsNotFound
 import com.antonioleiva.bandhookkotlin.repository.datasource.AlbumDataSource
+import com.finecinnamon.Result
+import com.finecinnamon.bind
+import com.finecinnamon.raiseError
+import com.finecinnamon.result
 
 class CloudAlbumDataSource(val lastFmService: LastFmService) : AlbumDataSource {
 
     override fun get(id: String): Result<AlbumNotFound, Album> =
-            binding {
+            bind {
                 val response = it binds lastFmService.requestAlbum(id).asyncResult()
                 val album = AlbumMapper().transform(response.album)
                 val r = it binds album.fold({ AlbumNotFound(id).raiseError()},{ it.result() })
