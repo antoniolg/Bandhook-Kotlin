@@ -28,8 +28,6 @@ class MainLayout : ActivityAnkoComponent<MainActivity> {
             appBarLayout {
                 toolbar = toolbar(R.style.ThemeOverlay_AppCompat_Dark_ActionBar) {
                     backgroundResource = R.color.primary
-                    fitsSystemWindows = true
-                    popupTheme = R.style.ThemeOverlay_AppCompat_Light
                 }.lparams(width = MATCH_PARENT) {
                     scrollFlags = SCROLL_FLAG_SNAP or SCROLL_FLAG_SCROLL or SCROLL_FLAG_ENTER_ALWAYS
                 }
