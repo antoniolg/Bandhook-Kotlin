@@ -68,8 +68,9 @@ dependencies {
     }
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     compile "com.birbit:android-priority-jobqueue:2.0.1"
-    compile "org.jetbrains.anko:anko-sdk15:$parent.ext.ankoVersion"
-    compile "org.jetbrains.anko:anko-support-v4:$parent.ext.ankoVersion"
+    compile "org.jetbrains.anko:anko-sdk15:$ankoVersion"
+    compile "org.jetbrains.anko:anko-support-v4:$ankoVersion"
+    compile "org.jetbrains.anko:anko-appcompat-v7:$ankoVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     compile "com.google.dagger:dagger:$daggerVersion"
 
