@@ -76,6 +76,7 @@ class MainActivity : AnkoBaseActivity<MainLayout>(), MainView {
 
     private fun findItemById(id: String): View {
         val pos = adapter.findPositionById(id)
-        return ui.recycler.layoutManager.findViewByPosition(pos).findViewById(R.id.image)
+        val holder = ui.recycler.findViewHolderForLayoutPosition(pos) as ImageTitleAdapter.ViewHolder
+        return holder.ui.image
     }
 }

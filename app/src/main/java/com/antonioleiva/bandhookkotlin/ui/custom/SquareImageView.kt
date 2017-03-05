@@ -18,7 +18,9 @@ package com.antonioleiva.bandhookkotlin.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.ViewManager
 import android.widget.ImageView
+import org.jetbrains.anko.custom.ankoView
 
 class SquareImageView : ImageView {
 
@@ -34,3 +36,6 @@ class SquareImageView : ImageView {
         setMeasuredDimension(width, width)
     }
 }
+
+fun ViewManager.squareImageView(theme: Int = 0) = squareImageView(theme) {}
+inline fun ViewManager.squareImageView(theme: Int = 0, init: SquareImageView.() -> Unit) = ankoView(::SquareImageView, theme, init)
