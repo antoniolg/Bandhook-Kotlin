@@ -16,11 +16,11 @@
 
 package com.antonioleiva.bandhookkotlin.domain.repository
 
-import com.antonioleiva.bandhookkotlin.NonEmptyList
-import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.RecomendationsNotFound
+import com.finecinnamon.NonEmptyList
+import com.finecinnamon.Result
 
 interface ArtistRepository {
     fun getArtist(id: String): Result<ArtistNotFound, Artist>

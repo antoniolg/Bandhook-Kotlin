@@ -16,7 +16,7 @@
 
 package com.antonioleiva.bandhookkotlin.ui.entity.mapper
 
-import com.antonioleiva.bandhookkotlin.NonEmptyList
+import com.finecinnamon.NonEmptyList
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle

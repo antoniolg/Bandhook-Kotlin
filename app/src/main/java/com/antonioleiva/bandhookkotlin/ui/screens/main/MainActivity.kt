@@ -21,7 +21,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.antonioleiva.bandhookkotlin.NonEmptyList
+import com.finecinnamon.NonEmptyList
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.main.MainActivityModule

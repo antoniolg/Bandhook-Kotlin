@@ -16,7 +16,7 @@
 
 package com.antonioleiva.bandhookkotlin.ui.view
 
-import com.antonioleiva.bandhookkotlin.NonEmptyList
+import com.finecinnamon.NonEmptyList
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 
 interface MainView : PresentationView {

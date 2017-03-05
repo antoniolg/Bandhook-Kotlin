@@ -1,0 +1,18 @@
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:1.1.0"
+    compile 'nl.komponents.kovenant:kovenant-functional:3.3.0'
+    compile "org.funktionale:funktionale-all:1.0.0-final"
+    testCompile "junit:junit:4.12"
+}
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

@@ -16,10 +16,10 @@
 
 package com.antonioleiva.bandhookkotlin.repository
 
-import com.antonioleiva.bandhookkotlin.NonEmptyList
-import com.antonioleiva.bandhookkotlin.Result
-import com.antonioleiva.bandhookkotlin.Result.Factory.firstSuccessIn
-import com.antonioleiva.bandhookkotlin.Result.Factory.raiseError
+import com.finecinnamon.NonEmptyList
+import com.finecinnamon.Result
+import com.finecinnamon.Result.Factory.firstSuccessIn
+import com.finecinnamon.Result.Factory.raiseError
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.RecomendationsNotFound

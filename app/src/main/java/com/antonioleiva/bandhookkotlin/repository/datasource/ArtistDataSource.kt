@@ -16,11 +16,11 @@
 
 package com.antonioleiva.bandhookkotlin.repository.datasource
 
-import com.antonioleiva.bandhookkotlin.NonEmptyList
-import com.antonioleiva.bandhookkotlin.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
+import com.finecinnamon.NonEmptyList
+import com.finecinnamon.Result
 
 interface ArtistDataSource {
 
