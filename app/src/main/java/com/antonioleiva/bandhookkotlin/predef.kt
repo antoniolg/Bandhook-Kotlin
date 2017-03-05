@@ -174,13 +174,15 @@ object binding {
     operator fun <E, A> invoke(block: suspend (binding) -> A): Result<E, A> =
             ResultContinuation<E, A>().also { block.startCoroutine(binding, it) }.result
 
-    private class ResultContinuation<E, A>: Continuation<A> {
+    private class ResultContinuation<E, A> : Continuation<A> {
 
         lateinit var result: Result<E, A>
 
         override val context: CoroutineContext = EmptyCoroutineContext
 
-        override fun resume(value: A) { result = pure(value) }
+        override fun resume(value: A) {
+            result = pure(value)
+        }
 
         override fun resumeWithException(exception: Throwable) {
             if (exception is Exception)
@@ -199,7 +201,7 @@ object binding {
 
     infix suspend fun <A> returns(fa: A): A =
             suspendCoroutine { cont: Continuation<A> ->
-                pure<Nothing,A>(fa)
+                pure<Nothing, A>(fa)
             }
 }
 
@@ -236,30 +238,26 @@ fun <E, A, B> ((A) -> Result<E, A>).plus(fa: (A) -> Result<E, B>): Result<E, B> 
 interface NonEmptyCollection<out A> : Collection<A> {
     val head: A
     val tail: Collection<A>
-}
-
-abstract class AbstractNonEmptyCollection<out A>(
-        override val head: A,
-        override val tail: Collection<A>) : AbstractCollection<A>(), NonEmptyCollection<A> {
-
-    @Suppress("LeakingThis")
-    override val size: Int = 1 + tail.size
 
     override fun contains(element: @UnsafeVariance A): Boolean {
-        return (head == element).or(tail.contains(element))
+        return (head == element).or(tail.contains(element));
     }
 
-    override fun isEmpty(): Boolean = false
+    override fun containsAll(elements: Collection<@UnsafeVariance A>): Boolean =
+            elements.all { contains(it) }
 
+    override fun isEmpty(): Boolean = false
 }
 
 class NonEmptyList<out A> private constructor(
         override val head: A,
         override val tail: List<A>,
-        val all: List<A>) : AbstractNonEmptyCollection<A>(head, tail) {
+        val all: List<A>) : NonEmptyCollection<A> {
 
     constructor(head: A, tail: List<A>) : this(head, tail, listOf(head) + tail)
     private constructor(list: List<A>) : this(list[0], list.tail(), list)
+
+    override val size: Int = all.size
 
     inline fun <reified B> map(f: (A) -> B): NonEmptyList<B> =
             NonEmptyList(f(head), tail.map(f))
@@ -292,4 +290,5 @@ class NonEmptyList<out A> private constructor(
         inline fun <reified A> of(head: A, vararg t: A): NonEmptyList<A> = NonEmptyList(head, t.asList())
         fun <A> unsafeFromList(l: List<A>): NonEmptyList<A> = NonEmptyList(l)
     }
+
 }
