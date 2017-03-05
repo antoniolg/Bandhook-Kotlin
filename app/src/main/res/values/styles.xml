@@ -27,16 +27,6 @@
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
 
-    <style name="GridTextAppearance">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:background">@color/cardview_dark_background</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead.Inverse</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
-    </style>
-
     <style name="NeutralColorEdge">
         <item name="android:colorEdgeEffect">#AAAAAA</item>
     </style>

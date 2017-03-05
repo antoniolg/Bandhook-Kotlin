@@ -16,35 +16,31 @@
 
 package com.antonioleiva.bandhookkotlin.ui.util
 
-import android.animation.ObjectAnimator
 import android.support.annotation.LayoutRes
+import android.support.annotation.StyleRes
+import android.support.v4.widget.TextViewCompat
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.DecelerateInterpolator
-import android.view.animation.Interpolator
+import android.widget.ImageView
+import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.ui.adapter.SingleClickListener
+import com.squareup.picasso.Picasso
 import org.jetbrains.anko.layoutInflater
 
-fun View.animateEnter() = animateTranslationY(0, DecelerateInterpolator(3f))
-fun View.animateExit() = animateTranslationY(-height, AccelerateInterpolator(3f))
-
-fun View.animateTranslationY(translationY: Int, interpolator: Interpolator) {
-    with(ObjectAnimator.ofFloat(this, "translationY", translationY.toFloat()))
-    {
-        duration = context.resources.getInteger(android.R.integer.config_mediumAnimTime).toLong()
-        setInterpolator(interpolator)
-        start()
-    }
-}
-
 /**
- * Click listener setter that prevents double click on the view it´s set
+ * Click listener setter that prevents double click on the view it's set
  */
-fun View.singleClick(l: (android.view.View?) -> Unit){
+fun View.singleClick(l: (android.view.View?) -> Unit) {
     setOnClickListener(SingleClickListener(l))
 }
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
     return context.layoutInflater.inflate(layoutRes, this, attachToRoot)
 }
+
+fun ImageView.loadUrl(url: String) {
+    Picasso.with(context).load(url).into(this)
+}
+
+fun TextView.setTextAppearanceC(@StyleRes textAppearance: Int)
+        = TextViewCompat.setTextAppearance(this, textAppearance)
