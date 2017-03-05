@@ -11,14 +11,17 @@ import org.funktionale.collections.tail
 import org.funktionale.either.Disjunction
 import org.funktionale.option.Option
 import org.funktionale.utils.identity
-import kotlin.coroutines.experimental.*
+import kotlin.coroutines.experimental.Continuation
+import kotlin.coroutines.experimental.EmptyCoroutineContext
+import kotlin.coroutines.experimental.RestrictsSuspension
+import kotlin.coroutines.experimental.intrinsics.COROUTINE_SUSPENDED
+import kotlin.coroutines.experimental.intrinsics.suspendCoroutineOrReturn
+import kotlin.coroutines.experimental.startCoroutine
 
 /**
  * A Result is a deferred promise containing either a controlled error and successful value or an unknown exception.
  * The containing Disjunction is right biased on A
  */
-//TODO remove continuations custom impl and attempt to implement https://github.com/h0tk3y/kotlin-monads to get DoNotation for free
-// changing the bind syntaxi, en realidad e for the custom one on the coroutine
 class Result<E, A>(private val value: Promise<Disjunction<E, A>, Exception>) {
 
     /**
@@ -32,7 +35,7 @@ class Result<E, A>(private val value: Promise<Disjunction<E, A>, Exception>) {
     /**
      * map over the left exceptional case
      */
-    fun <EE> recover(r: Result<E, A>, fa: (E) -> EE): Result<EE, A> =
+    fun <EE> recover(fa: (E) -> EE): Result<EE, A> =
             Result(value.then { it ->
                 it.swap().map { fa(it) }.swap()
             })
@@ -81,7 +84,7 @@ class Result<E, A>(private val value: Promise<Disjunction<E, A>, Exception>) {
 
     companion object Factory {
 
-        fun <A> async(f: () -> A): Result<Nothing, A> =
+        fun <E, A> async(f: () -> A): Result<E, A> =
                 Result(task {
                     f()
                 } bind { fa ->
@@ -169,50 +172,45 @@ class Result<E, A>(private val value: Promise<Disjunction<E, A>, Exception>) {
 
 }
 
-fun <E, A> bind(block: suspend (binding) -> A): Result<E, A> =
-        Result.pure<E, Unit>(Unit).flatMap {
-            val continuation = ResultContinuation<E, A>()
-            block.startCoroutine(binding, continuation)
-            continuation.result
-        }
+fun <E, B> binding(c: suspend ResultContinuation<E, *>.() -> Result<E, B>): Result<E, B> {
+    val controller = ResultContinuation<E, B>()
+    val f: suspend ResultContinuation<E, *>.() -> Result<E, B> = { c() }
+    f.startCoroutine(controller, controller)
+    return controller.returnedMonad
+}
 
-internal class ResultContinuation<E, A>: Continuation<A> {
+@RestrictsSuspension
+class ResultContinuation<E, A> : java.io.Serializable, Continuation<Result<E, A>> {
 
-    lateinit var result: Result<E, A>
+    override val context = EmptyCoroutineContext
 
-    override val context: CoroutineContext = EmptyCoroutineContext
-
-    override fun resume(value: A) { result = pure(value) }
+    override fun resume(value: Result<E, A>) {
+        returnedMonad = value
+    }
 
     override fun resumeWithException(exception: Throwable) {
-        if (exception is Exception)
-            result = Result.raiseUnknownError(exception)
+        throw exception
     }
+
+    internal lateinit var returnedMonad: Result<E, A>
+
+    suspend fun <B> bind(m: Result<E, B>): B = suspendCoroutineOrReturn { c ->
+        returnedMonad = m.flatMap { x ->
+            c.resume(x)
+            returnedMonad
+        }
+        COROUTINE_SUSPENDED
+    }
+
+    fun <B> yields(b: B) = pure<E, B>(b)
+
 }
 
-
-object binding {
-    infix suspend fun <E, A> binds(fa: Result<E, A>): A =
-            suspendCoroutine { cont: Continuation<A> ->
-                fa.onComplete(
-                        onSuccess = { cont.resume(it) },
-                        onError = {},
-                        onUnhandledException = { cont.resumeWithException(it) }
-                )
-            }
-
-    infix suspend fun <A> returns(fa: A): A =
-            suspendCoroutine { cont: Continuation<A> ->
-                pure<Nothing,A>(fa)
-            }
-}
-
-
-fun <A> A.result(): Result<Nothing, A> {
+fun <E, A> A.result(): Result<E, A> {
     return Result.pure(this)
 }
 
-fun <E> E.raiseError(): Result<E, Nothing> {
+fun <E, A> E.raiseError(): Result<E, A> {
     return Result.raiseError(this)
 }
 
@@ -231,11 +229,6 @@ fun <L> L.left(): Disjunction<L, Nothing> {
 fun <R> R.right(): Disjunction<Nothing, R> {
     return Disjunction.Right<Nothing, R>(this)
 }
-
-/*
-fun <E, A, B> ((A) -> Result<E, A>).plus(fa: (A) -> Result<E, B>): Result<E, B> {
-    return Disjunction.Right<Nothing, R>(this)
-}*/
 
 interface NonEmptyCollection<out A> : Collection<A> {
     val head: A
