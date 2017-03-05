@@ -246,7 +246,7 @@ abstract class AbstractNonEmptyCollection<out A>(
     override val size: Int = 1 + tail.size
 
     override fun contains(element: @UnsafeVariance A): Boolean {
-        return (head == element).or(tail.contains(element));
+        return (head == element).or(tail.contains(element))
     }
 
     override fun isEmpty(): Boolean = false
@@ -269,9 +269,27 @@ class NonEmptyList<out A> private constructor(
 
     override fun iterator(): Iterator<A> = all.iterator()
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other?.javaClass != javaClass) return false
+
+        other as NonEmptyList<*>
+
+        if (all != other.all) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return all.hashCode()
+    }
+
+    override fun toString(): String {
+        return "NonEmptyList(all=$all)"
+    }
+
     companion object Factory {
         inline fun <reified A> of(head: A, vararg t: A): NonEmptyList<A> = NonEmptyList(head, t.asList())
         fun <A> unsafeFromList(l: List<A>): NonEmptyList<A> = NonEmptyList(l)
     }
-
 }
