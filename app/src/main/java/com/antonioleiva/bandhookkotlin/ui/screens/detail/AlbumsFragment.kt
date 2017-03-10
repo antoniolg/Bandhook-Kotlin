@@ -25,6 +25,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.activity.ViewAnkoComponent
+import com.antonioleiva.bandhookkotlin.ui.adapter.BaseAdapter
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 import com.antonioleiva.bandhookkotlin.ui.custom.PaddingItemDecoration
 import com.antonioleiva.bandhookkotlin.ui.custom.autoFitRecycler
@@ -90,7 +91,8 @@ class AlbumsFragment : Fragment() {
 
     fun findViewByItemId(id: String): View? {
         return adapter?.findPositionById(id)?.let {
-            val holder = component?.recycler?.findViewHolderForLayoutPosition(it) as ImageTitleAdapter.ViewHolder
+            val holder = component?.recycler?.findViewHolderForLayoutPosition(it)
+                    as BaseAdapter.BaseViewHolder<ImageTitleAdapter.Component>
             return holder.ui.image
         }
     }
