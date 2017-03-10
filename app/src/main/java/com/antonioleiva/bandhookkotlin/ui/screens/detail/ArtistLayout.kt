@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.Toolbar
 import android.view.Gravity
+import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
@@ -36,6 +37,7 @@ class ArtistLayout : ActivityAnkoComponent<ArtistActivity> {
     lateinit var tabLayout: TabLayout
 
     override fun createView(ui: AnkoContext<ArtistActivity>) = with(ui) {
+
         coordinatorLayout {
             fitsSystemWindows = true
 
@@ -74,7 +76,7 @@ class ArtistLayout : ActivityAnkoComponent<ArtistActivity> {
             }.lparams(width = MATCH_PARENT)
 
             viewPager = viewPager {
-                id = R.id.view_pager
+                id = View.generateViewId()
             }.lparams {
                 behavior = AppBarLayout.ScrollingViewBehavior()
             }
