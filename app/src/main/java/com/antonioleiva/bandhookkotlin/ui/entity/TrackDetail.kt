@@ -16,4 +16,4 @@
 
 package com.antonioleiva.bandhookkotlin.ui.entity
 
-data class TrackDetail(val name: String, val duration: Int)
+data class TrackDetail(val number: Int, val name: String, val duration: Int)

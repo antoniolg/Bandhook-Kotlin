@@ -16,8 +16,8 @@
 
 package com.antonioleiva.bandhookkotlin.ui.adapter
 
+import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
-import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
 import android.widget.TextView
@@ -37,16 +37,16 @@ class ImageTitleAdapter(listener: (ImageTitle) -> Unit)
         item.url?.let { image.loadUrl(it) }
     }
 
-    override fun onCreateComponent(parent: ViewGroup) = Component(parent)
+    override fun onCreateComponent(parent: RecyclerView) = Component(parent)
 
     fun findPositionById(id: String): Int = items.withIndex().first { it.value.id == id }.index
 
-    class Component(override val view: ViewGroup) : ViewAnkoComponent<ViewGroup> {
+    class Component(override val view: RecyclerView) : ViewAnkoComponent<RecyclerView> {
 
         lateinit var title: TextView
         lateinit var image: ImageView
 
-        override fun createView(ui: AnkoContext<ViewGroup>) = with(ui) {
+        override fun createView(ui: AnkoContext<RecyclerView>) = with(ui) {
             frameLayout {
 
                 verticalLayout {
