@@ -18,11 +18,11 @@ package com.antonioleiva.bandhookkotlin.ui.screens.main
 
 import android.os.Bundle
 import android.view.View
-import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.main.MainActivityModule
 import com.antonioleiva.bandhookkotlin.ui.activity.AnkoBaseActivity
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
+import com.antonioleiva.bandhookkotlin.ui.adapter.BaseAdapter
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
@@ -38,22 +38,16 @@ class MainActivity : AnkoBaseActivity<MainLayout>(), MainView {
     @Inject
     lateinit var presenter: MainPresenter
 
-    @Inject
-    lateinit var adapter: ImageTitleAdapter
+    val adapter = ImageTitleAdapter { presenter.onArtistClicked(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        init()
+        ui.recycler.adapter = adapter
     }
 
     override fun injectDependencies(applicationComponent: ApplicationComponent) {
         applicationComponent.plus(MainActivityModule(this))
                 .injectTo(this)
-    }
-
-    fun init() {
-        ui.recycler.adapter = adapter
-        adapter.onItemClickListener = { presenter.onArtistClicked(it) }
     }
 
     override fun onResume() {
@@ -76,7 +70,8 @@ class MainActivity : AnkoBaseActivity<MainLayout>(), MainView {
 
     private fun findItemById(id: String): View {
         val pos = adapter.findPositionById(id)
-        val holder = ui.recycler.findViewHolderForLayoutPosition(pos) as ImageTitleAdapter.ViewHolder
+        val holder = ui.recycler.findViewHolderForLayoutPosition(pos)
+                as BaseAdapter.BaseViewHolder<ImageTitleAdapter.Component>
         return holder.ui.image
     }
 }

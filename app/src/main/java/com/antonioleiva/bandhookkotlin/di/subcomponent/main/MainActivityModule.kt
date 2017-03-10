@@ -28,9 +28,4 @@ class MainActivityModule(activity: MainActivity) : ActivityModule(activity) {
                              interactorExecutor: InteractorExecutor,
                              imageMapper: ImageTitleDataMapper) = MainPresenter(view, bus, recommendedArtistsInteractor,
             interactorExecutor, imageMapper)
-
-    @Provides @ActivityScope
-    fun provideAdapter() = ImageTitleAdapter()
-
-
 }

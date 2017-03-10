@@ -16,7 +16,6 @@
 
 package com.antonioleiva.bandhookkotlin.ui.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -28,38 +27,21 @@ import com.antonioleiva.bandhookkotlin.ui.custom.squareImageView
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.util.loadUrl
 import com.antonioleiva.bandhookkotlin.ui.util.setTextAppearanceC
-import com.antonioleiva.bandhookkotlin.ui.util.singleClick
 import org.jetbrains.anko.*
-import kotlin.properties.Delegates
 
-private typealias ClickItemListener = ((ImageTitle) -> Unit)?
+class ImageTitleAdapter(listener: (ImageTitle) -> Unit)
+    : BaseAdapter<ImageTitle, ImageTitleAdapter.Component>(listener) {
 
-class ImageTitleAdapter(var onItemClickListener: ClickItemListener = null)
-    : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
-
-    var items: List<ImageTitle> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ImageTitleComponent(parent), onItemClickListener)
+    override val bind: Component.(item: ImageTitle) -> Unit = { item ->
+        title.text = item.name
+        item.url?.let { image.loadUrl(it) }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(items[position])
-
-    override fun getItemCount() = items.size
+    override fun onCreateComponent(parent: ViewGroup) = Component(parent)
 
     fun findPositionById(id: String): Int = items.withIndex().first { it.value.id == id }.index
 
-    class ViewHolder(val ui: ImageTitleComponent, val onItemClickListener: ClickItemListener)
-        : RecyclerView.ViewHolder(ui.inflate()) {
-
-        fun bind(item: ImageTitle) {
-            itemView.singleClick { onItemClickListener?.invoke(item) }
-            ui.title.text = item.name
-            item.url?.let { ui.image.loadUrl(it) }
-        }
-    }
-
-    class ImageTitleComponent(override val view: ViewGroup) : ViewAnkoComponent<ViewGroup> {
+    class Component(override val view: ViewGroup) : ViewAnkoComponent<ViewGroup> {
 
         lateinit var title: TextView
         lateinit var image: ImageView
