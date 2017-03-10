@@ -18,12 +18,12 @@ package com.antonioleiva.bandhookkotlin.ui.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
-import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
 import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.R
+import com.antonioleiva.bandhookkotlin.ui.activity.ViewAnkoComponent
 import com.antonioleiva.bandhookkotlin.ui.custom.squareImageView
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.util.loadUrl
@@ -34,11 +34,10 @@ import kotlin.properties.Delegates
 
 private typealias ClickItemListener = ((ImageTitle) -> Unit)?
 
-class ImageTitleAdapter : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
+class ImageTitleAdapter(var onItemClickListener: ClickItemListener = null)
+    : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
 
     var items: List<ImageTitle> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
-
-    var onItemClickListener: ClickItemListener = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ImageTitleComponent(parent), onItemClickListener)
@@ -48,7 +47,7 @@ class ImageTitleAdapter : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
 
     override fun getItemCount() = items.size
 
-    fun findPositionById(id: String): Int = items.withIndex().first({ it.value.id == id }).index
+    fun findPositionById(id: String): Int = items.withIndex().first { it.value.id == id }.index
 
     class ViewHolder(val ui: ImageTitleComponent, val onItemClickListener: ClickItemListener)
         : RecyclerView.ViewHolder(ui.inflate()) {
@@ -60,7 +59,7 @@ class ImageTitleAdapter : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
         }
     }
 
-    class ImageTitleComponent(val parent: ViewGroup) : AnkoComponent<ViewGroup> {
+    class ImageTitleComponent(override val view: ViewGroup) : ViewAnkoComponent<ViewGroup> {
 
         lateinit var title: TextView
         lateinit var image: ImageView
@@ -85,11 +84,6 @@ class ImageTitleAdapter : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
                 }.lparams(width = MATCH_PARENT)
 
             }
-        }
-
-        fun inflate(): View {
-            val ctx = AnkoContext.Companion.create(parent.context, parent)
-            return createView(ctx)
         }
     }
 }
