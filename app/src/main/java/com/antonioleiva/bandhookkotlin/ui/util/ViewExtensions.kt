@@ -16,9 +16,11 @@
 
 package com.antonioleiva.bandhookkotlin.ui.util
 
+import android.os.Build
 import android.support.annotation.LayoutRes
 import android.support.annotation.StyleRes
 import android.support.v4.widget.TextViewCompat
+import android.text.Html
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -44,3 +46,10 @@ fun ImageView.loadUrl(url: String) {
 
 fun TextView.setTextAppearanceC(@StyleRes textAppearance: Int)
         = TextViewCompat.setTextAppearance(this, textAppearance)
+
+@Suppress("DEPRECATION")
+fun String.fromHtml() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+    Html.fromHtml(this, Html.FROM_HTML_MODE_COMPACT);
+} else {
+    Html.fromHtml(this)
+}

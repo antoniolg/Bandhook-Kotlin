@@ -33,7 +33,7 @@ class MainLayout : ActivityAnkoComponent<MainActivity> {
 
             recycler = autoFitRecycler {
                 clipToPadding = false
-                columnWidth = dip(180)
+                columnWidth = dimen(R.dimen.column_width)
                 padding = dip(2)
                 addItemDecoration(PaddingItemDecoration(dip(2)))
 
