@@ -21,16 +21,13 @@ import android.animation.AnimatorListenerAdapter
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.annotation.VisibleForTesting
-import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.MenuItem
 import android.view.WindowManager
-import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.album.AlbumActivityModule
-import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
+import com.antonioleiva.bandhookkotlin.ui.activity.AnkoBaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.TracksAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
 import com.antonioleiva.bandhookkotlin.ui.entity.TrackDetail
@@ -41,10 +38,12 @@ import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import org.jetbrains.anko.find
+import org.jetbrains.anko.dimen
 import javax.inject.Inject
 
-class AlbumActivity : BaseActivity(), AlbumView {
+class AlbumActivity : AnkoBaseActivity<AlbumLayout>(), AlbumView {
+
+    override val ui = AlbumLayout()
 
     companion object {
         private val listAnimationStartDelay = 500L
@@ -52,11 +51,7 @@ class AlbumActivity : BaseActivity(), AlbumView {
         private val transparent = 0f
     }
 
-    override val layoutResource = R.layout.activity_album
-    val image by lazy { find<ImageView>(R.id.album_image) }
-    val trackList by lazy { find<RecyclerView>(R.id.tracks_list) }
-    val listCard by lazy { find<CardView>(R.id.card_view) }
-    val albumListBreakingEdgeHeight by lazy { resources.getDimension(R.dimen.album_breaking_edge_height) }
+    val albumListBreakingEdgeHeight by lazy { dimen(R.dimen.album_breaking_edge_height).toFloat() }
 
     @Inject @VisibleForTesting
     lateinit var presenter: AlbumPresenter
@@ -88,13 +83,13 @@ class AlbumActivity : BaseActivity(), AlbumView {
     @SuppressLint("NewApi")
     private fun setUpTransition() {
         supportPostponeEnterTransition()
-        supportsLollipop { image.transitionName = IMAGE_TRANSITION_NAME }
+        supportsLollipop { ui.image.transitionName = IMAGE_TRANSITION_NAME }
     }
 
     private fun setUpTrackList() {
-        trackList.adapter = adapter
-        trackList.layoutManager = layoutManager
-        listCard.translationY = -albumListBreakingEdgeHeight
+        ui.trackList.adapter = adapter
+        ui.trackList.layoutManager = layoutManager
+        ui.listCard.translationY = -albumListBreakingEdgeHeight
     }
 
     private fun setUpActionBar() {
@@ -115,7 +110,7 @@ class AlbumActivity : BaseActivity(), AlbumView {
 
     override fun showAlbum(albumDetail: AlbumDetail?) {
         if (albumDetail != null) {
-            picasso.load(albumDetail.url).fit().centerCrop().into(image, object : Callback.EmptyCallback() {
+            picasso.load(albumDetail.url).fit().centerCrop().into(ui.image, object : Callback.EmptyCallback() {
                 override fun onSuccess() {
                     makeStatusBarTransparent()
                     supportStartPostponedEnterTransition()
@@ -130,7 +125,7 @@ class AlbumActivity : BaseActivity(), AlbumView {
     }
 
     private fun animateTrackListUp() {
-        listCard.animate().setStartDelay(listAnimationStartDelay).translationY(noTranslation)
+        ui.listCard.animate().setStartDelay(listAnimationStartDelay).translationY(noTranslation)
     }
 
     private fun populateTrackList(trackDetails: List<TrackDetail>) {
@@ -154,7 +149,7 @@ class AlbumActivity : BaseActivity(), AlbumView {
     }
 
     override fun onBackPressed() {
-        listCard.animate().alpha(transparent).setListener(object : AnimatorListenerAdapter() {
+        ui.listCard.animate().alpha(transparent).setListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator?) {
                 supportFinishAfterTransition()
             }

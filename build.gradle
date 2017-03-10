@@ -33,7 +33,7 @@ allprojects {
     ext {
         // Android config
         androidBuildToolsVersion = "25.0.2"
-        androidMinSdkVersion = 16
+        androidMinSdkVersion = 17
         androidTargetSdkVersion = 25
         androidCompileSdkVersion = 25
         androidApplicationId = "com.antonioleiva.bandhookkotlin"
