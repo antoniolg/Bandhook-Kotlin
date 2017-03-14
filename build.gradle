@@ -15,43 +15,53 @@
  */
 
 buildscript {
-    ext.kotlin_version = '1.1.0'
+    ext {
+        // Constants
+        androidBuildToolsVersion = '25.0.2'
+        androidGradlePluginVersion = '2.3.0'
+        androidMinSdkVersion = 16
+        androidTargetSdkVersion = 25
+        androidCompileSdkVersion = 25
+        androidApplicationId = 'com.antonioleiva.bandhookkotlin'
+        androidVersionCode = 1
+        androidVersionName = '0.1'
+        dexmakerVersion = '1.2'
+        espressoVersion = '2.3-alpha'
+        funktionaleVersion = '1.0.0-final'
+        gradleVersion = '3.4.1'
+        gradleVersionsPluginVersion = '0.14.0'
+        javaVersion = '1.7'
+        junitVersion = '4.12'
+        kotlinVersion = '1.1.1'
+        kovenantVersion = '3.3.0'
+        picassoVersion = '2.5.2'
+        supportVersion = '25.2.0'
+        ankoVersion= '0.9.1a'
+        daggerVersion = '2.9'
+        mockitoVersion = '2.7.17'
+        okhttpVersion = '3.6.0'
+        retrofitVersion = '2.2.0'
+    }
+
     repositories {
         jcenter()
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.14.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
+    dependencies {
+        classpath "com.android.tools.build:gradle:$androidGradlePluginVersion"
+        classpath "com.github.ben-manes:gradle-versions-plugin:$gradleVersionsPluginVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
 
 allprojects {
     repositories {
         jcenter()
-        maven { url "https://jitpack.io" }
-    }
-
-    ext {
-        // Android config
-        androidBuildToolsVersion = "25.0.2"
-        androidMinSdkVersion = 16
-        androidTargetSdkVersion = 25
-        androidCompileSdkVersion = 25
-        androidApplicationId = "com.antonioleiva.bandhookkotlin"
-        androidVersionCode = 1
-        androidVersionName = "0.1"
-        supportVersion = "25.2.0"
-        ankoVersion= "0.9.1a"
-        daggerVersion = "2.9"
-        retrofitVersion = "2.2.0"
-        okhttpVersion = "3.6.0"
+        maven { url 'https://jitpack.io' }
     }
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.4'
     distributionUrl = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 

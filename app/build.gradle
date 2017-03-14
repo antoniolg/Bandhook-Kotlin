@@ -21,13 +21,18 @@ android {
     compileSdkVersion parent.ext.androidCompileSdkVersion
     buildToolsVersion parent.ext.androidBuildToolsVersion
 
+    compileOptions {
+        sourceCompatibility javaVersion
+        targetCompatibility javaVersion
+    }
+
     defaultConfig {
         minSdkVersion parent.ext.androidMinSdkVersion
         targetSdkVersion parent.ext.androidTargetSdkVersion
         versionCode parent.ext.androidVersionCode
         versionName parent.ext.androidVersionName
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
 
     buildTypes {
@@ -59,39 +64,30 @@ kotlin {
 
 dependencies {
     compile project(':tools')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:1.1.0"
-    compile 'nl.komponents.kovenant:kovenant-functional:3.3.0'
-    compile "org.funktionale:funktionale-all:1.0.0-final"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile "nl.komponents.kovenant:kovenant-functional:$kovenantVersion"
+    compile "org.funktionale:funktionale-all:$funktionaleVersion"
     compile "com.android.support:appcompat-v7:$supportVersion"
     compile "com.android.support:recyclerview-v7:$supportVersion"
     compile "com.android.support:cardview-v7:$supportVersion"
     compile "com.android.support:palette-v7:$supportVersion"
     compile "com.android.support:design:$supportVersion"
-    compile "com.squareup.picasso:picasso:2.5.2"
+    compile "com.squareup.picasso:picasso:$picassoVersion"
     compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
     compile "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
-    compile ("com.squareup.retrofit2:retrofit:$retrofitVersion"){
-        // exclude Retrofit’s OkHttp peer-dependency module and define your own module import
-        exclude module: 'okhttp'
-    }
+    compile "com.squareup.retrofit2:retrofit:$retrofitVersion"
     compile "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     compile "org.jetbrains.anko:anko-sdk15:$parent.ext.ankoVersion"
     compile "org.jetbrains.anko:anko-support-v4:$parent.ext.ankoVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     compile "com.google.dagger:dagger:$daggerVersion"
 
-    androidTestCompile "org.mockito:mockito-core:2.7.13"
-    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
-    androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
+    androidTestCompile "org.mockito:mockito-core:$mockitoVersion"
+    androidTestCompile "com.google.dexmaker:dexmaker:$dexmakerVersion"
+    androidTestCompile "com.google.dexmaker:dexmaker-mockito:$dexmakerVersion"
     androidTestCompile "com.android.support:support-annotations:$supportVersion"
-    androidTestCompile "com.android.support.test.espresso:espresso-core:2.3-alpha"
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$espressoVersion"
 
-    testCompile "junit:junit:4.12"
-    testCompile "org.mockito:mockito-core:2.7.13"
-}
-
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-core:$mockitoVersion"
 }
