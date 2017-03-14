@@ -35,7 +35,7 @@ buildscript {
         kotlinVersion = '1.1.1'
         kovenantVersion = '3.3.0'
         picassoVersion = '2.5.2'
-        supportVersion = '25.2.0'
+        supportVersion = '25.3.0'
         ankoVersion= '0.9.1a'
         daggerVersion = '2.9'
         mockitoVersion = '2.7.17'
