@@ -28,10 +28,10 @@ class AlbumLayout : ActivityAnkoComponent<AlbumActivity> {
             image = squareImageView {
                 id = View.generateViewId()
                 backgroundResource = android.R.color.darker_gray
-            }.lparams(width = MATCH_PARENT)
+            }.lparams(width = matchParent)
 
             toolbar = toolbar(R.style.ThemeOverlay_AppCompat_Dark_ActionBar)
-                    .lparams(width = MATCH_PARENT) {
+                    .lparams(width = matchParent) {
                         topMargin = dimen(R.dimen.statusbar_height)
                     }
 
