@@ -26,7 +26,6 @@ import android.view.WindowManager
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.detail.ArtistActivityModule
-import com.antonioleiva.bandhookkotlin.ui.activity.AnkoBaseActivity
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.ArtistDetailPagerAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
@@ -43,7 +42,7 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
-class ArtistActivity : AnkoBaseActivity<ArtistLayout>(), ArtistView, AlbumsFragmentContainer {
+class ArtistActivity : BaseActivity<ArtistLayout>(), ArtistView, AlbumsFragmentContainer {
 
     override val ui = ArtistLayout()
 

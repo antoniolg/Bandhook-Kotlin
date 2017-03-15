@@ -27,7 +27,7 @@ import android.view.WindowManager
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.album.AlbumActivityModule
-import com.antonioleiva.bandhookkotlin.ui.activity.AnkoBaseActivity
+import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.TracksAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
 import com.antonioleiva.bandhookkotlin.ui.entity.TrackDetail
@@ -41,7 +41,7 @@ import com.squareup.picasso.Picasso
 import org.jetbrains.anko.dimen
 import javax.inject.Inject
 
-class AlbumActivity : AnkoBaseActivity<AlbumLayout>(), AlbumView {
+class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
 
     override val ui = AlbumLayout()
 

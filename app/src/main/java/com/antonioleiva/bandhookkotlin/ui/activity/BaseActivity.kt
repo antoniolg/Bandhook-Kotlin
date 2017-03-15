@@ -18,26 +18,24 @@ package com.antonioleiva.bandhookkotlin.ui.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import com.antonioleiva.bandhookkotlin.App
-import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
-import org.jetbrains.anko.find
+import org.jetbrains.anko.setContentView
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<out UI : ActivityAnkoComponent<out AppCompatActivity>> : AppCompatActivity() {
 
     companion object {
         val IMAGE_TRANSITION_NAME = "activity_image_transition"
     }
 
-    protected abstract val layoutResource: Int
-    val toolbar: Toolbar by lazy { find<Toolbar>(R.id.toolbar) }
+    abstract val ui: UI
 
+    @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         injectDependencies(App.graph)
-        setContentView(layoutResource)
-        setSupportActionBar(toolbar)
+        (ui as ActivityAnkoComponent<AppCompatActivity>).setContentView(this)
+        setSupportActionBar(ui.toolbar)
     }
 
     abstract fun injectDependencies(applicationComponent: ApplicationComponent)

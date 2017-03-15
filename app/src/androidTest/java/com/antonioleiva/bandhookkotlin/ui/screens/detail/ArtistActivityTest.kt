@@ -16,6 +16,7 @@
 
 package com.antonioleiva.bandhookkotlin.ui.screens.detail
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.test.InstrumentationRegistry
 import android.test.ActivityInstrumentationTestCase2
@@ -59,22 +60,23 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
 
         artistActivity = activity
 
-        image = artistActivity.image
+        image = artistActivity.ui.image
         biographyFragment = artistActivity.biographyFragment
         albumsFragment = artistActivity.albumsFragment
     }
 
+    @SuppressLint("NewApi")
     fun testOnCreate() {
         // When created
         // Then
-        assertNotNull(artistActivity.image)
-        assertEquals(BaseActivity.IMAGE_TRANSITION_NAME, artistActivity.image.transitionName)
+        assertNotNull(artistActivity.ui.image)
+        assertEquals(BaseActivity.IMAGE_TRANSITION_NAME, artistActivity.ui.image.transitionName)
         assertNull(artistActivity.title)
-        assertNotNull(artistActivity.tabLayout)
-        assertNotNull(artistActivity.viewPager)
-        assertEquals(ArtistDetailPagerAdapter::class.java, artistActivity.viewPager.adapter.javaClass)
-        assertEquals(biographyFragment, (artistActivity.viewPager.adapter as ArtistDetailPagerAdapter).getItem(0))
-        assertEquals(albumsFragment, (artistActivity.viewPager.adapter as ArtistDetailPagerAdapter).getItem(1))
+        assertNotNull(artistActivity.ui.tabLayout)
+        assertNotNull(artistActivity.ui.viewPager)
+        assertEquals(ArtistDetailPagerAdapter::class.java, artistActivity.ui.viewPager.adapter.javaClass)
+        assertEquals(biographyFragment, (artistActivity.ui.viewPager.adapter as ArtistDetailPagerAdapter).getItem(0))
+        assertEquals(albumsFragment, (artistActivity.ui.viewPager.adapter as ArtistDetailPagerAdapter).getItem(1))
     }
 
     fun testViewPagerTitles() {
@@ -83,8 +85,8 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
         val desiredAlbumsTitle = instrumentation.targetContext.getString(com.antonioleiva.bandhookkotlin.R.string.albums_fragment_title)
 
         // Then
-        assertEquals(desiredBioTitle, artistActivity.viewPager.adapter.getPageTitle(0))
-        assertEquals(desiredAlbumsTitle, artistActivity.viewPager.adapter.getPageTitle(1))
+        assertEquals(desiredBioTitle, artistActivity.ui.viewPager.adapter.getPageTitle(0))
+        assertEquals(desiredAlbumsTitle, artistActivity.ui.viewPager.adapter.getPageTitle(1))
     }
 
     @UiThreadTest
@@ -137,6 +139,6 @@ class ArtistActivityTest : ActivityInstrumentationTestCase2<ArtistActivity>(Arti
         artistActivity.showAlbums(albumImageTitles)
 
         // Then
-        assertEquals(albumImageTitles, albumsFragment.adapter.items)
+        assertEquals(albumImageTitles, albumsFragment.adapter?.items)
     }
 }
