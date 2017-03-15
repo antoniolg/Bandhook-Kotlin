@@ -20,7 +20,6 @@ import android.os.Bundle
 import android.view.View
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.main.MainActivityModule
-import com.antonioleiva.bandhookkotlin.ui.activity.AnkoBaseActivity
 import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
 import com.antonioleiva.bandhookkotlin.ui.adapter.BaseAdapter
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
@@ -31,7 +30,7 @@ import com.antonioleiva.bandhookkotlin.ui.util.navigate
 import com.antonioleiva.bandhookkotlin.ui.view.MainView
 import javax.inject.Inject
 
-class MainActivity : AnkoBaseActivity<MainLayout>(), MainView {
+class MainActivity : BaseActivity<MainLayout>(), MainView {
 
     override val ui = MainLayout()
 

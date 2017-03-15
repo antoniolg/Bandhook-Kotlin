@@ -23,18 +23,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.activity.ViewAnkoComponent
 import com.antonioleiva.bandhookkotlin.ui.adapter.BaseAdapter
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
-import com.antonioleiva.bandhookkotlin.ui.custom.PaddingItemDecoration
+import com.antonioleiva.bandhookkotlin.ui.custom.AutofitRecyclerView
 import com.antonioleiva.bandhookkotlin.ui.custom.autoFitRecycler
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.fragment.AlbumsFragmentContainer
+import com.antonioleiva.bandhookkotlin.ui.screens.style
 import org.jetbrains.anko.AnkoContext
-import org.jetbrains.anko.dimen
-import org.jetbrains.anko.dip
-import org.jetbrains.anko.horizontalPadding
 
 class AlbumsFragment : Fragment() {
 
@@ -42,7 +39,7 @@ class AlbumsFragment : Fragment() {
         private set
 
     private var component: Component? = null
-    private var adapter: ImageTitleAdapter? = null
+    var adapter: ImageTitleAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         component = container?.let { Component(container) }
@@ -78,13 +75,7 @@ class AlbumsFragment : Fragment() {
         lateinit var recycler: RecyclerView
 
         override fun createView(ui: AnkoContext<ViewGroup>) = with(ui) {
-            recycler = autoFitRecycler {
-                columnWidth = dimen(R.dimen.column_width)
-                clipToPadding = false
-                scrollBarStyle = View.SCROLLBARS_OUTSIDE_OVERLAY
-                horizontalPadding = dimen(R.dimen.recycler_spacing)
-                addItemDecoration(PaddingItemDecoration(dip(2)))
-            }
+            recycler = autoFitRecycler().apply(AutofitRecyclerView::style)
             recycler
         }
     }

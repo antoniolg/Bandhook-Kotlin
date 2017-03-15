@@ -7,10 +7,12 @@ import android.support.v7.widget.Toolbar
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.activity.ActivityAnkoComponent
-import com.antonioleiva.bandhookkotlin.ui.custom.PaddingItemDecoration
+import com.antonioleiva.bandhookkotlin.ui.custom.AutofitRecyclerView
 import com.antonioleiva.bandhookkotlin.ui.custom.autoFitRecycler
-import org.jetbrains.anko.*
+import com.antonioleiva.bandhookkotlin.ui.screens.style
+import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.appcompat.v7.toolbar
+import org.jetbrains.anko.backgroundResource
 import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.coordinatorLayout
 
@@ -31,16 +33,11 @@ class MainLayout : ActivityAnkoComponent<MainActivity> {
                 }
             }.lparams(width = MATCH_PARENT)
 
-            recycler = autoFitRecycler {
-                clipToPadding = false
-                columnWidth = dimen(R.dimen.column_width)
-                padding = dip(2)
-                addItemDecoration(PaddingItemDecoration(dip(2)))
-
-            }.lparams(MATCH_PARENT, MATCH_PARENT) {
-                behavior = AppBarLayout.ScrollingViewBehavior()
-            }
-
+            recycler = autoFitRecycler()
+                    .apply(AutofitRecyclerView::style)
+                    .lparams(MATCH_PARENT, MATCH_PARENT) {
+                        behavior = AppBarLayout.ScrollingViewBehavior()
+                    }
         }
     }
 }
