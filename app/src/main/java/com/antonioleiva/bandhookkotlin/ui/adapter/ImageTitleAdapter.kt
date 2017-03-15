@@ -61,9 +61,9 @@ class ImageTitleAdapter(listener: (ImageTitle) -> Unit)
                         setTextAppearanceC(R.style.TextAppearance_AppCompat_Subhead_Inverse)
                         maxLines = 1
                         ellipsize = TextUtils.TruncateAt.END
-                    }.lparams(width = MATCH_PARENT)
+                    }.lparams(width = matchParent)
 
-                }.lparams(width = MATCH_PARENT)
+                }.lparams(width = matchParent)
 
             }
         }

@@ -12,8 +12,6 @@ import android.support.v4.view.ViewPager
 import android.support.v7.widget.Toolbar
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.activity.ActivityAnkoComponent
@@ -25,7 +23,9 @@ import org.jetbrains.anko.design.collapsingToolbarLayout
 import org.jetbrains.anko.design.coordinatorLayout
 import org.jetbrains.anko.design.tabLayout
 import org.jetbrains.anko.dip
+import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.support.v4.viewPager
+import org.jetbrains.anko.wrapContent
 
 class ArtistLayout : ActivityAnkoComponent<ArtistActivity> {
 
@@ -51,7 +51,7 @@ class ArtistLayout : ActivityAnkoComponent<ArtistActivity> {
 
                     image = squareImageView {
                         fitsSystemWindows = true
-                    }.lparamsC(MATCH_PARENT) {
+                    }.lparamsC(matchParent) {
                         collapseMode = COLLAPSE_MODE_PARALLAX
                     }
 
@@ -59,21 +59,21 @@ class ArtistLayout : ActivityAnkoComponent<ArtistActivity> {
                         popupTheme = R.style.ThemeOverlay_AppCompat_Light
                         gravity = Gravity.TOP
                         titleMarginTop = dip(16)
-                    }.lparamsC(width = MATCH_PARENT, height = dip(88)) {
+                    }.lparamsC(width = matchParent, height = dip(88)) {
                         collapseMode = COLLAPSE_MODE_PIN
                     }
 
                     tabLayout = tabLayout {
                         setSelectedTabIndicatorColor(Color.WHITE)
-                    }.lparamsC(width = MATCH_PARENT) {
+                    }.lparamsC(width = matchParent) {
                         gravity = Gravity.BOTTOM
                     }
 
-                }.lparams(width = MATCH_PARENT) {
+                }.lparams(width = matchParent) {
                     scrollFlags = SCROLL_FLAG_SCROLL or SCROLL_FLAG_EXIT_UNTIL_COLLAPSED
                 }
 
-            }.lparams(width = MATCH_PARENT)
+            }.lparams(width = matchParent)
 
             viewPager = viewPager {
                 id = View.generateViewId()
@@ -88,7 +88,7 @@ class ArtistLayout : ActivityAnkoComponent<ArtistActivity> {
  * For some reason, the regular lparams is returning FrameLayout LayoutParams, instead of the ones
  * for CollapsingToolbarLayout. This fixes it.
  */
-private fun <T : android.view.View> T.lparamsC(width: kotlin.Int = WRAP_CONTENT, height: kotlin.Int = WRAP_CONTENT, init: CollapsingToolbarLayout.LayoutParams.() -> kotlin.Unit = {}): T {
+private fun <T : android.view.View> T.lparamsC(width: kotlin.Int = wrapContent, height: kotlin.Int = wrapContent, init: CollapsingToolbarLayout.LayoutParams.() -> kotlin.Unit = {}): T {
     val params = CollapsingToolbarLayout.LayoutParams(width, height)
     params.init()
     layoutParams = params
