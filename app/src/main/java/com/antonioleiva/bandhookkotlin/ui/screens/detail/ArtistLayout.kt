@@ -39,7 +39,6 @@ class ArtistLayout : ActivityAnkoComponent<ArtistActivity> {
     override fun createView(ui: AnkoContext<ArtistActivity>) = with(ui) {
 
         coordinatorLayout {
-            fitsSystemWindows = true
 
             appBarLayout(R.style.ThemeOverlay_AppCompat_Dark_ActionBar) {
                 fitsSystemWindows = true
