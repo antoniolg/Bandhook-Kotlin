@@ -18,4 +18,6 @@
     <dimen name="detail_toolbar_height">300dp</dimen>
     <dimen name="statusbar_height">24dp</dimen>
     <dimen name="album_breaking_edge_height">-110dp</dimen>
+    <dimen name="column_width">180dp</dimen>
+    <dimen name="recycler_spacing">2dp</dimen>
 </resources>

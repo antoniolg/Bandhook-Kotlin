@@ -3,7 +3,6 @@ package com.antonioleiva.bandhookkotlin.di.subcomponent.main
 import com.antonioleiva.bandhookkotlin.di.ActivityModule
 import com.antonioleiva.bandhookkotlin.di.scope.ActivityScope
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetRecommendedArtistsInteractor
-import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
 import com.antonioleiva.bandhookkotlin.ui.screens.main.MainActivity
@@ -25,8 +24,5 @@ class MainActivityModule(activity: MainActivity) : ActivityModule(activity) {
                              recommendedArtistsInteractor: GetRecommendedArtistsInteractor,
                              imageMapper: ImageTitleDataMapper)
             = MainPresenter(view, recommendedArtistsInteractor, imageMapper)
-
-    @Provides @ActivityScope
-    fun provideAdapter() = ImageTitleAdapter()
 
 }

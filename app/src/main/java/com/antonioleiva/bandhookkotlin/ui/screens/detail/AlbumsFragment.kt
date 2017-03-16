@@ -23,39 +23,37 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.antonioleiva.bandhookkotlin.R
+import com.antonioleiva.bandhookkotlin.ui.activity.ViewAnkoComponent
+import com.antonioleiva.bandhookkotlin.ui.adapter.BaseAdapter
 import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
+import com.antonioleiva.bandhookkotlin.ui.custom.AutofitRecyclerView
+import com.antonioleiva.bandhookkotlin.ui.custom.autoFitRecycler
+import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
 import com.antonioleiva.bandhookkotlin.ui.fragment.AlbumsFragmentContainer
+import com.antonioleiva.bandhookkotlin.ui.screens.style
+import org.jetbrains.anko.AnkoContext
 
 class AlbumsFragment : Fragment() {
-
-    lateinit var adapter: ImageTitleAdapter
-        private set
-    lateinit var recycler: RecyclerView
-        private set
 
     var albumsFragmentContainer: AlbumsFragmentContainer? = null
         private set
 
+    private var component: Component? = null
+    var adapter: ImageTitleAdapter? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        val view = inflater.inflate(R.layout.fragment_albums, container, false)
-
-        if (view != null) {
-            setUpRecyclerView(view)
-            return view
-        }
-        return super.onCreateView(inflater, container, savedInstanceState)
+        component = container?.let { Component(container) }
+        return component?.inflate()?.setup()
     }
 
-    private fun setUpRecyclerView(view: View) {
-        recycler = view.findViewById(R.id.albums_view) as RecyclerView
-        adapter = ImageTitleAdapter()
-        recycler.adapter = adapter
-
-        adapter.onItemClickListener = {
-            albumsFragmentContainer?.getAlbumsPresenter()?.onAlbumClicked(it)
+    private fun View.setup(): View {
+        component?.recycler?.let {
+            adapter = ImageTitleAdapter { item ->
+                albumsFragmentContainer?.getAlbumsPresenter()?.onAlbumClicked(item)
+            }
+            it.adapter = adapter
         }
+        return this
     }
 
     override fun onAttach(context: Context?) {
@@ -70,5 +68,27 @@ class AlbumsFragment : Fragment() {
         super.onDetach()
 
         albumsFragmentContainer = null
+    }
+
+    private class Component(override val view: ViewGroup) : ViewAnkoComponent<ViewGroup> {
+
+        lateinit var recycler: RecyclerView
+
+        override fun createView(ui: AnkoContext<ViewGroup>) = with(ui) {
+            recycler = autoFitRecycler().apply(AutofitRecyclerView::style)
+            recycler
+        }
+    }
+
+    fun findViewByItemId(id: String): View? {
+        return adapter?.findPositionById(id)?.let {
+            val holder = component?.recycler?.findViewHolderForLayoutPosition(it)
+                    as BaseAdapter.BaseViewHolder<ImageTitleAdapter.Component>
+            return holder.ui.image
+        }
+    }
+
+    fun showAlbums(albums: List<ImageTitle>) {
+        adapter?.items = albums
     }
 }

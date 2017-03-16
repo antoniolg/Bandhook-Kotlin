@@ -16,61 +16,68 @@
 
 package com.antonioleiva.bandhookkotlin.ui.adapter
 
-import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.RecyclerView
-import android.view.View
+import android.view.Gravity
 import android.view.ViewGroup
 import android.widget.TextView
-import com.antonioleiva.bandhookkotlin.R
+import com.antonioleiva.bandhookkotlin.ui.activity.ViewAnkoComponent
 import com.antonioleiva.bandhookkotlin.ui.entity.TrackDetail
-import com.antonioleiva.bandhookkotlin.ui.util.inflate
-import org.jetbrains.anko.find
-import kotlin.properties.Delegates
+import org.jetbrains.anko.*
 
-open class TracksAdapter : RecyclerView.Adapter<TracksAdapter.ViewHolder>() {
+class TracksAdapter : BaseAdapter<TrackDetail, TracksAdapter.Component>() {
 
-    var items: List<TrackDetail> by Delegates.observable(emptyList())
-                    { _, _, _ -> notifyDataSetChange() }
+    private val timeStampPattern = "%d:%02d"
+    private val timeSystemBaseNumber = 60
 
-    override fun getItemCount(): Int {
-        return items.count()
+    override val bind: Component.(item: TrackDetail) -> Unit = { item ->
+        number.text = item.number.toString()
+        name.text = item.name
+        length.text = secondsToTrackDurationString(item)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setItem(items[position], position)
+    private fun secondsToTrackDurationString(item: TrackDetail): String {
+        val fullMinutes = item.duration / timeSystemBaseNumber
+        val restSeconds = item.duration % timeSystemBaseNumber
+        val trackLength = String.format(timeStampPattern, fullMinutes, restSeconds)
+        return trackLength
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder? {
-        val v = parent.inflate(R.layout.track_item_view)
-        return TracksAdapter.ViewHolder(v)
-    }
+    override fun onCreateComponent(parent: RecyclerView) = Component(parent)
 
-    @VisibleForTesting
-    open fun notifyDataSetChange() {
-        notifyDataSetChanged()
-    }
+    class Component(override val view: RecyclerView) : ViewAnkoComponent<RecyclerView> {
 
-    open class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        lateinit var number: TextView
+        lateinit var name: TextView
+        lateinit var length: TextView
 
-        private val timeStampPattern = "%d:%02d"
-        private val timeSystemBaseNumber = 60
+        override fun createView(ui: AnkoContext<RecyclerView>) = with(ui) {
 
-        private val trackNumberTextView: TextView = view.find(R.id.track_number)
-        private val trackNameTextView: TextView = view.find(R.id.track_name)
-        private val trackLengthTextView: TextView = view.find(R.id.track_length)
+            linearLayout {
 
-        open fun setItem(item: TrackDetail, position: Int) {
+                lparams(width = matchParent)
 
-            trackNumberTextView.text = "${position + 1}"
-            trackNameTextView.text = item.name
-            trackLengthTextView.text = secondsToTrackDurationString(item)
-        }
+                padding = dip(16)
+                weightSum = 1f
 
-        private fun secondsToTrackDurationString(item: TrackDetail): String {
-            val fullMinutes = item.duration / timeSystemBaseNumber
-            val restSeconds = item.duration % timeSystemBaseNumber
-            val trackLength = String.format(timeStampPattern, fullMinutes, restSeconds)
-            return trackLength
+                number = textView {
+                    minEms = 2
+                    gravity = Gravity.END
+                }
+
+                name = textView{
+                    horizontalPadding = dip(16)
+                }.lparams(width = 0){
+                    weight = 1f
+                }
+
+                length = textView()
+
+            }.applyRecursively { view ->
+                when (view) {
+                    is TextView -> view.textSize = 16f
+                }
+            }
+
         }
     }
 }

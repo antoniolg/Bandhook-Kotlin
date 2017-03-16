@@ -18,23 +18,13 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#ef6c00</item> 
-        <item name="colorPrimaryDark">#e65100</item> 
-        <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="colorPrimary">@color/primary</item> 
+        <item name="colorPrimaryDark">@color/primary_dark</item> 
+        <item name="colorAccent">@color/accent</item>
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
-    </style>
-
-    <style name="GridTextAppearance">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:background">@color/cardview_dark_background</item>
-        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Subhead.Inverse</item>
-        <item name="android:maxLines">1</item>
-        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="NeutralColorEdge">

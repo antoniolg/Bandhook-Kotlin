@@ -16,6 +16,7 @@
 
 package com.antonioleiva.bandhookkotlin.ui.screens.album
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.test.InstrumentationRegistry
 import android.test.ActivityInstrumentationTestCase2
@@ -58,23 +59,24 @@ class AlbumActivityTest : ActivityInstrumentationTestCase2<AlbumActivity>(AlbumA
 
         albumActivity = activity
 
-        image = albumActivity.image
+        image = albumActivity.ui.image
     }
 
+    @SuppressLint("NewApi")
     fun testOnCreate() {
         // When created
         // Then
-        assertNotNull(albumActivity.image)
-        assertNotNull(albumActivity.trackList)
-        assertNotNull(albumActivity.listCard)
+        assertNotNull(albumActivity.ui.image)
+        assertNotNull(albumActivity.ui.trackList)
+        assertNotNull(albumActivity.ui.listCard)
         assertNotNull(albumActivity.albumListBreakingEdgeHeight)
         assertNotNull(albumActivity.trackDataMapper)
         assertNotNull(albumActivity.presenter)
         assertNotNull(albumActivity.adapter)
         assertNull(albumActivity.title)
-        assertEquals(BaseActivity.IMAGE_TRANSITION_NAME, albumActivity.image.transitionName)
-        assertEquals(albumActivity.adapter, albumActivity.trackList.adapter)
-        assertEquals(-albumActivity.albumListBreakingEdgeHeight, albumActivity.listCard.translationY)
+        assertEquals(BaseActivity.IMAGE_TRANSITION_NAME, albumActivity.ui.image.transitionName)
+        assertEquals(albumActivity.adapter, albumActivity.ui.trackList.adapter)
+        assertEquals(-albumActivity.albumListBreakingEdgeHeight, albumActivity.ui.listCard.translationY)
     }
 
     @UiThreadTest

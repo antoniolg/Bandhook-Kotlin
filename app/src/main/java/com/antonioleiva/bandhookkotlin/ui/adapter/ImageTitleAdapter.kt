@@ -17,46 +17,55 @@
 package com.antonioleiva.bandhookkotlin.ui.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.view.View
-import android.view.ViewGroup
+import android.text.TextUtils
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
 import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.R
+import com.antonioleiva.bandhookkotlin.ui.activity.ViewAnkoComponent
+import com.antonioleiva.bandhookkotlin.ui.custom.squareImageView
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
-import com.antonioleiva.bandhookkotlin.ui.util.inflate
-import com.antonioleiva.bandhookkotlin.ui.util.singleClick
-import com.squareup.picasso.Picasso
-import org.jetbrains.anko.find
-import kotlin.properties.Delegates
+import com.antonioleiva.bandhookkotlin.ui.util.loadUrl
+import com.antonioleiva.bandhookkotlin.ui.util.setTextAppearanceC
+import org.jetbrains.anko.*
 
-class ImageTitleAdapter : RecyclerView.Adapter<ImageTitleAdapter.ViewHolder>() {
+class ImageTitleAdapter(listener: (ImageTitle) -> Unit)
+    : BaseAdapter<ImageTitle, ImageTitleAdapter.Component>(listener) {
 
-    var items: List<ImageTitle> by Delegates.observable(emptyList()) { _, _, _ -> notifyDataSetChanged() }
-
-    var onItemClickListener: ((ImageTitle) -> Unit)? = null
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = parent.inflate(R.layout.item_view)
-        return ViewHolder(v, onItemClickListener)
+    override val bind: Component.(item: ImageTitle) -> Unit = { item ->
+        title.text = item.name
+        item.url?.let { image.loadUrl(it) }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setItem(items[position])
-    }
+    override fun onCreateComponent(parent: RecyclerView) = Component(parent)
 
-    override fun getItemCount() = items.size
+    fun findPositionById(id: String): Int = items.withIndex().first { it.value.id == id }.index
 
-    fun findPositionById(id: String): Int = items.withIndex().first({ it.value.id == id }).index
+    class Component(override val view: RecyclerView) : ViewAnkoComponent<RecyclerView> {
 
-    class ViewHolder(view: View, var onItemClickListener: ((ImageTitle) -> Unit)?) : RecyclerView.ViewHolder(view) {
+        lateinit var title: TextView
+        lateinit var image: ImageView
 
-        private val title: TextView = view.find(R.id.title)
-        private val image: ImageView = view.find(R.id.image)
+        override fun createView(ui: AnkoContext<RecyclerView>) = with(ui) {
+            frameLayout {
 
-        fun setItem(item: ImageTitle) {
-            itemView?.singleClick { onItemClickListener?.invoke(item) }
-            title.text = item.name
-            Picasso.with(itemView.context).load(item.url).centerCrop().fit().into(image)
+                verticalLayout {
+
+                    image = squareImageView {
+                        scaleType = ImageView.ScaleType.CENTER_CROP
+                        backgroundResource = R.color.cardview_dark_background
+                    }
+                    title = textView {
+                        padding = dip(16)
+                        backgroundResource = R.color.cardview_dark_background
+                        setTextAppearanceC(R.style.TextAppearance_AppCompat_Subhead_Inverse)
+                        maxLines = 1
+                        ellipsize = TextUtils.TruncateAt.END
+                    }.lparams(width = matchParent)
+
+                }.lparams(width = matchParent)
+
+            }
         }
     }
 }

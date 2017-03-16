@@ -16,17 +16,13 @@
 
 package com.antonioleiva.bandhookkotlin.ui.screens.detail
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.support.annotation.VisibleForTesting
-import android.support.design.widget.CollapsingToolbarLayout
-import android.support.design.widget.TabLayout
-import android.support.v4.view.ViewPager
 import android.support.v7.graphics.Palette
 import android.view.MenuItem
-import android.view.View
 import android.view.WindowManager
-import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.detail.ArtistActivityModule
@@ -46,16 +42,11 @@ import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.ArtistView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import org.jetbrains.anko.find
 import javax.inject.Inject
 
-class ArtistActivity : BaseActivity(), ArtistView, AlbumsFragmentContainer {
+class ArtistActivity : BaseActivity<ArtistLayout>(), ArtistView, AlbumsFragmentContainer {
 
-    override val layoutResource = R.layout.activity_artist
-    val image by lazy { find<ImageView>(R.id.collapse_image) }
-    val collapsingToolbarLayout by lazy { find<CollapsingToolbarLayout>(R.id.collapse_toolbar) }
-    val viewPager by lazy { find<ViewPager>(R.id.viewpager) }
-    val tabLayout by lazy { find<TabLayout>(R.id.tabs) }
+    override val ui = ArtistLayout()
 
     @Inject @VisibleForTesting
     lateinit var presenter: ArtistPresenter
@@ -83,9 +74,10 @@ class ArtistActivity : BaseActivity(), ArtistView, AlbumsFragmentContainer {
                 .injectTo(this)
     }
 
+    @SuppressLint("NewApi")
     private fun setUpTransition() {
         supportPostponeEnterTransition()
-        supportsLollipop { image.transitionName = IMAGE_TRANSITION_NAME }
+        supportsLollipop { ui.image.transitionName = IMAGE_TRANSITION_NAME }
     }
 
     private fun setUpTopBar() {
@@ -94,14 +86,14 @@ class ArtistActivity : BaseActivity(), ArtistView, AlbumsFragmentContainer {
     }
 
     private fun setUpTabLayout() {
-        tabLayout.setupWithViewPager(viewPager)
+        ui.tabLayout.setupWithViewPager(ui.viewPager)
     }
 
     private fun setUpViewPager() {
         val artistDetailPagerAdapter = ArtistDetailPagerAdapter(supportFragmentManager)
         artistDetailPagerAdapter.addFragment(biographyFragment, resources.getString(R.string.bio_fragment_title))
         artistDetailPagerAdapter.addFragment(albumsFragment, resources.getString(R.string.albums_fragment_title))
-        viewPager.adapter = artistDetailPagerAdapter
+        ui.viewPager.adapter = artistDetailPagerAdapter
     }
 
     override fun onResume() {
@@ -116,7 +108,7 @@ class ArtistActivity : BaseActivity(), ArtistView, AlbumsFragmentContainer {
     }
 
     override fun showArtist(artistDetail: ArtistDetail) = runOnUiThread {
-        picasso.load(artistDetail.url).fit().centerCrop().into(image, object : Callback.EmptyCallback() {
+        picasso.load(artistDetail.url).fit().centerCrop().into(ui.image, object : Callback.EmptyCallback() {
             override fun onSuccess() {
                 makeStatusBarTransparent()
                 supportStartPostponedEnterTransition()
@@ -145,7 +137,7 @@ class ArtistActivity : BaseActivity(), ArtistView, AlbumsFragmentContainer {
     }
 
     override fun showAlbums(albums: List<ImageTitle>) {
-        albumsFragment.adapter.items = albums
+        albumsFragment.showAlbums(albums)
     }
 
     private fun setActionBarTitle(title: String) {
@@ -160,13 +152,13 @@ class ArtistActivity : BaseActivity(), ArtistView, AlbumsFragmentContainer {
     }
 
     private fun setActionBarPalette() {
-        val drawable = image.drawable as BitmapDrawable?
+        val drawable = ui.image.drawable as BitmapDrawable?
         val bitmap = drawable?.bitmap
         if (bitmap != null) {
             Palette.from(bitmap).generate { palette ->
                 val darkVibrantColor = palette.getDarkVibrantColor(R.attr.colorPrimary)
-                collapsingToolbarLayout.setContentScrimColor(darkVibrantColor)
-                collapsingToolbarLayout.setStatusBarScrimColor(darkVibrantColor)
+                ui.collapsingToolbarLayout.setContentScrimColor(darkVibrantColor)
+                ui.collapsingToolbarLayout.setStatusBarScrimColor(darkVibrantColor)
             }
         }
     }
@@ -180,12 +172,8 @@ class ArtistActivity : BaseActivity(), ArtistView, AlbumsFragmentContainer {
     }
 
     override fun navigateToAlbum(albumId: String) {
-        navigate<AlbumActivity>(albumId, findItemById(albumId), BaseActivity.IMAGE_TRANSITION_NAME)
-    }
-
-    private fun findItemById(id: String): View? {
-        val pos = albumsFragment.adapter.findPositionById(id)
-        return albumsFragment.recycler.layoutManager.findViewByPosition(pos).findViewById(R.id.image)
+        val view = albumsFragment.findViewByItemId(albumId)
+        navigate<AlbumActivity>(albumId, view, BaseActivity.IMAGE_TRANSITION_NAME)
     }
 
     override fun getAlbumsPresenter(): AlbumsPresenter {

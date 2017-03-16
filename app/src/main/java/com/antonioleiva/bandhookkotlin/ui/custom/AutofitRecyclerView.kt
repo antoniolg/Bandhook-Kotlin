@@ -20,6 +20,8 @@ import android.content.Context
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
+import android.view.ViewManager
+import org.jetbrains.anko.custom.ankoView
 import kotlin.properties.Delegates
 
 /**
@@ -31,7 +33,7 @@ import kotlin.properties.Delegates
 class AutofitRecyclerView : RecyclerView {
 
     private var manager: GridLayoutManager by Delegates.notNull()
-    private var columnWidth = -1
+    var columnWidth = -1
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -65,3 +67,6 @@ class AutofitRecyclerView : RecyclerView {
         }
     }
 }
+
+fun ViewManager.autoFitRecycler(theme: Int = 0) = autoFitRecycler(theme) {}
+inline fun ViewManager.autoFitRecycler(theme: Int = 0, init: AutofitRecyclerView.() -> Unit) = ankoView(::AutofitRecyclerView, theme, init)
