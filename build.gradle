@@ -15,7 +15,7 @@
  */
 
 buildscript {
-    ext.kotlin_version = '1.1.0'
+    ext.kotlin_version = '1.1.1'
     repositories {
         jcenter()
     }
@@ -39,7 +39,7 @@ allprojects {
         androidApplicationId = "com.antonioleiva.bandhookkotlin"
         androidVersionCode = 1
         androidVersionName = "0.1"
-        supportVersion = "25.2.0"
+        supportVersion = "25.3.0"
         ankoVersion= "0.9.1a"
         daggerVersion = "2.6"
         retrofitVersion = "2.2.0"
