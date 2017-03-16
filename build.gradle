@@ -33,6 +33,7 @@ buildscript {
         javaVersion = '1.7'
         junitVersion = '4.12'
         kotlinVersion = '1.1.1'
+        kotlinxCollectionsImmutableVersion = '0.1'
         kotlinxCoroutinesVersion = '0.13'
         kovenantVersion = '3.3.0'
         picassoVersion = '2.5.2'
@@ -59,6 +60,7 @@ allprojects {
     repositories {
         jcenter()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://dl.bintray.com/kotlin/kotlinx' }
     }
 }
 
