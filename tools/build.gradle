@@ -3,15 +3,10 @@ apply plugin: 'kotlin'
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
+    compile "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinxCoroutinesVersion"
     compile "nl.komponents.kovenant:kovenant-functional:$kovenantVersion"
     compile "org.funktionale:funktionale-all:$funktionaleVersion"
     testCompile "junit:junit:$junitVersion"
-}
-
-kotlin {
-    experimental {
-        coroutines 'enable'
-    }
 }
 
 sourceCompatibility = javaVersion
