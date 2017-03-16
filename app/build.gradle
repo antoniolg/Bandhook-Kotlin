@@ -64,7 +64,7 @@ kotlin {
 
 dependencies {
     compile project(':tools')
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlinVersion"
     compile "nl.komponents.kovenant:kovenant-functional:$kovenantVersion"
     compile "org.funktionale:funktionale-all:$funktionaleVersion"
     compile "com.android.support:appcompat-v7:$supportVersion"
