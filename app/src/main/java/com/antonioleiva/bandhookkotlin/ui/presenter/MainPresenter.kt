@@ -26,7 +26,7 @@ class MainPresenter(
         val recommendedArtistsInteractor: GetRecommendedArtistsInteractor,
         val mapper: ImageTitleDataMapper) : Presenter<MainView> {
 
-    override fun onResume() {
+    suspend override fun onResume() {
         super.onResume()
         recommendedArtistsInteractor.getRecommendedArtists().onComplete(
                 onSuccess = { view.showArtists(mapper.transformArtists(it)) },

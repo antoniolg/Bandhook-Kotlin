@@ -39,6 +39,8 @@ import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import org.jetbrains.anko.dimen
 import javax.inject.Inject
 
@@ -100,13 +102,15 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
 
     override fun onResume() {
         super.onResume()
-        presenter.onResume()
-        presenter.init(getNavigationId())
-    }
 
-    override fun onPause() {
-        super.onPause()
-        presenter.onPause()
+        launch(job!! + UI) {
+            try {
+                presenter.onResume()
+                presenter.init(getNavigationId())
+            } finally {
+                presenter.onPause()
+            }
+        }
     }
 
     override fun showAlbum(albumDetail: AlbumDetail) = runOnUiThread {

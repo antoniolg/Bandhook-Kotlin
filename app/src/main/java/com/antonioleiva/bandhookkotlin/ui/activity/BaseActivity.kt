@@ -22,7 +22,7 @@ import com.antonioleiva.bandhookkotlin.App
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import org.jetbrains.anko.setContentView
 
-abstract class BaseActivity<out UI : ActivityAnkoComponent<out AppCompatActivity>> : AppCompatActivity() {
+abstract class BaseActivity<out UI : ActivityAnkoComponent<out AppCompatActivity>> : CoroutineActivity() {
 
     companion object {
         val IMAGE_TRANSITION_NAME = "activity_image_transition"

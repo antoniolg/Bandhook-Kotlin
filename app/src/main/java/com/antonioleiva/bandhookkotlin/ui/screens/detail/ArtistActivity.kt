@@ -42,6 +42,8 @@ import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
 import com.antonioleiva.bandhookkotlin.ui.view.ArtistView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.launch
 import javax.inject.Inject
 
 class ArtistActivity : BaseActivity<ArtistLayout>(), ArtistView, AlbumsFragmentContainer {
@@ -98,13 +100,15 @@ class ArtistActivity : BaseActivity<ArtistLayout>(), ArtistView, AlbumsFragmentC
 
     override fun onResume() {
         super.onResume()
-        presenter.onResume()
-        presenter.init(getNavigationId())
-    }
 
-    override fun onPause() {
-        super.onPause()
-        presenter.onPause()
+        launch(job!! + UI) {
+            try {
+                presenter.onResume()
+                presenter.init(getNavigationId())
+            } finally {
+                presenter.onPause()
+            }
+        }
     }
 
     override fun showArtist(artistDetail: ArtistDetail) = runOnUiThread {

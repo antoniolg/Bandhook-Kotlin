@@ -29,6 +29,10 @@ import com.antonioleiva.bandhookkotlin.ui.screens.detail.ArtistActivity
 import com.antonioleiva.bandhookkotlin.ui.util.navigate
 import com.antonioleiva.bandhookkotlin.ui.view.MainView
 import com.github.finecinnamon.NonEmptyList
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+import org.jetbrains.anko.toast
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainLayout>(), MainView {
@@ -56,12 +60,23 @@ class MainActivity : BaseActivity<MainLayout>(), MainView {
 
     override fun onResume() {
         super.onResume()
-        presenter.onResume()
-    }
 
-    override fun onPause() {
-        super.onPause()
-        presenter.onPause()
+        launch(job!! + UI) {
+            try {
+                presenter.onResume()
+
+                // TODO: Delete the delay and the toasts. They are only included now to illustrate
+                // that the main thread is not blocked due to pending tasks and that cleanup occurs
+                // automatically in both of the following scenarios
+                // 1) This block of code ends
+                // 2) The activity is suspended before 1) occurs (try rotating the phone)
+                delay(10000)
+                toast("All tasks finished")
+            } finally {
+                toast("Cleaning up")
+                presenter.onPause()
+            }
+        }
     }
 
     override fun showArtists(artists: NonEmptyList<ImageTitle>) = runOnUiThread {

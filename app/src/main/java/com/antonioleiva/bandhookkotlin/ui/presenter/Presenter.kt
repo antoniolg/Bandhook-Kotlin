@@ -20,9 +20,9 @@ interface Presenter<out T> {
 
     val view: T
 
-    fun onResume() {
+    suspend fun onResume() {
     }
 
-    fun onPause() {
+    suspend fun onPause() {
     }
 }
