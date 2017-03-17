@@ -16,10 +16,10 @@
 
 package com.antonioleiva.bandhookkotlin.domain.interactor
 
-import com.finecinnamon.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
+import com.github.finecinnamon.Result
 
 class GetAlbumDetailInteractor(val albumRepository: AlbumRepository) {
 

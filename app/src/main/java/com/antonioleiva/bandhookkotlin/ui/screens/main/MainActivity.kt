@@ -28,7 +28,7 @@ import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
 import com.antonioleiva.bandhookkotlin.ui.screens.detail.ArtistActivity
 import com.antonioleiva.bandhookkotlin.ui.util.navigate
 import com.antonioleiva.bandhookkotlin.ui.view.MainView
-import com.finecinnamon.NonEmptyList
+import com.github.finecinnamon.NonEmptyList
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainLayout>(), MainView {

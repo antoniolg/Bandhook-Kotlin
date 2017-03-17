@@ -4,8 +4,6 @@ import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
-import android.view.View.generateViewId
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.activity.ActivityAnkoComponent

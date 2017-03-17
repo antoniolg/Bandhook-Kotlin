@@ -1,6 +1,6 @@
 package com.antonioleiva.bandhookkotlin.data
 
-import com.finecinnamon.Result
+import com.github.finecinnamon.Result
 import org.funktionale.either.Disjunction
 import retrofit2.Call
 

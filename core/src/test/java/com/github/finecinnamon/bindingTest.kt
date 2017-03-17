@@ -1,6 +1,6 @@
 @file:Suppress("EXPERIMENTAL_FEATURE_WARNING")
 
-package com.finecinnamon
+package com.github.finecinnamon
 
 import org.junit.Test
 
@@ -8,7 +8,7 @@ class bindingTest {
 
     @Test
     fun bindPure() {
-        bind<Exception, Int> {
+        binding<Exception, Int> {
             val one = it binds Result.pure<Exception, Int>(1)
             it returns one
         }
@@ -16,7 +16,7 @@ class bindingTest {
 
     @Test
     fun bindAsync() {
-        bind<Exception, Int> {
+        binding<Exception, Int> {
             val one = it binds Result.async {
                 3 + 2
             }
@@ -26,7 +26,7 @@ class bindingTest {
 
     @Test
     fun bindAp() {
-        bind<Exception, Int> {
+        binding<Exception, Int> {
             val one = it binds Result.ap(Result.pure<Exception, (Int) -> Int>({ it }), Result.pure(1))
             it returns one
         }
@@ -34,7 +34,7 @@ class bindingTest {
 
     @Test
     fun bindDisjunctionLeft() {
-        bind<Exception, Int> {
+        binding<Exception, Int> {
             val one = it binds Result.fromDisjunction(1.left()).swap()
             it returns one
         }
@@ -42,7 +42,7 @@ class bindingTest {
 
     @Test
     fun bindAsyncDisjunctionLeft() {
-        bind<Exception, Int> {
+        binding<Exception, Int> {
             val one = it binds Result.asyncOf {
                 Thread.sleep(100)
                 1.left()
@@ -53,7 +53,7 @@ class bindingTest {
 
     @Test
     fun bindDisjunctionRight() {
-        bind<Exception, Int> {
+        binding<Exception, Int> {
             val one = it binds Result.fromDisjunction(1.right())
             it returns one
         }
@@ -61,7 +61,7 @@ class bindingTest {
 
     @Test
     fun bindAsyncDisjunctionRight() {
-        bind<Exception, Int> {
+        binding<Exception, Int> {
             val one = it binds Result.asyncOf {
                 Thread.sleep(100)
                 1.right()

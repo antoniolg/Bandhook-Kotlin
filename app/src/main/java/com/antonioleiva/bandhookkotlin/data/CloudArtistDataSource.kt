@@ -16,16 +16,16 @@
 
 package com.antonioleiva.bandhookkotlin.data
 
-import com.finecinnamon.NonEmptyList
-import com.finecinnamon.Result
 import com.antonioleiva.bandhookkotlin.data.lastfm.LastFmService
 import com.antonioleiva.bandhookkotlin.data.mapper.ArtistMapper
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.RecomendationsNotFound
 import com.antonioleiva.bandhookkotlin.repository.datasource.ArtistDataSource
-import com.finecinnamon.left
-import com.finecinnamon.right
+import com.github.finecinnamon.NonEmptyList
+import com.github.finecinnamon.Result
+import com.github.finecinnamon.left
+import com.github.finecinnamon.right
 
 class CloudArtistDataSource(val language: String, val lastFmService: LastFmService) : ArtistDataSource {
 

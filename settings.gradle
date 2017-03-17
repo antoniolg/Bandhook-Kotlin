@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-include ':tools', ':app'
+include ':core', ':app'

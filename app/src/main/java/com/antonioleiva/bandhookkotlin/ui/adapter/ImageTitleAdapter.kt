@@ -18,7 +18,6 @@ package com.antonioleiva.bandhookkotlin.ui.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
 import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.R

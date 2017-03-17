@@ -19,7 +19,7 @@ package com.antonioleiva.bandhookkotlin.repository.datasource
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.TopAlbumsNotFound
-import com.finecinnamon.Result
+import com.github.finecinnamon.Result
 
 interface AlbumDataSource {
 

@@ -16,10 +16,10 @@
 
 package com.antonioleiva.bandhookkotlin.domain.repository
 
-import com.finecinnamon.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.TopAlbumsNotFound
+import com.github.finecinnamon.Result
 
 interface AlbumRepository {
     fun getAlbum(id: String): Result<AlbumNotFound, Album>

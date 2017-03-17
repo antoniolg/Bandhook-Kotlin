@@ -21,11 +21,11 @@ import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.RecomendationsNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 import com.antonioleiva.bandhookkotlin.repository.datasource.ArtistDataSource
-import com.finecinnamon.NonEmptyList
-import com.finecinnamon.Result
-import com.finecinnamon.Result.Factory.firstSuccessIn
-import com.finecinnamon.Result.Factory.raiseError
-import com.finecinnamon.binding
+import com.github.finecinnamon.NonEmptyList
+import com.github.finecinnamon.Result
+import com.github.finecinnamon.Result.Factory.firstSuccessIn
+import com.github.finecinnamon.Result.Factory.raiseError
+import com.github.finecinnamon.binding
 
 class ArtistRepositoryImpl(val dataSources: List<ArtistDataSource>) : ArtistRepository {
 
@@ -40,13 +40,13 @@ class ArtistRepositoryImpl(val dataSources: List<ArtistDataSource>) : ArtistRepo
             }
 
     override fun getRecommendedArtists(): Result<RecomendationsNotFound, NonEmptyList<Artist>> =
-        binding {
-            val r = bind(firstSuccessIn(
-                    fa = dataSources,
-                    acc = raiseError(RecomendationsNotFound),
-                    f = { it.requestRecommendedArtists() }
-            ))
-            yields(r)
-        }
+            binding {
+                val r = bind(firstSuccessIn(
+                        fa = dataSources,
+                        acc = raiseError(RecomendationsNotFound),
+                        f = { it.requestRecommendedArtists() }
+                ))
+                yields(r)
+            }
 
 }

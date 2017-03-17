@@ -1,8 +1,8 @@
 @file:Suppress("EXPERIMENTAL_FEATURE_WARNING")
 
-package com.finecinnamon
+package com.github.finecinnamon
 
-import com.finecinnamon.Result.Factory.pure
+import com.github.finecinnamon.Result.Factory.pure
 import nl.komponents.kovenant.Promise
 import nl.komponents.kovenant.functional.bind
 import nl.komponents.kovenant.task
@@ -11,6 +11,7 @@ import org.funktionale.collections.tail
 import org.funktionale.either.Disjunction
 import org.funktionale.option.Option
 import org.funktionale.utils.identity
+import java.io.Serializable
 import kotlin.coroutines.experimental.Continuation
 import kotlin.coroutines.experimental.EmptyCoroutineContext
 import kotlin.coroutines.experimental.RestrictsSuspension
@@ -180,7 +181,7 @@ fun <E, B> binding(c: suspend ResultContinuation<E, *>.() -> Result<E, B>): Resu
 }
 
 @RestrictsSuspension
-class ResultContinuation<E, A> : java.io.Serializable, Continuation<Result<E, A>> {
+class ResultContinuation<E, A> : Serializable, Continuation<Result<E, A>> {
 
     override val context = EmptyCoroutineContext
 
@@ -207,7 +208,7 @@ class ResultContinuation<E, A> : java.io.Serializable, Continuation<Result<E, A>
 }
 
 fun <E, A> A.result(): Result<E, A> {
-    return Result.pure(this)
+    return pure(this)
 }
 
 fun <E, A> E.raiseError(): Result<E, A> {

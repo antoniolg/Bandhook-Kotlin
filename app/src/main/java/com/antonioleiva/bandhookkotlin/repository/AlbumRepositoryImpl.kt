@@ -16,12 +16,12 @@
 
 package com.antonioleiva.bandhookkotlin.repository
 
-import com.finecinnamon.Result
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
 import com.antonioleiva.bandhookkotlin.domain.entity.BizException.TopAlbumsNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.repository.datasource.AlbumDataSource
+import com.github.finecinnamon.Result
 
 class AlbumRepositoryImpl(val dataSources: List<AlbumDataSource>) : AlbumRepository {
 

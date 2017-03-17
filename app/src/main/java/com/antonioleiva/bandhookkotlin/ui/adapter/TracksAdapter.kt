@@ -18,7 +18,6 @@ package com.antonioleiva.bandhookkotlin.ui.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
-import android.view.ViewGroup
 import android.widget.TextView
 import com.antonioleiva.bandhookkotlin.ui.activity.ViewAnkoComponent
 import com.antonioleiva.bandhookkotlin.ui.entity.TrackDetail
@@ -64,9 +63,9 @@ class TracksAdapter : BaseAdapter<TrackDetail, TracksAdapter.Component>() {
                     gravity = Gravity.END
                 }
 
-                name = textView{
+                name = textView {
                     horizontalPadding = dip(16)
-                }.lparams(width = 0){
+                }.lparams(width = 0) {
                     weight = 1f
                 }
 
