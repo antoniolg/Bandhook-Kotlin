@@ -17,14 +17,16 @@
 buildscript {
     ext {
         // Constants
+        androidApplicationId = 'com.antonioleiva.bandhookkotlin'
         androidBuildToolsVersion = '25.0.2'
+        androidCompileSdkVersion = 25
         androidGradlePluginVersion = '2.3.0'
         androidMinSdkVersion = 16
         androidTargetSdkVersion = 25
-        androidCompileSdkVersion = 25
-        androidApplicationId = 'com.antonioleiva.bandhookkotlin'
         androidVersionCode = 1
         androidVersionName = '0.1'
+        ankoVersion= '0.9.1a'
+        daggerVersion = '2.10'
         dexmakerVersion = '1.2'
         espressoVersion = '2.3-alpha'
         funktionaleVersion = '1.0.0-final'
@@ -34,15 +36,13 @@ buildscript {
         junitVersion = '4.12'
         kotlinVersion = '1.1.1'
         kotlinxCollectionsImmutableVersion = '0.1'
-        kotlinxCoroutinesVersion = '0.13'
+        kotlinxCoroutinesVersion = '0.14.1'
         kovenantVersion = '3.3.0'
-        picassoVersion = '2.5.2'
-        supportVersion = '25.3.0'
-        ankoVersion= '0.9.1a'
-        daggerVersion = '2.9'
-        mockitoVersion = '2.7.17'
+        mockitoVersion = '2.7.19'
         okhttpVersion = '3.6.0'
+        picassoVersion = '2.5.2'
         retrofitVersion = '2.2.0'
+        supportVersion = '25.3.0'
     }
 
     repositories {
@@ -60,7 +60,7 @@ allprojects {
     repositories {
         jcenter()
         maven { url 'https://jitpack.io' }
-        maven { url 'https://dl.bintray.com/kotlin/kotlinx' }
+        maven { url 'https://kotlin.bintray.com/kotlinx' }
     }
 }
 
