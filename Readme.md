@@ -1,4 +1,4 @@
-#Bandhook Kotlin
+# Bandhook Kotlin
 
 This project is a small replica of the app I developed some time ago. [Bandhook can still be found on Play Store](https://play.google.com/store/apps/details?id=com.limecreativelabs.bandhook)
 
@@ -19,7 +19,7 @@ written in [antonioleiva.com](http://antonioleiva.com) related to Kotlin for And
 
 This sample project is still in development, and could easily break or have some messy code. However, any idea or suggestion to improve it will be welcomed. Feel free to [open an issue](https://github.com/antoniolg/Bandhook-Kotlin/issues/new) if you think something could be improved.
 
-##How to use this project
+## How to use this project
 
 You can use Android Studio or Intellij to work with this repository.
 
@@ -33,7 +33,7 @@ The `Kotlin` plugin for Android Studio is also required.
 
 Many ideas on how this project is organized were taken from [Clean Contacts](https://github.com/PaNaVTEC/Clean-Contacts/blob/master/Readme.md) project, by [PaNaVTEC](https://github.com/PaNaVTEC). There are some slight differences, but reading [How to start section](https://github.com/PaNaVTEC/Clean-Contacts/blob/master/Readme.md#how-to-start-with-this-repository) will be helpful.
 
-#License
+# License
 
     Copyright 2015 Antonio Leiva
 
