@@ -16,18 +16,13 @@
 
 package com.antonioleiva.bandhookkotlin.ui.presenter
 
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
-
 interface Presenter<out T> {
 
     val view: T
-    val bus: Bus
 
-    fun onResume(){
-        bus.register(this)
+    suspend fun onResume() {
     }
 
-    fun onPause(){
-        bus.unregister(this)
+    suspend fun onPause() {
     }
 }

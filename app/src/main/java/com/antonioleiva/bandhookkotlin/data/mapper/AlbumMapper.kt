@@ -20,12 +20,14 @@ import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmAlbum
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmAlbumDetail
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
+import org.funktionale.option.Option
+import org.funktionale.option.toOption
 
 class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapper: ImageMapper = ImageMapper(),
                   val trackMapper: TrackMapper = TrackMapper()) {
 
-    fun transform(albums: List<LastFmAlbum>): List<Album> {
-        return albums.filter { albumHasQualityInfo(it) }.mapNotNull { transform(it) }
+    fun transform(albums: List<LastFmAlbum>): Option<List<Album>> {
+        return albums.filter { albumHasQualityInfo(it) }.mapNotNull { transform(it) }.toOption()
     }
 
     private fun albumHasQualityInfo(album: LastFmAlbum): Boolean {
@@ -36,19 +38,19 @@ class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapp
         return album.mbid?.isEmpty() ?: true
     }
 
-    fun transform(album: LastFmAlbumDetail) = album.mbid?.let {
-            Album(album.mbid,
-                    album.name,
-                    Artist("", album.artist),
-                    imageMapper.getMainImageUrl(album.images),
-                    trackMapper.transform(album.tracks.tracks))
+    fun transform(album: LastFmAlbumDetail): Option<Album> = album.mbid.toOption().map { mbid ->
+        Album(mbid,
+                album.name,
+                Artist("", album.artist).toOption(),
+                imageMapper.getMainImageUrl(album.images),
+                trackMapper.transform(album.tracks.tracks))
     }
 
     fun transform(album: LastFmAlbum) = album.mbid?.let {
-            Album(album.mbid,
-                    album.name,
-                    artistMapper.transform(album.artist),
-                    imageMapper.getMainImageUrl(album.images),
-                    trackMapper.transform(album.tracks?.tracks))
+        Album(album.mbid,
+                album.name,
+                artistMapper.transform(album.artist),
+                imageMapper.getMainImageUrl(album.images),
+                trackMapper.transform(album.tracks?.tracks))
     }
 }

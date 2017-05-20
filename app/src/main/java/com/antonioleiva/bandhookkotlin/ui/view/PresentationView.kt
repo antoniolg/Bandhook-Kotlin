@@ -16,4 +16,6 @@
 
 package com.antonioleiva.bandhookkotlin.ui.view
 
-interface PresentationView
+interface PresentationView {
+    fun showUnhandledException(e: Exception)
+}

@@ -32,7 +32,7 @@ import kotlin.properties.Delegates
  */
 class AutofitRecyclerView : RecyclerView {
 
-    private var manager:GridLayoutManager by Delegates.notNull()
+    private var manager: GridLayoutManager by Delegates.notNull()
     var columnWidth = -1
 
     constructor(context: Context) : super(context) {
@@ -48,7 +48,7 @@ class AutofitRecyclerView : RecyclerView {
     }
 
     fun init(context: Context, attrs: AttributeSet? = null) {
-        if (attrs != null){
+        if (attrs != null) {
             val attrsArray = intArrayOf(android.R.attr.columnWidth)
             val ta = context.obtainStyledAttributes(attrs, attrsArray)
             columnWidth = ta.getDimensionPixelSize(0, -1)

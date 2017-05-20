@@ -14,6 +14,17 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin.domain.interactor.base
+package com.antonioleiva.bandhookkotlin.repository.datasource
 
-interface Event
+import com.antonioleiva.bandhookkotlin.domain.entity.Artist
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.ArtistNotFound
+import com.github.finecinnamon.NonEmptyList
+import com.github.finecinnamon.Result
+
+interface ArtistDataSource {
+
+    fun get(id: String): Result<ArtistNotFound, Artist>
+    fun requestRecommendedArtists(): Result<BizException.RecomendationsNotFound, NonEmptyList<Artist>>
+
+}

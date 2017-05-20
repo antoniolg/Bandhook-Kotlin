@@ -17,14 +17,13 @@
 package com.antonioleiva.bandhookkotlin.ui.util
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
 import android.view.View
 
 inline fun <reified T : Activity> Activity.navigate(id: String, sharedView: View? = null,
-                                                           transitionName: String? = null) {
+                                                    transitionName: String? = null) {
     val intent = Intent(this, T::class.java)
     intent.putExtra("id", id)
 

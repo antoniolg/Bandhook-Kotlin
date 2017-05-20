@@ -16,18 +16,10 @@
 
 package com.antonioleiva.bandhookkotlin.domain.interactor
 
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.Event
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.Interactor
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistDetailEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 
-class GetArtistDetailInteractor(val artistRepository: ArtistRepository) : Interactor {
+class GetArtistDetailInteractor(val artistRepository: ArtistRepository) {
 
-    var id: String? = null
+    fun getArtist(artistId: String) = artistRepository.getArtist(artistId)
 
-    override fun invoke(): Event {
-        val id = this.id ?: throw IllegalStateException("id can´t be null")
-        val artist = artistRepository.getArtist(id)
-        return ArtistDetailEvent(artist)
-    }
 }

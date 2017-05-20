@@ -17,8 +17,9 @@
 package com.antonioleiva.bandhookkotlin.ui.view
 
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
+import com.github.finecinnamon.NonEmptyList
 
 interface MainView : PresentationView {
-    fun showArtists(artists: List<ImageTitle>)
+    fun showArtists(artists: NonEmptyList<ImageTitle>)
     fun navigateToDetail(id: String)
 }

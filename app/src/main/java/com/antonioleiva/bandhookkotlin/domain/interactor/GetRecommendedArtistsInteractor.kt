@@ -16,15 +16,15 @@
 
 package com.antonioleiva.bandhookkotlin.domain.interactor
 
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.Event
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.Interactor
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistsEvent
+import com.antonioleiva.bandhookkotlin.domain.entity.Artist
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.RecomendationsNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
+import com.github.finecinnamon.NonEmptyList
+import com.github.finecinnamon.Result
 
-class GetRecommendedArtistsInteractor(val artistRepository: ArtistRepository) : Interactor {
+class GetRecommendedArtistsInteractor(val artistRepository: ArtistRepository) {
 
-    override fun invoke(): Event {
-        val artists = artistRepository.getRecommendedArtists()
-        return ArtistsEvent(artists)
-    }
+    fun getRecommendedArtists(): Result<RecomendationsNotFound, NonEmptyList<Artist>> =
+            artistRepository.getRecommendedArtists()
+
 }

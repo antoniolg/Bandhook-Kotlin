@@ -113,4 +113,4 @@ class AlbumsFragmentTest {
     }
 }
 
-abstract class TestAlbumsFragmentContainer: Context(), AlbumsFragmentContainer
+abstract class TestAlbumsFragmentContainer : Context(), AlbumsFragmentContainer

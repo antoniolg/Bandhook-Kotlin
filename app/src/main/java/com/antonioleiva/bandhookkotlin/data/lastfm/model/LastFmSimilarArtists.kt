@@ -16,6 +16,6 @@
 
 package com.antonioleiva.bandhookkotlin.data.lastfm.model
 
-class LastFmSimilarArtists (
-    val artists: List<LastFmArtist>
+class LastFmSimilarArtists(
+        val artists: List<LastFmArtist>
 )

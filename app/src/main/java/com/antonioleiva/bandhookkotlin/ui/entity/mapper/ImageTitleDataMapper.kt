@@ -19,10 +19,11 @@ package com.antonioleiva.bandhookkotlin.ui.entity.mapper
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
+import com.github.finecinnamon.NonEmptyList
 
 class ImageTitleDataMapper() {
 
-    fun transformArtists(artists: List<Artist>): List<ImageTitle> {
+    fun transformArtists(artists: NonEmptyList<Artist>): NonEmptyList<ImageTitle> {
         return artists.map { ImageTitle(it.id, it.name, it.url) }
     }
 

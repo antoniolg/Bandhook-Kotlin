@@ -37,4 +37,5 @@ interface LastFmService {
 
     @GET("/2.0/?method=album.getInfo")
     fun requestAlbum(@Query("mbid") id: String): Call<LastFmResponse>
+
 }

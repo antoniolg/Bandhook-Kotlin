@@ -18,7 +18,6 @@ package com.antonioleiva.bandhookkotlin.domain.interactor
 
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import org.junit.Assert.assertEquals
 import org.junit.Before

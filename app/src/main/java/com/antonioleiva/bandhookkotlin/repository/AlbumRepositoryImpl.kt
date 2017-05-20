@@ -16,17 +16,28 @@
 
 package com.antonioleiva.bandhookkotlin.repository
 
+import com.antonioleiva.bandhookkotlin.domain.entity.Album
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.TopAlbumsNotFound
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
-import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
+import com.antonioleiva.bandhookkotlin.repository.datasource.AlbumDataSource
+import com.github.finecinnamon.Result
 
-class AlbumRepositoryImpl(val albumDataSets: List<AlbumDataSet>) : AlbumRepository {
+class AlbumRepositoryImpl(val dataSources: List<AlbumDataSource>) : AlbumRepository {
 
-    override fun getAlbum(id: String) = albumDataSets
-            .map { it.requestAlbum(id) }
-            .firstOrNull { it != null }
+    override fun getAlbum(id: String): Result<AlbumNotFound, Album> =
+            Result.firstSuccessIn(
+                    fa = dataSources,
+                    f = { it.get(id) },
+                    acc = Result.raiseError(AlbumNotFound(id))
+            )
 
-    override fun getTopAlbums(artistId: String?, artistName: String?) = albumDataSets
-                .map { it.requestTopAlbums(artistId, artistName) }
-                .firstOrNull { it.isNotEmpty() }
-                ?: emptyList()
+    override fun getTopAlbums(artistId: String?, artistName: String?):
+            Result<TopAlbumsNotFound, List<Album>> =
+            Result.firstSuccessIn(
+                    fa = dataSources,
+                    acc = Result.raiseError(TopAlbumsNotFound(artistId, artistName)),
+                    f = { it.requestTopAlbums(artistId, artistName) }
+            )
+
 }

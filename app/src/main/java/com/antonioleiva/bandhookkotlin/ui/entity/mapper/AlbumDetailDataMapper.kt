@@ -21,10 +21,9 @@ import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
 
 class AlbumDetailDataMapper {
 
-    fun transform(album: Album?) = album?.let { AlbumDetail(
+    fun transform(album: Album): AlbumDetail = AlbumDetail(
             album.id,
             album.name,
             album.url,
             album.tracks)
-    }
 }

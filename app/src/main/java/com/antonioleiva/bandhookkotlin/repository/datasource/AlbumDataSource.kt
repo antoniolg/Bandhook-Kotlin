@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Antonio Leiva
+ * Copyright (C) 2016 Alexey Verein
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,13 +14,17 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin.domain.interactor.base
+package com.antonioleiva.bandhookkotlin.repository.datasource
 
-import com.birbit.android.jobqueue.JobManager
+import com.antonioleiva.bandhookkotlin.domain.entity.Album
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.TopAlbumsNotFound
+import com.github.finecinnamon.Result
 
-class InteractorExecutorImpl(val jobManager: JobManager, val bus: Bus) : InteractorExecutor {
+interface AlbumDataSource {
 
-    override fun execute(interactor: Interactor, priority: InteractorPriority) {
-        jobManager.addJobInBackground(InteractorWrapper(interactor, priority,  bus))
-    }
+    fun get(id: String): Result<AlbumNotFound, Album>
+    fun requestTopAlbums(artistId: String?, artistName: String?):
+            Result<TopAlbumsNotFound, List<Album>>
+
 }

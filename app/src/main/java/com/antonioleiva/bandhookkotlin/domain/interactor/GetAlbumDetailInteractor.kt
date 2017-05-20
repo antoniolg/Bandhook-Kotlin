@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Antonio Leiva
+ * Copyright (C) 2016 Alexey Verein
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-package com.antonioleiva.bandhookkotlin.domain.interactor.base
+package com.antonioleiva.bandhookkotlin.domain.interactor
 
-interface Interactor {
+import com.antonioleiva.bandhookkotlin.domain.entity.Album
+import com.antonioleiva.bandhookkotlin.domain.entity.BizException.AlbumNotFound
+import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
+import com.github.finecinnamon.Result
 
-    operator fun invoke(): Event
+class GetAlbumDetailInteractor(val albumRepository: AlbumRepository) {
+
+    fun getAlbum(albumId: String): Result<AlbumNotFound, Album> =
+            albumRepository.getAlbum(albumId)
+
 }

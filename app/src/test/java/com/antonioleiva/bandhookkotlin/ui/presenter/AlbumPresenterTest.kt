@@ -19,9 +19,6 @@ package com.antonioleiva.bandhookkotlin.ui.presenter
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.interactor.GetAlbumDetailInteractor
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.Bus
-import com.antonioleiva.bandhookkotlin.domain.interactor.base.InteractorExecutor
-import com.antonioleiva.bandhookkotlin.domain.interactor.event.AlbumEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.ui.entity.mapper.AlbumDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
