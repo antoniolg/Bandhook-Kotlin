@@ -35,27 +35,27 @@ allprojects {
 
     ext {
         // Android config
-        androidBuildToolsVersion = "26.0.0"
+        androidBuildToolsVersion = "26.0.1"
         androidMinSdkVersion = 17
-        androidTargetSdkVersion = 25
-        androidCompileSdkVersion = 25
+        androidTargetSdkVersion = 26
+        androidCompileSdkVersion = 26
         androidApplicationId = "com.antonioleiva.bandhookkotlin"
         androidVersionCode = 1
         androidVersionName = "0.1"
 
 
         // Compile dependencies
-        supportVersion = "25.3.0"
         ankoVersion= "0.9.1a"
-        daggerVersion = "2.6"
         retrofitVersion = "2.2.0"
+        supportVersion = "26.0.1"
+        daggerVersion = "2.11"
         okhttpVersion = "3.6.0"
         eventBusVersion = "2.4.1"
         picassoVersion = "2.5.2"
         priorityJobQueueVersion = "2.0.1"
 
         // Unit tests
-        mockitoVersion = "2.7.13"
+        mockitoVersion = "2.8.47"
 
     }
 }
