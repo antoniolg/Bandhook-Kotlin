@@ -28,6 +28,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
     }
 
     ext {
@@ -39,10 +42,20 @@ allprojects {
         androidApplicationId = "com.antonioleiva.bandhookkotlin"
         androidVersionCode = 1
         androidVersionName = "0.1"
+
+
+        // Compile dependencies
         supportVersion = "25.3.0"
         ankoVersion= "0.9.1a"
         daggerVersion = "2.6"
         retrofitVersion = "2.2.0"
         okhttpVersion = "3.6.0"
+        eventBusVersion = "2.4.1"
+        picassoVersion = "2.5.2"
+        priorityJobQueueVersion = "2.0.1"
+
+        // Unit tests
+        mockitoVersion = "2.7.13"
+
     }
 }
