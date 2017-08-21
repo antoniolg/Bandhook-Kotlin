@@ -46,9 +46,9 @@ allprojects {
 
         // Compile dependencies
         ankoVersion= "0.9.1a"
-        retrofitVersion = "2.2.0"
         supportVersion = "26.0.1"
         daggerVersion = "2.11"
+        retrofitVersion = "2.3.0"
         okhttpVersion = "3.6.0"
         eventBusVersion = "2.4.1"
         picassoVersion = "2.5.2"
