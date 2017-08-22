@@ -20,5 +20,4 @@
     <string name="albums_fragment_title">Albums</string>
     <string name="bio_fragment_title">Bio</string>
 
-    <string name="last_fm_api_key">MOCKED_API_KEY</string>
 </resources>
