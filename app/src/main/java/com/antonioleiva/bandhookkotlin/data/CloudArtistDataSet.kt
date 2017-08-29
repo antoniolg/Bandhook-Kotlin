@@ -29,7 +29,7 @@ class CloudArtistDataSet(val language: String, val lastFmService: LastFmService)
             lastFmService.requestSimilar(coldplayMbid).unwrapCall {
                 // Search for coldplay similar artists.
                 ArtistMapper().transform(similarArtists.artists)
-            }
+            } ?: emptyList()
 
     override fun requestArtist(id: String): Artist? =
             lastFmService.requestArtistInfo(id, language).unwrapCall {

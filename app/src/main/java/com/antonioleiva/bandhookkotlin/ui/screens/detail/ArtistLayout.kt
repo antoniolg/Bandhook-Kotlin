@@ -18,10 +18,10 @@ import com.antonioleiva.bandhookkotlin.ui.activity.ActivityAnkoComponent
 import com.antonioleiva.bandhookkotlin.ui.custom.squareImageView
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.appcompat.v7.toolbar
-import org.jetbrains.anko.design.appBarLayout
 import org.jetbrains.anko.design.collapsingToolbarLayout
 import org.jetbrains.anko.design.coordinatorLayout
 import org.jetbrains.anko.design.tabLayout
+import org.jetbrains.anko.design.themedAppBarLayout
 import org.jetbrains.anko.dip
 import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.support.v4.viewPager
@@ -40,7 +40,7 @@ class ArtistLayout : ActivityAnkoComponent<ArtistActivity> {
 
         coordinatorLayout {
 
-            appBarLayout(R.style.ThemeOverlay_AppCompat_Dark_ActionBar) {
+            themedAppBarLayout(R.style.ThemeOverlay_AppCompat_Dark_ActionBar) {
                 fitsSystemWindows = true
 
                 collapsingToolbarLayout = collapsingToolbarLayout {
@@ -56,9 +56,9 @@ class ArtistLayout : ActivityAnkoComponent<ArtistActivity> {
 
                     toolbar = toolbar {
                         popupTheme = R.style.ThemeOverlay_AppCompat_Light
-                        gravity = Gravity.TOP
                         titleMarginTop = dip(16)
                     }.lparamsC(width = matchParent, height = dip(88)) {
+                        gravity = Gravity.TOP
                         collapseMode = COLLAPSE_MODE_PIN
                     }
 

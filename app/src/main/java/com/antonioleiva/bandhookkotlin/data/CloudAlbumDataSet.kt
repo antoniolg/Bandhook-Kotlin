@@ -33,7 +33,7 @@ class CloudAlbumDataSet(val lastFmService: LastFmService) : AlbumDataSet {
         if (!mbid.isEmpty() || !name.isEmpty()) {
             return lastFmService.requestAlbums(mbid, name).unwrapCall {
                 AlbumMapper().transform(topAlbums.albums)
-            }
+            } ?: emptyList()
         }
 
         return emptyList()

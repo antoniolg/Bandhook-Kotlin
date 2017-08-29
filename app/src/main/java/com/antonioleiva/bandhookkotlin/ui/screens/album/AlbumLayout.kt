@@ -4,16 +4,21 @@ import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
-import android.view.View.generateViewId
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.ImageView
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.ui.activity.ActivityAnkoComponent
 import com.antonioleiva.bandhookkotlin.ui.custom.squareImageView
-import org.jetbrains.anko.*
-import org.jetbrains.anko.appcompat.v7.toolbar
+import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.appcompat.v7.themedToolbar
+import org.jetbrains.anko.backgroundResource
+import org.jetbrains.anko.below
 import org.jetbrains.anko.cardview.v7.cardView
+import org.jetbrains.anko.dimen
+import org.jetbrains.anko.dip
+import org.jetbrains.anko.horizontalMargin
+import org.jetbrains.anko.matchParent
 import org.jetbrains.anko.recyclerview.v7.recyclerView
+import org.jetbrains.anko.relativeLayout
 
 class AlbumLayout : ActivityAnkoComponent<AlbumActivity> {
 
@@ -30,7 +35,7 @@ class AlbumLayout : ActivityAnkoComponent<AlbumActivity> {
                 backgroundResource = android.R.color.darker_gray
             }.lparams(width = matchParent)
 
-            toolbar = toolbar(R.style.ThemeOverlay_AppCompat_Dark_ActionBar)
+            toolbar = themedToolbar(R.style.ThemeOverlay_AppCompat_Dark_ActionBar)
                     .lparams(width = matchParent) {
                         topMargin = dimen(R.dimen.statusbar_height)
                     }
