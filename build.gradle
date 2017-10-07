@@ -15,7 +15,7 @@
  */
 
 buildscript {
-    ext.kotlin_version = '1.1.4'
+    ext.kotlin_version = '1.1.51'
     repositories {
         jcenter()
     }
@@ -28,15 +28,13 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url "https://maven.google.com"
-        }
+        maven { url 'https://maven.google.com' }
     }
 
     ext {
         // Android config
         androidBuildToolsVersion = "26.0.1"
-        androidMinSdkVersion = 17
+        androidMinSdkVersion = 19
         androidTargetSdkVersion = 26
         androidCompileSdkVersion = 26
         androidApplicationId = "com.antonioleiva.bandhookkotlin"
@@ -45,11 +43,11 @@ allprojects {
 
 
         // Compile dependencies
-        supportVersion = "26.0.1"
+        supportVersion = "26.1.0"
         ankoVersion= "0.10.1"
         daggerVersion = "2.11"
         retrofitVersion = "2.3.0"
-        okhttpVersion = "3.6.0"
+        okhttpVersion = "3.9.0"
         eventBusVersion = "2.4.1"
         picassoVersion = "2.5.2"
         priorityJobQueueVersion = "2.0.1"
