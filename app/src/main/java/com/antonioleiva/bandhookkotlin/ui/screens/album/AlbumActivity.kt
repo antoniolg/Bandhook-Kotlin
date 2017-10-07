@@ -16,32 +16,34 @@
 
 package com.antonioleiva.bandhookkotlin.ui.screens.album
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.support.annotation.VisibleForTesting
-import android.support.v7.widget.LinearLayoutManager
-import android.view.MenuItem
-import android.view.WindowManager
-import com.antonioleiva.bandhookkotlin.R
-import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
-import com.antonioleiva.bandhookkotlin.di.subcomponent.album.AlbumActivityModule
-import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
-import com.antonioleiva.bandhookkotlin.ui.adapter.TracksAdapter
-import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
-import com.antonioleiva.bandhookkotlin.ui.entity.TrackDetail
-import com.antonioleiva.bandhookkotlin.ui.entity.mapper.TrackDataMapper
-import com.antonioleiva.bandhookkotlin.ui.presenter.AlbumPresenter
-import com.antonioleiva.bandhookkotlin.ui.util.getNavigationId
-import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
-import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
-import org.jetbrains.anko.dimen
-import javax.inject.Inject
+import android.animation.*
+import android.annotation.*
+import android.os.*
+import android.support.v7.widget.*
+import android.view.*
+import com.antonioleiva.bandhookkotlin.*
+import com.antonioleiva.bandhookkotlin.ui.activity.*
+import com.antonioleiva.bandhookkotlin.ui.adapter.*
+import com.antonioleiva.bandhookkotlin.ui.entity.*
+import com.antonioleiva.bandhookkotlin.ui.entity.mapper.*
+import com.antonioleiva.bandhookkotlin.ui.presenter.*
+import com.antonioleiva.bandhookkotlin.ui.util.*
+import com.antonioleiva.bandhookkotlin.ui.view.*
+import com.github.salomonbrys.kodein.*
+import com.squareup.picasso.*
+import org.jetbrains.anko.*
 
 class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
+
+    override val activityModule = Kodein.Module {
+        bind() from provider {
+            AlbumPresenter(this@AlbumActivity, instance(), instance(), instance(),
+                    AlbumDetailDataMapper())
+
+        }
+
+        bind() from provider { TrackDataMapper() }
+    }
 
     override val ui = AlbumLayout()
 
@@ -53,31 +55,19 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
 
     val albumListBreakingEdgeHeight by lazy { dimen(R.dimen.album_breaking_edge_height).toFloat() }
 
-    @Inject @VisibleForTesting
-    lateinit var presenter: AlbumPresenter
+    val presenter: AlbumPresenter by instance()
 
-    @Inject
-    lateinit var trackDataMapper: TrackDataMapper
+    val trackDataMapper: TrackDataMapper by instance()
 
-    @Inject
-    lateinit var adapter: TracksAdapter
+    val adapter: TracksAdapter = TracksAdapter()
 
-    @Inject
-    lateinit var layoutManager: LinearLayoutManager
-
-    @Inject
-    lateinit var picasso: Picasso
+    val picasso: Picasso by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpTransition()
         setUpActionBar()
         setUpTrackList()
-    }
-
-    override fun injectDependencies(applicationComponent: ApplicationComponent) {
-        applicationComponent.plus(AlbumActivityModule(this))
-                .injectTo(this)
     }
 
     @SuppressLint("NewApi")
@@ -88,7 +78,7 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
 
     private fun setUpTrackList() {
         ui.trackList.adapter = adapter
-        ui.trackList.layoutManager = layoutManager
+        ui.trackList.layoutManager = LinearLayoutManager(this)
         ui.listCard.translationY = -albumListBreakingEdgeHeight
     }
 

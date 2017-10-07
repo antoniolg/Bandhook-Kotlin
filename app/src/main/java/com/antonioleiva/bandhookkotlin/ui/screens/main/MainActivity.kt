@@ -16,37 +16,36 @@
 
 package com.antonioleiva.bandhookkotlin.ui.screens.main
 
-import android.os.Bundle
-import android.view.View
-import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
-import com.antonioleiva.bandhookkotlin.di.subcomponent.main.MainActivityModule
-import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
-import com.antonioleiva.bandhookkotlin.ui.adapter.BaseAdapter
-import com.antonioleiva.bandhookkotlin.ui.adapter.ImageTitleAdapter
-import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
-import com.antonioleiva.bandhookkotlin.ui.presenter.MainPresenter
-import com.antonioleiva.bandhookkotlin.ui.screens.detail.ArtistActivity
-import com.antonioleiva.bandhookkotlin.ui.util.navigate
-import com.antonioleiva.bandhookkotlin.ui.view.MainView
-import javax.inject.Inject
+import android.os.*
+import android.view.*
+import com.antonioleiva.bandhookkotlin.ui.activity.*
+import com.antonioleiva.bandhookkotlin.ui.adapter.*
+import com.antonioleiva.bandhookkotlin.ui.entity.*
+import com.antonioleiva.bandhookkotlin.ui.entity.mapper.*
+import com.antonioleiva.bandhookkotlin.ui.presenter.*
+import com.antonioleiva.bandhookkotlin.ui.screens.detail.*
+import com.antonioleiva.bandhookkotlin.ui.util.*
+import com.antonioleiva.bandhookkotlin.ui.view.*
+import com.github.salomonbrys.kodein.*
 
 class MainActivity : BaseActivity<MainLayout>(), MainView {
 
     override val ui = MainLayout()
 
-    @Inject
-    lateinit var presenter: MainPresenter
+    override val activityModule = Kodein.Module {
+        bind() from provider {
+            MainPresenter(this@MainActivity, instance(), instance(), instance(),
+                    ImageTitleDataMapper())
+        }
+    }
+
+    val presenter: MainPresenter by instance()
 
     val adapter = ImageTitleAdapter { presenter.onArtistClicked(it) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ui.recycler.adapter = adapter
-    }
-
-    override fun injectDependencies(applicationComponent: ApplicationComponent) {
-        applicationComponent.plus(MainActivityModule(this))
-                .injectTo(this)
     }
 
     override fun onResume() {
@@ -67,6 +66,7 @@ class MainActivity : BaseActivity<MainLayout>(), MainView {
         navigate<ArtistActivity>(id, findItemById(id), BaseActivity.IMAGE_TRANSITION_NAME)
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun findItemById(id: String): View {
         val pos = adapter.findPositionById(id)
         val holder = ui.recycler.findViewHolderForLayoutPosition(pos)

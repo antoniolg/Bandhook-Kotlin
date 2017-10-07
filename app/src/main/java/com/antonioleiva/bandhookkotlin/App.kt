@@ -16,26 +16,29 @@
 
 package com.antonioleiva.bandhookkotlin
 
-import android.app.Application
-import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
-import com.antonioleiva.bandhookkotlin.di.ApplicationModule
-import com.antonioleiva.bandhookkotlin.di.DaggerApplicationComponent
+import android.app.*
+import android.content.*
+import com.antonioleiva.bandhookkotlin.di.*
+import com.github.salomonbrys.kodein.*
+import com.github.salomonbrys.kodein.android.*
 
-class App : Application() {
+class App : Application(), KodeinAware {
 
-    companion object {
-        lateinit var graph: ApplicationComponent
+    override val kodein by Kodein.lazy {
+        import(appModule(this@App))
+        import(dataModule)
+        import(domainModule)
+        import(repositoryModule)
     }
 
     override fun onCreate() {
         super.onCreate()
-        initializeDagger()
-    }
 
-    fun initializeDagger() {
-        graph = DaggerApplicationComponent.builder()
-                .applicationModule(ApplicationModule(this))
-                .build()
+        registerActivityLifecycleCallbacks(
+                androidActivityScope.lifecycleManager
+        )
     }
 }
+
+fun Context.asApp() = applicationContext as App
 

@@ -70,8 +70,8 @@ dependencies {
     compile "org.jetbrains.anko:anko-design:$ankoVersion"
     compile "org.jetbrains.anko:anko-cardview-v7:$ankoVersion"
     compile "org.jetbrains.anko:anko-recyclerview-v7:$ankoVersion"
-    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
-    compile "com.google.dagger:dagger:$daggerVersion"
+    compile "com.github.salomonbrys.kodein:kodein:$kodeinVersion"
+    compile "com.github.salomonbrys.kodein:kodein-android:$kodeinVersion"
 
     testCompile "junit:junit:4.12"
     testCompile "org.mockito:mockito-core:$mockitoVersion"

@@ -16,13 +16,13 @@
 
 package com.antonioleiva.bandhookkotlin.ui.activity
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import com.antonioleiva.bandhookkotlin.App
-import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
-import org.jetbrains.anko.setContentView
+import android.os.*
+import android.support.v7.app.*
+import com.antonioleiva.bandhookkotlin.*
+import com.github.salomonbrys.kodein.*
+import org.jetbrains.anko.*
 
-abstract class BaseActivity<out UI : ActivityAnkoComponent<out AppCompatActivity>> : AppCompatActivity() {
+abstract class BaseActivity<out UI : ActivityAnkoComponent<out AppCompatActivity>> : AppCompatActivity(), KodeinInjected {
 
     companion object {
         val IMAGE_TRANSITION_NAME = "activity_image_transition"
@@ -30,13 +30,20 @@ abstract class BaseActivity<out UI : ActivityAnkoComponent<out AppCompatActivity
 
     abstract val ui: UI
 
+    override val injector = KodeinInjector()
+
+    val kodein by Kodein.lazy {
+        extend(applicationContext.asApp().kodein)
+        import(activityModule)
+    }
+
+    abstract val activityModule: Kodein.Module
+
     @Suppress("UNCHECKED_CAST")
     override fun onCreate(savedInstanceState: Bundle?) {
+        inject(kodein)
         super.onCreate(savedInstanceState)
-        injectDependencies(App.graph)
         (ui as ActivityAnkoComponent<AppCompatActivity>).setContentView(this)
         setSupportActionBar(ui.toolbar)
     }
-
-    abstract fun injectDependencies(applicationComponent: ApplicationComponent)
 }

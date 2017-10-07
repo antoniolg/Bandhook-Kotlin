@@ -45,12 +45,12 @@ allprojects {
         // Compile dependencies
         supportVersion = "26.1.0"
         ankoVersion= "0.10.1"
-        daggerVersion = "2.11"
         retrofitVersion = "2.3.0"
         okhttpVersion = "3.9.0"
         eventBusVersion = "2.4.1"
         picassoVersion = "2.5.2"
         priorityJobQueueVersion = "2.0.1"
+        kodeinVersion = "4.1.0"
 
         // Unit tests
         mockitoVersion = "2.8.47"
