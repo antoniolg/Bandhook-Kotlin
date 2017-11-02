@@ -20,7 +20,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -33,7 +33,7 @@ allprojects {
 
     ext {
         // Android config
-        androidBuildToolsVersion = "26.0.1"
+        androidBuildToolsVersion = "26.0.2"
         androidMinSdkVersion = 19
         androidTargetSdkVersion = 26
         androidCompileSdkVersion = 26
@@ -44,7 +44,7 @@ allprojects {
 
         // Compile dependencies
         supportVersion = "26.1.0"
-        ankoVersion= "0.10.1"
+        ankoVersion= "0.10.2"
         daggerVersion = "2.11"
         retrofitVersion = "2.3.0"
         okhttpVersion = "3.9.0"
