@@ -23,7 +23,8 @@ import android.os.Bundle
 import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
-import android.view.WindowManager
+import android.view.ViewPropertyAnimator
+import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
 import com.antonioleiva.bandhookkotlin.R
 import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
 import com.antonioleiva.bandhookkotlin.di.subcomponent.album.AlbumActivityModule
@@ -53,7 +54,8 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
 
     val albumListBreakingEdgeHeight by lazy { dimen(R.dimen.album_breaking_edge_height).toFloat() }
 
-    @Inject @VisibleForTesting
+    @Inject
+    @VisibleForTesting
     lateinit var presenter: AlbumPresenter
 
     @Inject
@@ -109,19 +111,26 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
     }
 
     override fun showAlbum(albumDetail: AlbumDetail?) {
-        if (albumDetail != null) {
-            picasso.load(albumDetail.url).fit().centerCrop().into(ui.image, object : Callback.EmptyCallback() {
-                override fun onSuccess() {
-                    makeStatusBarTransparent()
-                    supportStartPostponedEnterTransition()
-                    populateTrackList(trackDataMapper.transform(albumDetail.tracks))
-                    animateTrackListUp()
-                }
-            })
-        } else {
-            supportStartPostponedEnterTransition()
-            supportFinishAfterTransition()
-        }
+
+        albumDetail?.let(this::updateAlbumDetail)
+                ?: postponeTransitions()
+
+    }
+
+    private fun updateAlbumDetail(albumDetail: AlbumDetail) {
+        picasso.load(albumDetail.url).fit().centerCrop().into(ui.image, object : Callback.EmptyCallback() {
+            override fun onSuccess() {
+                makeStatusBarTransparent()
+                supportStartPostponedEnterTransition()
+                populateTrackList(trackDataMapper.transform(albumDetail.tracks))
+                animateTrackListUp()
+            }
+        })
+    }
+
+    private fun postponeTransitions() {
+        supportStartPostponedEnterTransition()
+        supportFinishAfterTransition()
     }
 
     private fun animateTrackListUp() {
@@ -135,8 +144,7 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
     @SuppressLint("InlinedApi")
     private fun makeStatusBarTransparent() {
         supportsLollipop {
-            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            window.setFlags(FLAG_TRANSLUCENT_STATUS, FLAG_TRANSLUCENT_STATUS)
         }
     }
 
@@ -149,10 +157,18 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
     }
 
     override fun onBackPressed() {
-        ui.listCard.animate().alpha(transparent).setListener(object : AnimatorListenerAdapter() {
-            override fun onAnimationEnd(animation: Animator?) {
-                supportFinishAfterTransition()
-            }
-        })
+        ui.listCard.animate().alpha(transparent)
+                .onAnimationEnd { supportFinishAfterTransition() }
     }
+}
+
+inline fun ViewPropertyAnimator.onAnimationEnd(
+        crossinline continuation: (Animator) -> Unit) {
+
+    setListener(object : AnimatorListenerAdapter() {
+        override fun onAnimationEnd(animation: Animator) {
+            continuation(animation)
+        }
+    })
+
 }

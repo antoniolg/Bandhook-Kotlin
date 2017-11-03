@@ -18,15 +18,17 @@ package com.antonioleiva.bandhookkotlin.ui.util
 
 import android.os.Build
 
-fun supportsKitKat(code: () -> Unit) {
+inline fun supportsKitKat(code: () -> Unit) {
     supportsVersion(code, 19)
 }
 
-fun supportsLollipop(code: () -> Unit) {
-    supportsVersion(code, 21)
+inline fun supportsLollipop(code: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= 21) {
+        code.invoke()
+    }
 }
 
-private fun supportsVersion(code: () -> Unit, sdk: Int) {
+inline fun supportsVersion(code: () -> Unit, sdk: Int) {
     if (Build.VERSION.SDK_INT >= sdk) {
         code.invoke()
     }
