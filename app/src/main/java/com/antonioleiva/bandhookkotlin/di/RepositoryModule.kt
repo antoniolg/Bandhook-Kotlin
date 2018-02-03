@@ -7,7 +7,7 @@ import com.antonioleiva.bandhookkotlin.di.qualifier.LanguageSelection
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 import com.antonioleiva.bandhookkotlin.repository.AlbumRepositoryImpl
-import com.antonioleiva.bandhookkotlin.repository.ArtistRepositoryImp
+import com.antonioleiva.bandhookkotlin.repository.ArtistRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -17,7 +17,7 @@ class RepositoryModule {
 
     @Provides @Singleton
     fun provideArtistRepo(@LanguageSelection language: String, lastFmService: LastFmService): ArtistRepository
-            = ArtistRepositoryImp(listOf(CloudArtistDataSet(language, lastFmService)))
+            = ArtistRepositoryImpl(listOf(CloudArtistDataSet(language, lastFmService)))
 
     @Provides @Singleton
     fun provideAlbumRepo(lastFmService: LastFmService): AlbumRepository

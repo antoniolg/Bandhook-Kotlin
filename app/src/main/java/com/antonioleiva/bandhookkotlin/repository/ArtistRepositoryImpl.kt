@@ -20,27 +20,16 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 import com.antonioleiva.bandhookkotlin.repository.dataset.ArtistDataSet
 
-class ArtistRepositoryImp(val artistDataSets: List<ArtistDataSet>) : ArtistRepository {
+class ArtistRepositoryImpl(val artistDataSets: List<ArtistDataSet>) : ArtistRepository {
 
-    override fun getRecommendedArtists(): List<Artist> {
-        for (dataSet in artistDataSets) {
-            val result = dataSet.requestRecommendedArtists()
-            if (result.isNotEmpty()) {
-                return result
-            }
-        }
+    override fun getRecommendedArtists() = artistDataSets
+            .map { it.requestRecommendedArtists() }
+            .firstOrNull { it.isNotEmpty() }
+            .orEmpty()
 
-        return emptyList()
-    }
-
-    override fun getArtist(id: String): Artist {
-        for (dataSet in artistDataSets) {
-            val result = dataSet.requestArtist(id)
-            if (result != null) {
-                return result
-            }
-        }
-        return Artist("empty", "empty", "empty")
-    }
+    override fun getArtist(id: String): Artist = artistDataSets
+            .map { it.requestArtist(id) }
+            .firstOrNull { it != null }
+            ?: Artist("empty", "empty", "empty")
 
 }
