@@ -1,18 +1,18 @@
-val kotlinVersion = "1.1.51"
-val androidGradleVersion = "3.0.0"
+val kotlinVersion = "1.2.21"
+val androidGradleVersion = "3.0.1"
 
 // Compile dependencies
-val supportVersion = "26.1.0"
-val ankoVersion = "0.10.2"
-val daggerVersion = "2.11"
+val supportVersion = "27.0.2"
+val ankoVersion = "0.10.4"
+val daggerVersion = "2.14.1"
 val retrofitVersion = "2.3.0"
-val okhttpVersion = "3.9.0"
+val okhttpVersion = "3.9.1"
 val eventBusVersion = "2.4.1"
 val picassoVersion = "2.5.2"
 val priorityJobQueueVersion = "2.0.1"
 
 // Unit tests
-val mockitoVersion = "2.8.47"
+val mockitoVersion = "2.13.0"
 
 class ProjectConfiguration {
     val buildPlugins = BuildPlugins()
@@ -27,10 +27,10 @@ class BuildPlugins {
 }
 
 class Android {
-    val buildToolsVersion = "26.0.2"
+    val buildToolsVersion = "27.0.3"
     val minSdkVersion = 19
-    val targetSdkVersion = 26
-    val compileSdkVersion = 26
+    val targetSdkVersion = 27
+    val compileSdkVersion = 27
     val applicationId = "com.antonioleiva.bandhookkotlin"
     val versionCode = 1
     val versionName = "0.1"
