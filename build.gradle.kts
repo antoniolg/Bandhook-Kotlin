@@ -21,15 +21,13 @@ import org.gradle.kotlin.dsl.repositories
 
 buildscript {
 
-    val config = ProjectConfiguration()
-
     repositories {
         jcenter()
         google()
     }
     dependencies {
-        classpath(config.buildPlugins.androidGradle)
-        classpath(config.buildPlugins.kotlinGradlePlugin)
+        classpath(Config.BuildPlugins.androidGradle)
+        classpath(Config.BuildPlugins.kotlinGradlePlugin)
     }
 }
 

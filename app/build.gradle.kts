@@ -25,18 +25,16 @@ plugins {
     kotlin("kapt")
 }
 
-val config = ProjectConfiguration()
-
 android {
-    compileSdkVersion(config.android.compileSdkVersion)
-    buildToolsVersion(config.android.buildToolsVersion)
+    compileSdkVersion(Config.Android.compileSdkVersion)
+    buildToolsVersion(Config.Android.buildToolsVersion)
 
     defaultConfig {
-        applicationId = config.android.applicationId
-        minSdkVersion(config.android.minSdkVersion)
-        targetSdkVersion(config.android.targetSdkVersion)
-        versionCode = config.android.versionCode
-        versionName = config.android.versionName
+        applicationId = Config.Android.applicationId
+        minSdkVersion(Config.Android.minSdkVersion)
+        targetSdkVersion(Config.Android.targetSdkVersion)
+        versionCode = Config.Android.versionCode
+        versionName = Config.Android.versionName
 
         testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -50,34 +48,34 @@ android {
 }
 
 dependencies {
-    compile(config.libs.kotlin_std)
-    compile(config.libs.appcompat)
-    compile(config.libs.recyclerview)
-    compile(config.libs.cardview)
-    compile(config.libs.palette)
-    compile(config.libs.design)
-    compile(config.libs.eventbus)
-    compile(config.libs.picasso)
-    compile(config.libs.okhttp)
-    compile(config.libs.okhttp_interceptor)
-    compile(config.libs.retrofit)
-    compile(config.libs.retrofit_gson)
-    compile(config.libs.jobqueue)
-    compile(config.libs.anko_sdk15)
-    compile(config.libs.anko_support)
-    compile(config.libs.anko_appcompat)
-    compile(config.libs.anko_design)
-    compile(config.libs.anko_cardview)
-    compile(config.libs.anko_recyclerview)
-    kapt(config.libs.dagger_compiler)
-    compile(config.libs.dagger)
+    compile(Config.Libs.kotlin_std)
+    compile(Config.Libs.appcompat)
+    compile(Config.Libs.recyclerview)
+    compile(Config.Libs.cardview)
+    compile(Config.Libs.palette)
+    compile(Config.Libs.design)
+    compile(Config.Libs.eventbus)
+    compile(Config.Libs.picasso)
+    compile(Config.Libs.okhttp)
+    compile(Config.Libs.okhttp_interceptor)
+    compile(Config.Libs.retrofit)
+    compile(Config.Libs.retrofit_gson)
+    compile(Config.Libs.jobqueue)
+    compile(Config.Libs.anko_sdk15)
+    compile(Config.Libs.anko_support)
+    compile(Config.Libs.anko_appcompat)
+    compile(Config.Libs.anko_design)
+    compile(Config.Libs.anko_cardview)
+    compile(Config.Libs.anko_recyclerview)
+    kapt(Config.Libs.dagger_compiler)
+    compile(Config.Libs.dagger)
 
-    testCompile(config.testLibs.junit)
-    testCompile(config.testLibs.mockito)
+    testCompile(Config.TestLibs.junit)
+    testCompile(Config.TestLibs.mockito)
 
-    androidTestCompile(config.testLibs.mockito)
-    androidTestCompile(config.testLibs.dexmaker)
-    androidTestCompile(config.testLibs.dexmaker_mockito)
-    androidTestCompile(config.testLibs.annotations)
-    androidTestCompile(config.testLibs.espresso)
+    androidTestCompile(Config.TestLibs.mockito)
+    androidTestCompile(Config.TestLibs.dexmaker)
+    androidTestCompile(Config.TestLibs.dexmaker_mockito)
+    androidTestCompile(Config.TestLibs.annotations)
+    androidTestCompile(Config.TestLibs.espresso)
 }
