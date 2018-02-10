@@ -23,7 +23,7 @@ import de.greenrobot.event.EventBus
 
 class BusImpl : EventBus(), Bus {
 
-    val mainThread = Handler(Looper.getMainLooper())
+    private val mainThread = Handler(Looper.getMainLooper())
 
     override fun post(event: Any) {
         mainThread.post({ super.post(event) })

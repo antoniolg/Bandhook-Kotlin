@@ -1,12 +1,11 @@
 package com.antonioleiva.bandhookkotlin.data.mock
 
-import java.io.IOException
-import java.util.concurrent.atomic.AtomicBoolean
-
 import okhttp3.Request
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.IOException
+import java.util.concurrent.atomic.AtomicBoolean
 
 /**
  * Created by Mahmoud Abdurrahman (ma.abdurrahman@gmail.com) on 2/17/17.
@@ -42,12 +41,10 @@ class FakeCall<T>(val response: Response<T>?, val error: IOException?) : Call<T>
             throw IllegalStateException("Already executed")
         }
         callback?.let {
-            if (canceled.get()) {
-                callback.onFailure(this, IOException("canceled"))
-            } else if (response != null) {
-                callback.onResponse(this, response)
-            } else {
-                callback.onFailure(this, error)
+            when {
+                canceled.get() -> callback.onFailure(this, IOException("canceled"))
+                response != null -> callback.onResponse(this, response)
+                else -> callback.onFailure(this, error)
             }
         } ?: throw NullPointerException("callback == null")
     }

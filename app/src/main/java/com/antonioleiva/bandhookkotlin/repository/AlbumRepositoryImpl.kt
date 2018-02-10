@@ -19,7 +19,7 @@ package com.antonioleiva.bandhookkotlin.repository
 import com.antonioleiva.bandhookkotlin.domain.repository.AlbumRepository
 import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
 
-class AlbumRepositoryImpl(val albumDataSets: List<AlbumDataSet>) : AlbumRepository {
+class AlbumRepositoryImpl(private val albumDataSets: List<AlbumDataSet>) : AlbumRepository {
 
     override fun getAlbum(id: String) = albumDataSets
             .map { it.requestAlbum(id) }

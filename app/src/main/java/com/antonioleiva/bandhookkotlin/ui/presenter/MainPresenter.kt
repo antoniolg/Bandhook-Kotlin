@@ -25,11 +25,12 @@ import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.MainView
 
 class MainPresenter(
-        override val view: MainView,
-        override val bus: Bus,
-        val recommendedArtistsInteractor: GetRecommendedArtistsInteractor,
-        val interactorExecutor: InteractorExecutor,
-        val mapper: ImageTitleDataMapper) : Presenter<MainView> {
+    override val view: MainView,
+    override val bus: Bus,
+    private val recommendedArtistsInteractor: GetRecommendedArtistsInteractor,
+    private val interactorExecutor: InteractorExecutor,
+    private val mapper: ImageTitleDataMapper
+) : Presenter<MainView> {
 
     override fun onResume() {
         super.onResume()

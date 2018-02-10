@@ -24,11 +24,11 @@ import com.antonioleiva.bandhookkotlin.ui.entity.mapper.AlbumDetailDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
 
 open class AlbumPresenter(
-        override val view: AlbumView,
-        override val bus: Bus,
-        val albumInteractor: GetAlbumDetailInteractor,
-        val interactorExecutor: InteractorExecutor,
-        val albumDetailMapper: AlbumDetailDataMapper) : Presenter<AlbumView> {
+    override val view: AlbumView,
+    override val bus: Bus,
+    private val albumInteractor: GetAlbumDetailInteractor,
+    private val interactorExecutor: InteractorExecutor,
+    private val albumDetailMapper: AlbumDetailDataMapper) : Presenter<AlbumView> {
 
     open fun init(albumId: String) {
         val albumDetailInteractor = albumInteractor

@@ -21,7 +21,7 @@ import com.antonioleiva.bandhookkotlin.data.mapper.AlbumMapper
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.repository.dataset.AlbumDataSet
 
-class CloudAlbumDataSet(val lastFmService: LastFmService) : AlbumDataSet {
+class CloudAlbumDataSet(private val lastFmService: LastFmService) : AlbumDataSet {
 
     override fun requestAlbum(mbid: String): Album?
             = lastFmService.requestAlbum(mbid).unwrapCall { AlbumMapper().transform(album) }

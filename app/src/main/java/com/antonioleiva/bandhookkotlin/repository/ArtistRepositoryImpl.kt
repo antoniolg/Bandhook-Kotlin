@@ -20,7 +20,7 @@ import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 import com.antonioleiva.bandhookkotlin.repository.dataset.ArtistDataSet
 
-class ArtistRepositoryImpl(val artistDataSets: List<ArtistDataSet>) : ArtistRepository {
+class ArtistRepositoryImpl(private val artistDataSets: List<ArtistDataSet>) : ArtistRepository {
 
     override fun getRecommendedArtists() = artistDataSets
             .map { it.requestRecommendedArtists() }

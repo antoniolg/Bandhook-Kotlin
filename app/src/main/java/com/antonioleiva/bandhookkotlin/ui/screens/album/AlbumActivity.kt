@@ -47,9 +47,9 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
     override val ui = AlbumLayout()
 
     companion object {
-        private val listAnimationStartDelay = 500L
-        private val noTranslation = 0f
-        private val transparent = 0f
+        private const val LIST_ANIMATION_START_DELAY = 500L
+        private const val NO_TRANSLATION = 0f
+        private const val TRANSPARENT = 0f
     }
 
     val albumListBreakingEdgeHeight by lazy { dimen(R.dimen.album_breaking_edge_height).toFloat() }
@@ -134,7 +134,7 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
     }
 
     private fun animateTrackListUp() {
-        ui.listCard.animate().setStartDelay(listAnimationStartDelay).translationY(noTranslation)
+        ui.listCard.animate().setStartDelay(LIST_ANIMATION_START_DELAY).translationY(NO_TRANSLATION)
     }
 
     private fun populateTrackList(trackDetails: List<TrackDetail>) {
@@ -157,7 +157,7 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
     }
 
     override fun onBackPressed() {
-        ui.listCard.animate().alpha(transparent)
+        ui.listCard.animate().alpha(TRANSPARENT)
                 .onAnimationEnd { supportFinishAfterTransition() }
     }
 }

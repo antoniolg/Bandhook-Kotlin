@@ -18,9 +18,10 @@ package com.antonioleiva.bandhookkotlin.domain.interactor.base
 
 import com.birbit.android.jobqueue.JobManager
 
-class InteractorExecutorImpl(val jobManager: JobManager, val bus: Bus) : InteractorExecutor {
+class InteractorExecutorImpl(private val jobManager: JobManager, val bus: Bus) :
+    InteractorExecutor {
 
     override fun execute(interactor: Interactor, priority: InteractorPriority) {
-        jobManager.addJobInBackground(InteractorWrapper(interactor, priority,  bus))
+        jobManager.addJobInBackground(InteractorWrapper(interactor, priority, bus))
     }
 }

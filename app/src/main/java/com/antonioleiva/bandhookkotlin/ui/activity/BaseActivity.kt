@@ -25,7 +25,7 @@ import org.jetbrains.anko.setContentView
 abstract class BaseActivity<out UI : ActivityAnkoComponent<out AppCompatActivity>> : AppCompatActivity() {
 
     companion object {
-        val IMAGE_TRANSITION_NAME = "activity_image_transition"
+        const val IMAGE_TRANSITION_NAME = "activity_image_transition"
     }
 
     abstract val ui: UI

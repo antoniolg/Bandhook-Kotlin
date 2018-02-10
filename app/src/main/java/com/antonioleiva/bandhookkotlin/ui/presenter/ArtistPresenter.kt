@@ -28,13 +28,13 @@ import com.antonioleiva.bandhookkotlin.ui.entity.mapper.ImageTitleDataMapper
 import com.antonioleiva.bandhookkotlin.ui.view.ArtistView
 
 open class ArtistPresenter(
-        override val view: ArtistView,
-        override val bus: Bus,
-        val artistDetailInteractor: GetArtistDetailInteractor,
-        val topAlbumsInteractor: GetTopAlbumsInteractor,
-        val interactorExecutor: InteractorExecutor,
-        val artistDetailMapper: ArtistDetailDataMapper,
-        val albumsMapper: ImageTitleDataMapper) : Presenter<ArtistView>, AlbumsPresenter {
+    override val view: ArtistView,
+    override val bus: Bus,
+    private val artistDetailInteractor: GetArtistDetailInteractor,
+    private val topAlbumsInteractor: GetTopAlbumsInteractor,
+    private val interactorExecutor: InteractorExecutor,
+    private val artistDetailMapper: ArtistDetailDataMapper,
+    private val albumsMapper: ImageTitleDataMapper) : Presenter<ArtistView>, AlbumsPresenter {
 
     open fun init(artistId: String) {
         val artistDetailInteractor = artistDetailInteractor

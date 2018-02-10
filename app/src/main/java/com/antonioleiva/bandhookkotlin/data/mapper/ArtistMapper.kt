@@ -19,7 +19,7 @@ package com.antonioleiva.bandhookkotlin.data.mapper
 import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmArtist
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 
-class ArtistMapper(val imageMapper: ImageMapper = ImageMapper()) {
+class ArtistMapper(private val imageMapper: ImageMapper = ImageMapper()) {
 
     fun transform(artists: List<LastFmArtist>): List<Artist> {
         return artists.filter { artistHasQualityInfo(it) }.mapNotNull { transform(it) }

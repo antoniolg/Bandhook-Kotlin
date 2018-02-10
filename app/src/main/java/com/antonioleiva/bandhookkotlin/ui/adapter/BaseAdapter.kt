@@ -6,8 +6,10 @@ import com.antonioleiva.bandhookkotlin.ui.activity.ViewAnkoComponent
 import com.antonioleiva.bandhookkotlin.ui.util.singleClick
 import kotlin.properties.Delegates
 
-abstract class BaseAdapter<Item, Component : ViewAnkoComponent<RecyclerView>>(val listener: (Item) -> Unit = {})
-    : RecyclerView.Adapter<BaseAdapter.BaseViewHolder<Component>>() {
+abstract class BaseAdapter<Item, Component : ViewAnkoComponent<RecyclerView>>(
+    private val listener: (Item) -> Unit = {}
+) :
+    RecyclerView.Adapter<BaseAdapter.BaseViewHolder<Component>>() {
 
     abstract val bind: Component.(item: Item) -> Unit
 
@@ -27,6 +29,6 @@ abstract class BaseAdapter<Item, Component : ViewAnkoComponent<RecyclerView>>(va
 
     override fun getItemCount() = items.size
 
-    class BaseViewHolder<out Component : ViewAnkoComponent<RecyclerView>>(val ui: Component)
-        : RecyclerView.ViewHolder(ui.inflate())
+    class BaseViewHolder<out Component : ViewAnkoComponent<RecyclerView>>(val ui: Component) :
+        RecyclerView.ViewHolder(ui.inflate())
 }

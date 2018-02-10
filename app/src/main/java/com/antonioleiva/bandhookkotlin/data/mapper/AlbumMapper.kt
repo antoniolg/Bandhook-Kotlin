@@ -21,8 +21,11 @@ import com.antonioleiva.bandhookkotlin.data.lastfm.model.LastFmAlbumDetail
 import com.antonioleiva.bandhookkotlin.domain.entity.Album
 import com.antonioleiva.bandhookkotlin.domain.entity.Artist
 
-class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapper: ImageMapper = ImageMapper(),
-                  val trackMapper: TrackMapper = TrackMapper()) {
+class AlbumMapper(
+    private val artistMapper: ArtistMapper = ArtistMapper(),
+    private val imageMapper: ImageMapper = ImageMapper(),
+    private val trackMapper: TrackMapper = TrackMapper()
+) {
 
     fun transform(albums: List<LastFmAlbum>): List<Album> {
         return albums.filter { albumHasQualityInfo(it) }.mapNotNull { transform(it) }
@@ -37,18 +40,22 @@ class AlbumMapper(val artistMapper: ArtistMapper = ArtistMapper(), val imageMapp
     }
 
     fun transform(album: LastFmAlbumDetail) = album.mbid?.let {
-            Album(album.mbid,
-                    album.name,
-                    Artist("", album.artist),
-                    imageMapper.getMainImageUrl(album.images),
-                    trackMapper.transform(album.tracks.tracks))
+        Album(
+            album.mbid,
+            album.name,
+            Artist("", album.artist),
+            imageMapper.getMainImageUrl(album.images),
+            trackMapper.transform(album.tracks.tracks)
+        )
     }
 
     fun transform(album: LastFmAlbum) = album.mbid?.let {
-            Album(album.mbid,
-                    album.name,
-                    artistMapper.transform(album.artist),
-                    imageMapper.getMainImageUrl(album.images),
-                    trackMapper.transform(album.tracks?.tracks))
+        Album(
+            album.mbid,
+            album.name,
+            artistMapper.transform(album.artist),
+            imageMapper.getMainImageUrl(album.images),
+            trackMapper.transform(album.tracks?.tracks)
+        )
     }
 }

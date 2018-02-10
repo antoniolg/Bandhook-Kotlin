@@ -21,7 +21,7 @@ import com.antonioleiva.bandhookkotlin.domain.interactor.base.Interactor
 import com.antonioleiva.bandhookkotlin.domain.interactor.event.ArtistsEvent
 import com.antonioleiva.bandhookkotlin.domain.repository.ArtistRepository
 
-class GetRecommendedArtistsInteractor(val artistRepository: ArtistRepository) : Interactor {
+class GetRecommendedArtistsInteractor(private val artistRepository: ArtistRepository) : Interactor {
 
     override fun invoke(): Event {
         val artists = artistRepository.getRecommendedArtists()

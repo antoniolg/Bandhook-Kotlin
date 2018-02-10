@@ -10,12 +10,10 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(
-        ApplicationModule::class,
-        DataModule::class,
-        RepositoryModule::class,
-        DomainModule::class
-))
+@Component(
+    modules = [(ApplicationModule::class), (DataModule::class), (RepositoryModule::class),
+        (DomainModule::class)]
+)
 interface ApplicationComponent {
 
     fun plus(module: MainActivityModule): MainActivityComponent
