@@ -16,70 +16,66 @@
 
 package com.antonioleiva.bandhookkotlin.ui.screens.album
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.annotation.SuppressLint
-import android.os.Bundle
-import android.support.annotation.VisibleForTesting
-import android.support.v7.widget.LinearLayoutManager
-import android.view.MenuItem
-import android.view.ViewPropertyAnimator
-import android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
-import com.antonioleiva.bandhookkotlin.R
-import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
-import com.antonioleiva.bandhookkotlin.di.subcomponent.album.AlbumActivityModule
-import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
-import com.antonioleiva.bandhookkotlin.ui.adapter.TracksAdapter
-import com.antonioleiva.bandhookkotlin.ui.entity.AlbumDetail
-import com.antonioleiva.bandhookkotlin.ui.entity.TrackDetail
-import com.antonioleiva.bandhookkotlin.ui.entity.mapper.TrackDataMapper
-import com.antonioleiva.bandhookkotlin.ui.presenter.AlbumPresenter
-import com.antonioleiva.bandhookkotlin.ui.util.getNavigationId
-import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
-import com.antonioleiva.bandhookkotlin.ui.view.AlbumView
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
-import org.jetbrains.anko.dimen
-import javax.inject.Inject
+import android.animation.*
+import android.annotation.*
+import android.os.*
+import android.support.v7.widget.*
+import android.view.*
+import com.antonioleiva.bandhookkotlin.*
+import com.antonioleiva.bandhookkotlin.ui.activity.*
+import com.antonioleiva.bandhookkotlin.ui.adapter.*
+import com.antonioleiva.bandhookkotlin.ui.entity.*
+import com.antonioleiva.bandhookkotlin.ui.entity.mapper.*
+import com.antonioleiva.bandhookkotlin.ui.presenter.*
+import com.antonioleiva.bandhookkotlin.ui.util.*
+import com.antonioleiva.bandhookkotlin.ui.view.*
+import com.squareup.picasso.*
+import org.jetbrains.anko.*
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
-class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
+class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView, KodeinAware {
+
+    private val _parentKodein by closestKodein()
+
+    override val kodein: Kodein = Kodein {
+        extend(_parentKodein)
+        bind() from provider {
+            AlbumPresenter(this@AlbumActivity, instance(), instance(), instance(),
+                    AlbumDetailDataMapper())
+
+        }
+
+        bind() from provider { TrackDataMapper() }
+    }
 
     override val ui = AlbumLayout()
 
     companion object {
-        private const val LIST_ANIMATION_START_DELAY = 500L
-        private const val NO_TRANSLATION = 0f
-        private const val TRANSPARENT = 0f
+        private val listAnimationStartDelay = 500L
+        private val noTranslation = 0f
+        private val transparent = 0f
     }
 
     val albumListBreakingEdgeHeight by lazy { dimen(R.dimen.album_breaking_edge_height).toFloat() }
 
-    @Inject
-    @VisibleForTesting
-    lateinit var presenter: AlbumPresenter
+    val presenter: AlbumPresenter by instance()
 
-    @Inject
-    lateinit var trackDataMapper: TrackDataMapper
+    val trackDataMapper: TrackDataMapper by instance()
 
-    @Inject
-    lateinit var adapter: TracksAdapter
+    val adapter: TracksAdapter = TracksAdapter()
 
-    @Inject
-    lateinit var layoutManager: LinearLayoutManager
-
-    @Inject
-    lateinit var picasso: Picasso
+    val picasso: Picasso by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpTransition()
         setUpActionBar()
         setUpTrackList()
-    }
-
-    override fun injectDependencies(applicationComponent: ApplicationComponent) {
-        applicationComponent.plus(AlbumActivityModule(this))
-                .injectTo(this)
     }
 
     @SuppressLint("NewApi")
@@ -90,7 +86,7 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
 
     private fun setUpTrackList() {
         ui.trackList.adapter = adapter
-        ui.trackList.layoutManager = layoutManager
+        ui.trackList.layoutManager = LinearLayoutManager(this)
         ui.listCard.translationY = -albumListBreakingEdgeHeight
     }
 
@@ -111,30 +107,23 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
     }
 
     override fun showAlbum(albumDetail: AlbumDetail?) {
-
-        albumDetail?.let(this::updateAlbumDetail)
-                ?: postponeTransitions()
-
-    }
-
-    private fun updateAlbumDetail(albumDetail: AlbumDetail) {
-        picasso.load(albumDetail.url).fit().centerCrop().into(ui.image, object : Callback.EmptyCallback() {
-            override fun onSuccess() {
-                makeStatusBarTransparent()
-                supportStartPostponedEnterTransition()
-                populateTrackList(trackDataMapper.transform(albumDetail.tracks))
-                animateTrackListUp()
-            }
-        })
-    }
-
-    private fun postponeTransitions() {
-        supportStartPostponedEnterTransition()
-        supportFinishAfterTransition()
+        if (albumDetail != null) {
+            picasso.load(albumDetail.url).fit().centerCrop().into(ui.image, object : Callback.EmptyCallback() {
+                override fun onSuccess() {
+                    makeStatusBarTransparent()
+                    supportStartPostponedEnterTransition()
+                    populateTrackList(trackDataMapper.transform(albumDetail.tracks))
+                    animateTrackListUp()
+                }
+            })
+        } else {
+            supportStartPostponedEnterTransition()
+            supportFinishAfterTransition()
+        }
     }
 
     private fun animateTrackListUp() {
-        ui.listCard.animate().setStartDelay(LIST_ANIMATION_START_DELAY).translationY(NO_TRANSLATION)
+        ui.listCard.animate().setStartDelay(listAnimationStartDelay).translationY(noTranslation)
     }
 
     private fun populateTrackList(trackDetails: List<TrackDetail>) {
@@ -144,7 +133,8 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
     @SuppressLint("InlinedApi")
     private fun makeStatusBarTransparent() {
         supportsLollipop {
-            window.setFlags(FLAG_TRANSLUCENT_STATUS, FLAG_TRANSLUCENT_STATUS)
+            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
     }
 
@@ -157,18 +147,10 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView {
     }
 
     override fun onBackPressed() {
-        ui.listCard.animate().alpha(TRANSPARENT)
-                .onAnimationEnd { supportFinishAfterTransition() }
+        ui.listCard.animate().alpha(transparent).setListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator?) {
+                supportFinishAfterTransition()
+            }
+        })
     }
-}
-
-inline fun ViewPropertyAnimator.onAnimationEnd(
-        crossinline continuation: (Animator) -> Unit) {
-
-    setListener(object : AnimatorListenerAdapter() {
-        override fun onAnimationEnd(animation: Animator) {
-            continuation(animation)
-        }
-    })
-
 }

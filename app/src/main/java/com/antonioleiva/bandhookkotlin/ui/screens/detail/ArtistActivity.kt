@@ -16,47 +16,50 @@
 
 package com.antonioleiva.bandhookkotlin.ui.screens.detail
 
-import android.annotation.SuppressLint
-import android.graphics.drawable.BitmapDrawable
-import android.os.Bundle
-import android.support.annotation.VisibleForTesting
-import android.support.v7.graphics.Palette
-import android.view.MenuItem
-import android.view.WindowManager
-import com.antonioleiva.bandhookkotlin.R
-import com.antonioleiva.bandhookkotlin.di.ApplicationComponent
-import com.antonioleiva.bandhookkotlin.di.subcomponent.detail.ArtistActivityModule
-import com.antonioleiva.bandhookkotlin.ui.activity.BaseActivity
-import com.antonioleiva.bandhookkotlin.ui.adapter.ArtistDetailPagerAdapter
-import com.antonioleiva.bandhookkotlin.ui.entity.ArtistDetail
-import com.antonioleiva.bandhookkotlin.ui.entity.ImageTitle
-import com.antonioleiva.bandhookkotlin.ui.fragment.AlbumsFragmentContainer
-import com.antonioleiva.bandhookkotlin.ui.presenter.AlbumsPresenter
-import com.antonioleiva.bandhookkotlin.ui.presenter.ArtistPresenter
-import com.antonioleiva.bandhookkotlin.ui.screens.album.AlbumActivity
-import com.antonioleiva.bandhookkotlin.ui.util.getNavigationId
-import com.antonioleiva.bandhookkotlin.ui.util.navigate
-import com.antonioleiva.bandhookkotlin.ui.util.supportsLollipop
-import com.antonioleiva.bandhookkotlin.ui.view.ArtistView
-import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
-import javax.inject.Inject
+import android.annotation.*
+import android.graphics.drawable.*
+import android.os.*
+import android.support.v7.graphics.*
+import android.view.*
+import com.antonioleiva.bandhookkotlin.*
+import com.antonioleiva.bandhookkotlin.ui.activity.*
+import com.antonioleiva.bandhookkotlin.ui.adapter.*
+import com.antonioleiva.bandhookkotlin.ui.entity.*
+import com.antonioleiva.bandhookkotlin.ui.entity.mapper.*
+import com.antonioleiva.bandhookkotlin.ui.fragment.*
+import com.antonioleiva.bandhookkotlin.ui.presenter.*
+import com.antonioleiva.bandhookkotlin.ui.screens.album.*
+import com.antonioleiva.bandhookkotlin.ui.util.*
+import com.antonioleiva.bandhookkotlin.ui.view.*
+import com.squareup.picasso.*
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.bind
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.provider
 
-class ArtistActivity : BaseActivity<ArtistLayout>(), ArtistView, AlbumsFragmentContainer {
+class ArtistActivity : BaseActivity<ArtistLayout>(), ArtistView, AlbumsFragmentContainer, KodeinAware {
+
+    private val _parentKodein by closestKodein()
+
+    override val kodein: Kodein = Kodein {
+        extend(_parentKodein)
+        bind() from provider {
+            ArtistPresenter(this@ArtistActivity, instance(), instance(), instance(), instance(),
+                    ArtistDetailDataMapper(), ImageTitleDataMapper())
+        }
+    }
 
     override val ui = ArtistLayout()
 
-    @Inject @VisibleForTesting
-    lateinit var presenter: ArtistPresenter
+    val presenter: ArtistPresenter by instance()
 
-    @Inject
-    lateinit var picasso: Picasso
+    val picasso: Picasso by instance()
 
-    @Inject
-    lateinit var biographyFragment: BiographyFragment
+    val biographyFragment = BiographyFragment()
 
-    @Inject
-    lateinit var albumsFragment: AlbumsFragment
+    val albumsFragment = AlbumsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,11 +68,6 @@ class ArtistActivity : BaseActivity<ArtistLayout>(), ArtistView, AlbumsFragmentC
         setUpTopBar()
         setUpViewPager()
         setUpTabLayout()
-    }
-
-    override fun injectDependencies(applicationComponent: ApplicationComponent) {
-        applicationComponent.plus(ArtistActivityModule(this))
-                .injectTo(this)
     }
 
     @SuppressLint("NewApi")

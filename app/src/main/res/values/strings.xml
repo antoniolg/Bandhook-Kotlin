@@ -20,4 +20,6 @@
     <string name="albums_fragment_title">Albums</string>
     <string name="bio_fragment_title">Bio</string>
 
+    <string name="last_fm_api_key">bb7e49ab41c4ba8b712b2d7faf234a09</string>
+
 </resources>
