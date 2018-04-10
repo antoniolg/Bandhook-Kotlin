@@ -2,7 +2,7 @@ private const val kotlinVersion = "1.2.31"
 private const val androidGradleVersion = "3.0.1"
 
 // Compile dependencies
-private const val supportVersion = "27.0.2"
+private const val supportVersion = "27.1.0"
 private const val ankoVersion = "0.10.4"
 private const val kodeinVersion = "5.0.0"
 private const val retrofitVersion = "2.3.0"
