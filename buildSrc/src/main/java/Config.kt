@@ -1,10 +1,10 @@
-private const val kotlinVersion = "1.2.21"
+private const val kotlinVersion = "1.2.31"
 private const val androidGradleVersion = "3.0.1"
 
 // Compile dependencies
-private const val supportVersion = "27.0.2"
+private const val supportVersion = "27.1.0"
 private const val ankoVersion = "0.10.4"
-private const val daggerVersion = "2.14.1"
+private const val kodeinVersion = "5.0.0"
 private const val retrofitVersion = "2.3.0"
 private const val okhttpVersion = "3.9.1"
 private const val eventBusVersion = "2.4.1"
@@ -52,8 +52,8 @@ object Config {
         val anko_design = "org.jetbrains.anko:anko-design:$ankoVersion"
         val anko_cardview = "org.jetbrains.anko:anko-cardview-v7:$ankoVersion"
         val anko_recyclerview = "org.jetbrains.anko:anko-recyclerview-v7:$ankoVersion"
-        val dagger_compiler = "com.google.dagger:dagger-compiler:$daggerVersion"
-        val dagger = "com.google.dagger:dagger:$daggerVersion"
+        val kodein_generic_jvm = "org.kodein.di:kodein-di-generic-jvm:$kodeinVersion"
+        val kodein_android = "org.kodein.di:kodein-di-framework-android:$kodeinVersion"
     }
 
     object TestLibs {
