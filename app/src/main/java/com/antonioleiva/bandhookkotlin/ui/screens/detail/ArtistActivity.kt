@@ -43,7 +43,7 @@ class ArtistActivity : BaseActivity<ArtistLayout>(), ArtistView, AlbumsFragmentC
 
     private val _parentKodein by closestKodein()
 
-    override val kodein: Kodein = Kodein {
+    override val kodein: Kodein = Kodein.lazy {
         extend(_parentKodein)
         bind() from provider {
             ArtistPresenter(this@ArtistActivity, instance(), instance(), instance(), instance(),

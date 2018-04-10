@@ -42,7 +42,7 @@ class AlbumActivity : BaseActivity<AlbumLayout>(), AlbumView, KodeinAware {
 
     private val _parentKodein by closestKodein()
 
-    override val kodein: Kodein = Kodein {
+    override val kodein: Kodein = Kodein.lazy {
         extend(_parentKodein)
         bind() from provider {
             AlbumPresenter(this@AlbumActivity, instance(), instance(), instance(),

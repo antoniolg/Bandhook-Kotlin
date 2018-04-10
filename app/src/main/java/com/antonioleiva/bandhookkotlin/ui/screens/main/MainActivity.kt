@@ -37,7 +37,7 @@ class MainActivity : BaseActivity<MainLayout>(), MainView, KodeinAware {
 
     private val _parentKodein by closestKodein()
 
-    override val kodein: Kodein = Kodein {
+    override val kodein: Kodein = Kodein.lazy {
         extend(_parentKodein)
         bind() from provider {
             MainPresenter(this@MainActivity, instance(), instance(), instance(),

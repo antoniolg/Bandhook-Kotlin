@@ -24,7 +24,7 @@ import org.kodein.di.android.androidModule
 
 class App : Application(), KodeinAware {
 
-    override val kodein = Kodein.lazy {
+    override val kodein = Kodein {
         import(androidModule(this@App))
         import(appModule(this@App))
         import(dataModule(this@App))
